@@ -1,0 +1,30 @@
+<body>
+    <div class="contenedor">
+    <nav class="navbar">
+        <ul class="menu">
+            <div class="links">
+                <li><a href="/inicio">Inicio</a></li>
+                {% if session["rol"] == 'super_admin' or session["rol"] == 'administrador' %}
+                <li><a href="/operadores">Operadores</a></li>
+                {% endif %}
+                <li><a href="#">Servicios</a></li>
+                <li><a href="#">Contacto</a></li>
+                </div>
+                <div class="salir">
+                    <a class="btn_cerrar" href="/dashboard/cerrar">Cerrar Sesion</a>
+                </div>
+            </ul>
+        
+        <div class="menu-toggle" id="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="logo">
+            <a href="/inicio">CONTROL GYM</a>
+        </div>
+        <div class="btn">
+            <a href="">Venta producto <i class="fa-solid fa-cart-shopping"></i> </a>
+            <a href="">Registrar usuario <i class="fa-solid fa-user-plus"></i> </a>
+        </div>
+    </nav>

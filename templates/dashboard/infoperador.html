@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/infOperadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>DATOS DEL OPERADOR</h2>
+</div>
+
+<div class="contenedorForm">
+    <form id="formulario" action="" method="POST">
+        <div class="content">
+           
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="inputText" value="{{operadores[1]}}" id="nombre" name="nombre" readonly>
+            
+            <label for="">Apellido:</label>
+            <input type="text" class="inputText" value="{{operadores[2]}}" id="apellido" name="apellido" readonly>
+            
+            <label for="">Cedula:</label>
+            <input type="text" class="inputText" value="{{operadores[3]}}" id="cedula" name="cedula" readonly>
+            
+            <label for="">Correo:</label>
+            <input type="email" class="inputText" value="{{operadores[5]}}" id="correo" name="correo" readonly>
+            
+            <label for="">Celular:</label>
+            <input type="tel" class="inputText" value="{{operadores[4]}}" id="celular" name="celular" readonly>
+            
+            <label for="">Cargo:</label>
+            <input type="text" class="inputText" value="{{operadores[7]}}" id="rol" name="rol" readonly>
+            
+            <label for="">Usuario:</label>
+            <input type="text" class="inputText" value="{{operadores[0]}}" id="usuario" name="usuario" readonly>
+            
+            <label for="">Fecha de Registro:</label>
+            <input type="text" class="inputText" value="{{operadores[8]}}" id="fregistro" name="fregistro" readonly>
+            
+            <label for="">Usuario que lo registro:</label>
+            <input type="text" class="inputText" value="{{operadores[9]}}" id="user_regis" name="user_regis" readonly>
+        </div>
+
+            <div class="btn_accion">
+                <a href="/operadores/desactivar/{{operadores[0]}}" onclick="return confirm('Seguro quiere eliminar este operador?')" class="buttonSumit">Eliminar</a>
+                <a href="/operadores" class="btn_desactivar">Cancelar</a>
+            </div>
+
+    </form>
+    
+</div>
+
+{% include 'dashboard/pie.html' %}
+
