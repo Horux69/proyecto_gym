@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/operadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>INVENTARIO</h2>
+</div>
+
+<div class="boton_agregar_pro">
+    <a href="/inventario/categorias" class="boton_cat">Agregar Categoria</a>
+    <a href="" class="boton_ope">Agregar Producto <i class="fa-solid fa-plus"></i></a>
+</div>
+
+<div class="container_table">
+<table>
+    <thead>
+        <tr>
+            <!-- <th>Usuario</th> -->
+            <th>Categoria</th>
+            <th>Nombre</th>
+            <!-- <th>Cedula</th> -->
+            <th>Cantidad</th>
+            <!-- <th>Correo</th> -->
+            <th>Precio de Compra</th>
+            <th>Precio de Venta</th>
+            <!-- <th>User Registro</th> -->
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>Proteina</td>
+            <td>Best Protein</td>
+            <td>20</td>
+            <td>55.000</td>
+            <td>80.000</td>
+            <td class="acciones">
+                
+            <a onclick="return confirm('Seguro quiere eliminar este operador?')" class="btn_eliminar" href=""><i class="fa-solid fa-trash"></i></a> 
+
+            <a class="btn_edit" href=""><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></i></a> 
+
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+</div>
+
+
+<!-- {% if mensaje %}
+<section class="modal">
+    <div class="modal_container">
+        <a href="#" class="modal_close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+        <div class="container_form">
+            <div class="form_container">
+                <h2 class="titulo">{{ mensaje }}</h2>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %} -->
+
+
+<section class="modal">
+<div class="modal_container">
+    <a href="#" class="modal_close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+    <div class="container_form">
+        <div class="form_container">
+            <h2 class="titulo">AGREGAR UN PRODUCTO</h2>
+            <form id="formulario" action="" method="POST">
+                <div class="content">
+                    
+                    <input type="text" class="inputText" id="nombre" name="nombre" placeholder="Nombre" required>
+                    
+                    <select class="inputText" name="categoria" id="categoria" required>
+                        <option value="">Categorias</option>
+                        <option value="administrador"></option>
+                        <option value="entrenador"></option>
+                    </select>
+
+                    <input type="text" class="inputText" id="precio_compra" name="precio_compra" placeholder="Precio de compra" required>
+                    
+                    <input type="text" class="inputText" id="precio_venta" name="precio_venta" placeholder="Precio de Venta" required>              
+                    
+                    <input type="text" class="inputText" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                    
+                    <label for="imagen" style="font-size: 14px;">Imagen del producto:</label>
+                    <input type="file" class="inputText" id="imagen" name="imagen" placeholder="">
+                </div>
+                <button type="submit" class="buttonSumit">Agregar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+
+
+{% include 'dashboard/pie.html' %}

@@ -19,6 +19,11 @@ body, html {
     justify-content: flex-end;
 }
 
+.boton_agregar_pro {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .boton_ope {
     text-decoration: none;
     color: #000;
@@ -27,6 +32,20 @@ body, html {
     background-color: #FFD100;
     border-radius: 6px;
     box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.25);
+}
+
+.boton_cat {
+    text-decoration: none;
+    color: #000;
+    margin: 0 25px 0 0;
+    padding: 10px;
+    background-color: #FFD100;
+    border-radius: 6px;
+    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.25);
+}
+
+.boton_cat:hover {
+    background-color: #d3ae0b;
 }
 
 .boton_ope:hover {
@@ -346,5 +365,13 @@ width: 100%;
     color: #fff;
     padding: 8px 11px;
     background-color: red;
+}
+
+.btn_edit {
+    text-decoration: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 8px 11px;
+    background-color: #d3ae0b; 
 }
 

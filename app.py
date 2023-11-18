@@ -133,6 +133,16 @@ def cerrarSesion():
     session.clear()
     return redirect('/')
 
+# ----------------------------- INVENTARIO ------------------------------------#
+
+@app.route('/inventario')
+def inventario():
+    return render_template('/dashboard/inventario_productos.html')
+
+@app.route('/inventario/categorias')
+def categorias():
+    return render_template('/dashboard/categoria_productos.html')
+
 
 
 @app.route('/inicio')
