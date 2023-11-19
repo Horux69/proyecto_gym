@@ -6,6 +6,7 @@ import hashlib
 from claseValidaLogin import ValidationLogin
 from claseOperadores import Operadores
 from claseMembresias import Membresias
+from claseAfiliados import Afiliados
 
 app = Flask(__name__)
 
@@ -35,6 +36,7 @@ cursor = conexion.cursor()
 validaLogin = ValidationLogin(mysql)
 losOperadores = Operadores(mysql)
 lasMembresias = Membresias(mysql)
+LosAfiliados = Afiliados(mysql)
 
 
 
@@ -196,6 +198,61 @@ def editMembresia():
     lasMembresias.editMembresia([_id, nombre, duracion, precio])
 
     return redirect('/membresias')
+
+
+# ------------------------ AFILIADOS ---------------------------------------------#
+
+@app.route('/afiliados')
+def afiliados():
+    if session.get("logueado"):
+        resultado = LosAfiliados.consultarAfiliados()
+        return render_template('dashboard/afiliados.html', afiliados = resultado)
+    else:
+        return redirect('/')
+    
+
+@app.route('/afiliados/agregarAfiliado', methods = ['POST'])
+def agregarAfiliados():
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+
+        cedula = request.form['cedula']
+        nombre = request.form['nombres']
+        apellido = request.form['apellidos']
+        fecha_nacimiento = request.form['fecha_nac']
+        telefono = request.form['telefono']
+        correo = request.form['email']
+        tarjeta_nfc = request.form['nfc']
+        id_membresia = request.form['membresia']
+        fecha_inicio = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        fecha_vencimiento = '1999/01/10'
+        fecha_registro = datetime.now().strftime('%Y-%m-%d')
+        estado = 'activo'
+
+        if not LosAfiliados.validarDatosAfiliados(cedula):
+
+            LosAfiliados.agregarAfiliados([cedula,nombre,apellido,fecha_nacimiento,telefono,correo,tarjeta_nfc,id_membresia,fecha_inicio,fecha_vencimiento,fecha_registro,estado], session['user_name'])
+            return redirect('/afiliados')
+        else:
+            return redirect('/afiliados', mensaje = 'La cedula ya esta en uso, intente con otra')
+        
+
+@app.route('/afiliados/desactivarAfiliado/<cedula>')
+def desactivarAfiliados(cedula):
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        LosAfiliados.desactivarAfiliados(cedula)
+        return redirect('/afiliados')
+    
+    
+@app.route('/afiliados/info/<cedula>', methods = ['GET'])
+def infoAfiliados(cedula):
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+
+        resultado = LosAfiliados.infoAfiliados(cedula)
+
+        return render_template('/dashboard/infoafiliados.html', afiliados = resultado[0])
+    else:
+        return redirect('/')
+    
 
 
 
