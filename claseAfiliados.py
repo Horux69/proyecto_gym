@@ -5,7 +5,7 @@ class Afiliados:
         self.cursor = self.conexion.cursor()
 
     def consultarAfiliados(self):
-        sql = "SELECT * FROM registro_usuarios WHERE estado = 'activo'"
+        sql = "SELECT registro_usuarios.*, membresias.nombre AS nombre_membresia FROM registro_usuarios JOIN membresias ON registro_usuarios.id_membresia = membresias.id_membresia WHERE registro_usuarios.estado = 'activo';"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
@@ -18,7 +18,7 @@ class Afiliados:
 
     
     def validarDatosAfiliados(self,cedula):
-        sql = f"SELECT * FROM operadores WHERE  cedula = '{cedula}'"
+        sql = f"SELECT * FROM registro_usuarios WHERE cedula = '{cedula}'"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()

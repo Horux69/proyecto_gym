@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2023 a las 23:30:32
+-- Tiempo de generación: 20-11-2023 a las 05:09:27
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -58,8 +58,19 @@ CREATE TABLE `membresias` (
   `id_membresia` int(11) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
   `tiempo_duracion` int(11) DEFAULT NULL,
-  `precio` int(11) DEFAULT NULL
+  `precio` int(11) DEFAULT NULL,
+  `estado` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `membresias`
+--
+
+INSERT INTO `membresias` (`id_membresia`, `nombre`, `tiempo_duracion`, `precio`, `estado`) VALUES
+(1, 'Diario', 1, 5000, 'activo'),
+(2, 'Semanal', 6, 15000, 'activo'),
+(3, 'Quincenal', 15, 30000, 'activo'),
+(4, 'Mensual', 30, 60000, 'activo');
 
 -- --------------------------------------------------------
 
@@ -110,8 +121,21 @@ CREATE TABLE `registro_usuarios` (
   `fecha_inicio` date NOT NULL,
   `fecha_vencimiento` date NOT NULL,
   `fecha_registro` date NOT NULL,
-  `user_registro` varchar(15) NOT NULL
+  `user_registro` varchar(15) NOT NULL,
+  `estado` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `registro_usuarios`
+--
+
+INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `correo`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES
+('1', 'dwwddw|', 'effff', '2001-11-24', '41515', 'ekfnfec@nkm.com', '5151558158', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
+('1007412611', 'Camilo', 'Castillo', '2001-11-24', '3172509264', 'horuxjcc@gmail.com', '126196196962', 4, '2023-11-19', '2023-12-19', '2023-11-19', 'Camilo', 'activo'),
+('16161', 'camilo', 'castillo', '2001-11-24', '56944194', 'camilo@gmail.com', '255626', 2, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'activo'),
+('21116969', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '2162626', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'activo'),
+('25252', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '122622', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
+('62961112', 'cristian', 'vanegas', '2001-10-23', '141469419', 'cris@gmail.com', '541514514', 4, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo');
 
 --
 -- Índices para tablas volcadas
@@ -169,7 +193,7 @@ ALTER TABLE `inventario_productos`
 -- AUTO_INCREMENT de la tabla `membresias`
 --
 ALTER TABLE `membresias`
-  MODIFY `id_membresia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_membresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

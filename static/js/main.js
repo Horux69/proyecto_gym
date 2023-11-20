@@ -32,7 +32,7 @@ modalClose.addEventListener('click', (e)=>{
 
 // Modal Registro de usuarios
 
-const openModalUser = document.querySelector('.boton_user');
+/* const openModalUser = document.querySelector('.boton_user');
 const modalUser = document.querySelector('.modal_user');
 const modalCloseUser = document.querySelector('.modal_close_user');
 
@@ -44,5 +44,5 @@ openModalUser.addEventListener('click', (e)=>{
 modalCloseUser.addEventListener('click', (e)=>{
     e.preventDefault();
     modalUser.classList.remove('modal--show');
-});
+}); */
 

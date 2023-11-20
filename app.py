@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template, request, redirect, session
 from flaskext.mysql import MySQL
-from datetime import datetime
+from datetime import datetime, timedelta
 import hashlib
 from claseValidaLogin import ValidationLogin
 from claseOperadores import Operadores
@@ -206,12 +206,14 @@ def editMembresia():
 def afiliados():
     if session.get("logueado"):
         resultado = LosAfiliados.consultarAfiliados()
-        return render_template('dashboard/afiliados.html', afiliados = resultado)
+        print(resultado)
+        membresias = lasMembresias.consultarMembresias()
+
+        return render_template('dashboard/afiliados.html', afiliados = resultado, resulMem = membresias)
     else:
         return redirect('/')
-    
 
-@app.route('/afiliados/agregarAfiliado', methods = ['POST'])
+@app.route('/afiliados/agregarAfiliado', methods = ['GET', 'POST'])
 def agregarAfiliados():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
 
@@ -223,8 +225,13 @@ def agregarAfiliados():
         correo = request.form['email']
         tarjeta_nfc = request.form['nfc']
         id_membresia = request.form['membresia']
-        fecha_inicio = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        fecha_vencimiento = '1999/01/10'
+        fecha_inicio = datetime.now()
+
+        duracion_membresia = lasMembresias.consultaTiempoMembresia(id_membresia)
+        duracion_timedelta = timedelta(days=duracion_membresia)
+
+        fecha_vencimiento = fecha_inicio + duracion_timedelta
+        
         fecha_registro = datetime.now().strftime('%Y-%m-%d')
         estado = 'activo'
 
@@ -233,7 +240,7 @@ def agregarAfiliados():
             LosAfiliados.agregarAfiliados([cedula,nombre,apellido,fecha_nacimiento,telefono,correo,tarjeta_nfc,id_membresia,fecha_inicio,fecha_vencimiento,fecha_registro,estado], session['user_name'])
             return redirect('/afiliados')
         else:
-            return redirect('/afiliados', mensaje = 'La cedula ya esta en uso, intente con otra')
+            return redirect('/afiliados')
         
 
 @app.route('/afiliados/desactivarAfiliado/<cedula>')

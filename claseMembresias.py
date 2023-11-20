@@ -11,9 +11,14 @@ class Membresias:
         self.conexion.commit()
         return resultado
     
+    def consultaTiempoMembresia(self, id_membresia):
+        sql = f"SELECT tiempo_duracion FROM membresias WHERE id_membresia = {id_membresia}"
+        self.cursor.execute(sql)
+        resultado = self.cursor.fetchone()[0]
+        return resultado
+    
     def agregarMembresia(self, membresias):
         sql = f"INSERT INTO membresias (id_membresia, nombre, tiempo_duracion, precio, estado) VALUES ('NULL', '{membresias[0]}','{membresias[1]}','{membresias[2]}','{membresias[3]}');"
-
         self.cursor.execute(sql)
         self.conexion.commit()
 
