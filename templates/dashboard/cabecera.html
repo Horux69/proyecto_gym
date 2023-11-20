@@ -8,6 +8,7 @@
                 <li><a href="/operadores">Operadores</a></li>
                 {% endif %}
                 <li><a href="/inventario">Inventario de Productos</a></li>
+                <li><a href="/afiliados">Afiliados</a></li>
                 <li><a href="/membresias">Membresias</a></li>
                 <li><a href="#">Servicios</a></li>
                 <li><a href="#">Contacto</a></li>
@@ -37,27 +38,29 @@
             <div class="container_form">
                 <div class="form_container">
                     <h2 class="titulo">AGREGAR NUEVO USUARIO</h2>
-                    <form id="formulario" action="" method="POST">
+                    <form id="formulario" action="/afiliados/agregarAfiliado" method="POST">
                         <div class="content">
                             
+                            <input type="text" class="inputText" id="cedula" name="cedula" placeholder="Cedula" required> 
+
                             <input type="text" class="inputText" id="nombres" name="nombres" placeholder="Nombres" required>
 
                             <input type="text" class="inputText" id="apellidos" name="apellidos" placeholder="Apellidos" required>
 
-                            <input type="text" class="inputText" id="cedula" name="cedula" placeholder="Cedula" required> 
-                            
                             <label for="fecha_nac" style="font-size: 14px;">Fecha de Nacimiento:</label>
-                            <input type="date" class="inputText" id="fecha_nac" name="fecha_nac" placeholder="Telefono Movil" required>
+                            <input type="text" class="inputText" id="fecha_nac" name="fecha_nac" placeholder="Telefono Movil" required>
 
                             <input type="tel" class="inputText" id="telefono" name="telefono" placeholder="Telefono Movil" required>
 
                             <input type="email" class="inputText" id="email" name="email" placeholder="Correo Electronico" required>
-                            
+
+                            <input type="number" class="inputText" id="nfc" name="nfc" placeholder="tarjeta nfc" required>
+
                             <select class="inputText" name="membresia" id="membresia" required>
                                 <option value="">Membresia</option>
-                                <option value="administrador"></option>
-                                <option value="entrenador"></option>
-                            </select>             
+                                <option value="0">Novato</option>
+                                <option value="1">Normal</option>
+                            </select>      
                             
                         </div>
                         <button type="submit" class="buttonSumit">Agregar Usario</button>
