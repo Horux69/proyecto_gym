@@ -235,7 +235,7 @@ def agregarAfiliados():
         fecha_registro = datetime.now().strftime('%Y-%m-%d')
         estado = 'activo'
 
-        if not LosAfiliados.validarDatosAfiliados(cedula):
+        if not LosAfiliados.validarDatosAfiliados(cedula,correo,telefono):
 
             LosAfiliados.agregarAfiliados([cedula,nombre,apellido,fecha_nacimiento,telefono,correo,tarjeta_nfc,id_membresia,fecha_inicio,fecha_vencimiento,fecha_registro,estado], session['user_name'])
             return redirect('/afiliados')

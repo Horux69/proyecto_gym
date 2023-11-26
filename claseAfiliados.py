@@ -17,8 +17,8 @@ class Afiliados:
         self.conexion.commit()
 
     
-    def validarDatosAfiliados(self,cedula):
-        sql = f"SELECT * FROM registro_usuarios WHERE cedula = '{cedula}'"
+    def validarDatosAfiliados(self,cedula,correo,telefono):
+        sql = f"SELECT * FROM operadores WHERE  cedula = '{cedula}' AND correo = '{correo}' AND telefono = '{telefono}'"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
