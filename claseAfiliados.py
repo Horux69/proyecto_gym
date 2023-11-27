@@ -35,3 +35,8 @@ class Afiliados:
         resultado = self.cursor.fetchall()
         self.conexion.commit()
         return resultado
+    
+    def desactivarUsuarios(self):
+        sql = "UPDATE registro_usuarios SET estado = 'inactivo' WHERE fecha_vencimiento <= DATE(NOW())"
+        self.cursor.execute(sql)
+        self.conexion.commit()

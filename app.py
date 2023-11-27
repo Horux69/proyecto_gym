@@ -38,7 +38,7 @@ losOperadores = Operadores(mysql)
 lasMembresias = Membresias(mysql)
 LosAfiliados = Afiliados(mysql)
 
-
+LosAfiliados.desactivarUsuarios() #funcion de desactivar usuarios
 
 @app.route('/')
 def login():
