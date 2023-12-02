@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/infOperadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>DATOS DEL PRODUCTO</h2>
+</div>
+
+<div class="contenedorForm">
+    <form id="formulario" action="/inventario/editProducto" method="POST">
+        <div class="content">
+           
+            <label for="nombre">ID: {{editProducto[0]}}</label>
+            <input type="text" class="inputText" value="{{editProducto[0]}}" id="txtID" name="txtID" hidden>
+            <br>
+            <br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="inputText" value="{{editProducto[1]}}" id="nombre" name="nombre">
+
+            <!-- <label for="categoria">Categoria:</label>
+            <input type="text" class="inputText" value="{{editProducto[2]}}" id="categoria" name="categoria"> -->
+            <label for="categoria">Categoria:</label>
+            <select class="inputText" name="categoria" id="categoria">
+                {% for resul in resulCate %}
+                <option value="{{resul[0]}}">{{resul[1]}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="precio_compra">Precio de Compra:</label>
+            <input type="text" class="inputText" value="{{editProducto[3]}}" id="precio_compra" name="precio_compra">
+            
+            <label for="precio_venta">Precio de Venta:</label>
+            <input type="text" class="inputText" value="{{editProducto[4]}}" id="precio_venta" name="precio_venta">
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="text" class="inputText" value="{{editProducto[5]}}" id="cantidad" name="cantidad">
+            
+        </div>
+
+            <div class="btn_accion">
+                <button type="submit" class="buttonEdit">Editar</button>
+                <!-- <a href="" class="buttonEdit">Editar</a> -->
+                <a href="/inventario" class="btn_desactivar">Cancelar</a>
+            </div>
+
+    </form>
+    
+</div>
+
+{% include 'dashboard/pie.html' %}

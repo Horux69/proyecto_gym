@@ -57,7 +57,9 @@
         </div>
 
             <div class="btn_accion">
+                {% if not session["rol"] == 'entrenador' %}
                 <a href="/afiliados/desactivarAfiliado/{{afiliados[0]}}" onclick="return confirm('Seguro quiere eliminar a este afiliado?')" class="buttonSumit">Eliminar</a>
+                {% endif %}
                 <a href="/afiliados" class="btn_desactivar">Cancelar</a>
             </div>
 

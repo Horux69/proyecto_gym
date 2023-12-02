@@ -7,6 +7,7 @@ from claseValidaLogin import ValidationLogin
 from claseOperadores import Operadores
 from claseMembresias import Membresias
 from claseAfiliados import Afiliados
+from claseInvProductos import InventarioProductos
 
 app = Flask(__name__)
 
@@ -37,6 +38,7 @@ validaLogin = ValidationLogin(mysql)
 losOperadores = Operadores(mysql)
 lasMembresias = Membresias(mysql)
 LosAfiliados = Afiliados(mysql)
+InvProductos = InventarioProductos(mysql)
 
 LosAfiliados.desactivarUsuarios() #funcion de desactivar usuarios
 
@@ -137,15 +139,98 @@ def cerrarSesion():
     session.clear()
     return redirect('/')
 
-# ----------------------------- INVENTARIO ------------------------------------#
+# ----------------------------- INVENTARIO PRODUCTOS ------------------------------------#
 
 @app.route('/inventario')
 def inventario():
-    return render_template('/dashboard/inventario_productos.html')
+    resultado = InvProductos.consultarProductos()
 
-@app.route('/inventario/categorias')
-def categorias():
-    return render_template('/dashboard/categoria_productos.html')
+    resulCate = InvProductos.consultaCataegorias()
+
+    return render_template('/dashboard/inventario_productos.html', productos = resultado, categorias = resulCate)
+
+@app.route('/inventario/agregarProducto', methods = ['POST'])
+def agregarProducto():
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        nombre = request.form['nombre']
+        categoria = request.form['categoria']
+        precio_compra = request.form['precio_compra']
+        precio_venta = request.form['precio_venta']
+        cantidad = request.form['precio_venta']
+        estado = 'activo'
+
+        InvProductos.agregarProducto([nombre, categoria, precio_compra, precio_venta, cantidad, estado])
+
+        return redirect('/inventario')
+    else:
+        return redirect('/')
+
+@app.route('/inventario/infoEditProducto/<id_producto>', methods = ['GET'])
+def infoEdirProducto(id_producto):
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        resultado = InvProductos.infoEditProducto(id_producto)
+        resultadoCate = InvProductos.consultaCataegorias()
+        return render_template('dashboard/editProducto.html', editProducto = resultado[0], resulCate = resultadoCate)
+    else:
+        return redirect('/')
+
+@app.route('/inventario/editProducto', methods = ['POST'])
+def editProducto():
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        id_producto = request.form['txtID']
+        nombre = request.form['nombre']
+        categoria = request.form['categoria']
+        precio_compra = request.form['precio_compra']
+        precio_venta = request.form['precio_venta']
+        cantidad = request.form['cantidad']
+
+        InvProductos.editProducto([id_producto, nombre, categoria, precio_compra, precio_venta, cantidad])
+
+        return redirect('/inventario')
+    else:
+        return redirect('/')
+
+@app.route('/inventario/desactivar/<id_productos>')
+def desactivarProducto(id_productos):
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        InvProductos.desactivarProductos(id_productos)
+        return render_template('/dashboard/inventario_productos.html')
+    else:
+        return redirect('/')
+
+
+
+#----------------------- CATEGORIA DE PRODUCTOS ---------------------------------#
+
+@app.route('/categorias/agregarCategoria',methods=['POST'])
+def agregarCategoria():
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        nombre=request.form['nombre']
+        estado = 'activo'
+
+        InvProductos.agregarCategoria([nombre, estado])
+
+        return redirect('/categorias')
+    else:
+        return redirect('/')
+
+@app.route("/categorias")
+def consultarCategoria():
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        resultado = InvProductos.consultaCataegorias()
+        print(resultado)
+        return render_template('dashboard/categoria_productos.html', categorias = resultado)
+    else:
+        return redirect('/')
+
+@app.route('/categorias/desactivarCategoria/<id_categoria>')
+def desactivarCategoria(id_categoria):
+    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        InvProductos.desactivarCategoria(id_categoria)
+        return redirect('/categorias')
+    else:
+        return redirect('/')
+
 
 # ------------------------ MEMBRESIAS ---------------------------------------------#
 
@@ -215,7 +300,7 @@ def afiliados():
 
 @app.route('/afiliados/agregarAfiliado', methods = ['GET', 'POST'])
 def agregarAfiliados():
-    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+    if session.get("logueado"):
 
         cedula = request.form['cedula']
         nombre = request.form['nombres']
@@ -252,7 +337,7 @@ def desactivarAfiliados(cedula):
     
 @app.route('/afiliados/info/<cedula>', methods = ['GET'])
 def infoAfiliados(cedula):
-    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+    if session.get("logueado"):
 
         resultado = LosAfiliados.infoAfiliados(cedula)
 
