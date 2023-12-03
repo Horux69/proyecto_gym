@@ -209,7 +209,16 @@ def afiliados():
         print(resultado)
         membresias = lasMembresias.consultarMembresias()
 
-        return render_template('dashboard/afiliados.html', afiliados = resultado, resulMem = membresias)
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+
+        return render_template('dashboard/afiliados.html', afiliados = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
 

@@ -78,18 +78,18 @@
             <form id="formulario" action="/afiliados/agregarAfiliado" method="POST">
                 <div class="content">
                     
-                    <input type="text" class="inputText" id="cedula" name="cedula" placeholder="Cedula" required> 
+                    <input type="text" class="inputText" id="cedula" name="cedula" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
                     
-                    <input type="text" class="inputText" id="nombres" name="nombres" placeholder="Nombres" required>
+                    <input type="text" class="inputText" id="nombres" name="nombres" pattern="[A-Za-z\s]{2,20}" maxlength="20" minlength="2" placeholder="Nombres" required>
 
-                    <input type="text" class="inputText" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+                    <input type="text" class="inputText" id="apellidos" name="apellidos" pattern="[A-Za-z\s]{4,20}" maxlength="20" minlength="4" placeholder="Apellidos" required>
                     
                     <label for="fecha_nac" style="font-size: 14px;">Fecha de Nacimiento:</label>
-                    <input type="date" class="inputText" id="fecha_nac" name="fecha_nac" placeholder="año/mes/dia" required>
+                    <input type="date" class="inputText" min="{{ minima }}" max="{{ maxima }}" id="fecha_nac" name="fecha_nac" placeholder="año/mes/dia" required>
 
-                    <input type="tel" class="inputText" id="telefono" name="telefono" placeholder="Telefono Movil" required>
+                    <input type="tel" class="inputText" id="telefono" pattern="[0-9]{10}" minlength="10" maxlength="10" name="telefono" placeholder="Telefono Movil" required>
 
-                    <input type="email" class="inputText" id="email" name="email" placeholder="Correo Electronico" required>
+                    <input type="email" class="inputText" id="email" name="email" pattern="[A-Za-z-_0-9]+@[A-Za-z]\.[a-z]{2,40}" minlength="2" maxlength="40" placeholder="Correo Electronico" required>
 
                     <input type="number" class="inputText" id="nfc" name="nfc" placeholder="tarjeta nfc" required>
                     
