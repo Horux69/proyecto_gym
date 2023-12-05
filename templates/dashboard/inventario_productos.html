@@ -87,7 +87,7 @@
             <form id="formulario" action="/inventario/agregarProducto" method="POST">
                 <div class="content">
                     
-                    <input type="text" class="inputText" id="nombre" name="nombre" placeholder="Nombre" required>
+                    <input type="text" class="inputText" id="nombre" name="nombre" pattern="[A-Za-z\s]{4,30}" minlength="4" maxlength="30" placeholder="Nombre" required>
                     
                     <select class="inputText" name="categoria" id="categoria" required>
                         {% for cate in categorias %}
@@ -95,11 +95,11 @@
                         {% endfor %}
                     </select>
 
-                    <input type="text" class="inputText" id="precio_compra" name="precio_compra" placeholder="Precio de compra" required>
+                    <input type="text" class="inputText" id="precio_compra" name="precio_compra" pattern="[0-9]{2,8}" minlength="2" maxlength="8" placeholder="Precio de compra" required>
                     
-                    <input type="text" class="inputText" id="precio_venta" name="precio_venta" placeholder="Precio de Venta" required>              
+                    <input type="text" class="inputText" id="precio_venta" name="precio_venta" pattern="[0-9]{2,8}" minlength="2" maxlength="8" placeholder="Precio de Venta" required>              
                     
-                    <input type="text" class="inputText" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                    <input type="text" class="inputText" id="cantidad" name="cantidad"pattern="[0-9]{2,6}" minlength="2" maxlength="6" placeholder="Cantidad" required>
                     
                     <!-- <label for="imagen" style="font-size: 14px;">Imagen del producto:</label>
                     <input type="file" class="inputText" id="imagen" name="imagen" placeholder=""> -->
