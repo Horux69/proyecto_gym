@@ -15,44 +15,49 @@
     <h2>INVENTARIO</h2>
 </div>
 
+{% if not session["rol"] == 'entrenador' %}
 <div class="boton_agregar_pro">
-    <a href="/inventario/categorias" class="boton_cat">Agregar Categoria</a>
+    <a href="/categorias" class="boton_cat">Agregar Categoria</a>
     <a href="" class="boton_ope">Agregar Producto <i class="fa-solid fa-plus"></i></a>
 </div>
+{% endif %}
 
 <div class="container_table">
 <table>
     <thead>
         <tr>
             <!-- <th>Usuario</th> -->
-            <th>Categoria</th>
             <th>Nombre</th>
+            <th>Categoria</th>
             <!-- <th>Cedula</th> -->
-            <th>Cantidad</th>
             <!-- <th>Correo</th> -->
             <th>Precio de Compra</th>
             <th>Precio de Venta</th>
+            <th>Cantidad</th>
             <!-- <th>User Registro</th> -->
+            {% if not session["rol"] == 'entrenador' %}
             <th>Acciones</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
-
+        {% for resul in productos %}
         <tr>
-            <td>Proteina</td>
-            <td>Best Protein</td>
-            <td>20</td>
-            <td>55.000</td>
-            <td>80.000</td>
+            <td>{{resul[1]}}</td>
+            <td>{{resul[2]}}</td>
+            <td>{{resul[3]}}</td>
+            <td>{{resul[4]}}</td>
+            <td>{{resul[5]}}</td>
+            {% if not session["rol"] == 'entrenador' %}
             <td class="acciones">
                 
-            <a onclick="return confirm('Seguro quiere eliminar este operador?')" class="btn_eliminar" href=""><i class="fa-solid fa-trash"></i></a> 
+            <a onclick="return confirm('Seguro quiere eliminar este operador?')" class="btn_eliminar" href="/inventario/desactivar/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
 
-            <a class="btn_edit" href=""><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></i></a> 
-
+            <a class="btn_edit" href="/inventario/infoEditProducto/{{resul[0]}}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></i></a> 
             </td>
-
+            {% endif %}
         </tr>
+        {% endfor %}
 
     </tbody>
 </table>
@@ -79,15 +84,15 @@
     <div class="container_form">
         <div class="form_container">
             <h2 class="titulo">AGREGAR UN PRODUCTO</h2>
-            <form id="formulario" action="" method="POST">
+            <form id="formulario" action="/inventario/agregarProducto" method="POST">
                 <div class="content">
                     
                     <input type="text" class="inputText" id="nombre" name="nombre" placeholder="Nombre" required>
                     
                     <select class="inputText" name="categoria" id="categoria" required>
-                        <option value="">Categorias</option>
-                        <option value="administrador"></option>
-                        <option value="entrenador"></option>
+                        {% for cate in categorias %}
+                        <option value="{{cate[0]}}">{{cate[1]}}</option>
+                        {% endfor %}
                     </select>
 
                     <input type="text" class="inputText" id="precio_compra" name="precio_compra" placeholder="Precio de compra" required>
@@ -96,8 +101,8 @@
                     
                     <input type="text" class="inputText" id="cantidad" name="cantidad" placeholder="Cantidad" required>
                     
-                    <label for="imagen" style="font-size: 14px;">Imagen del producto:</label>
-                    <input type="file" class="inputText" id="imagen" name="imagen" placeholder="">
+                    <!-- <label for="imagen" style="font-size: 14px;">Imagen del producto:</label>
+                    <input type="file" class="inputText" id="imagen" name="imagen" placeholder=""> -->
                 </div>
                 <button type="submit" class="buttonSumit">Agregar</button>
             </form>

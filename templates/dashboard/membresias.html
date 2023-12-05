@@ -15,9 +15,11 @@
     <h2>MEMBRESIAS</h2>
 </div>
 
+{% if not session["rol"] == 'entrenador' %}
 <div class="boton_registrar_ope">
     <a href="" class="boton_ope">Agregar Membresia<i class="fa-solid fa-plus"></i></a>
 </div>
+{% endif %}
 
 <div class="container_table">
 <table>
@@ -29,7 +31,9 @@
             <th>Nombre</th>
             <th>Duracion</th>
             <th>Precio</th>
+            {% if not session["rol"] == 'entrenador' %}
             <th>Acciones</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -39,6 +43,7 @@
             <td>{{ resul[1] }}</td>
             <td>{{ resul[2] }} Dias</td>
             <td>$ {{ resul[3] }}</td>
+            {% if not session["rol"] == 'entrenador' %}
             <td class="acciones">
                 
             <a onclick="return confirm('Seguro quiere eliminar esta membresia?')" class="btn_eliminar" href="/membresias/desactivarMembresia/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
@@ -46,6 +51,7 @@
             <a class="btn_edit" href="/membresias/infoEdit/{{resul[0]}}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a> 
 
             </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

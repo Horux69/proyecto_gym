@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-11-2023 a las 05:09:27
+-- Tiempo de generación: 02-12-2023 a las 05:17:41
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -29,8 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categoria_productos` (
   `id_categoria` int(11) NOT NULL,
-  `nombre` varchar(100) DEFAULT NULL
+  `nombre` varchar(100) DEFAULT NULL,
+  `estado` varchar(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categoria_productos`
+--
+
+INSERT INTO `categoria_productos` (`id_categoria`, `nombre`, `estado`) VALUES
+(1, 'Creatina', 'activo'),
+(3, 'Proteina', 'activo');
 
 -- --------------------------------------------------------
 
@@ -45,8 +54,17 @@ CREATE TABLE `inventario_productos` (
   `precio_compra` int(11) DEFAULT NULL,
   `precio_venta` int(11) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `imagen` int(11) DEFAULT NULL
+  `imagen` int(11) DEFAULT NULL,
+  `estado` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inventario_productos`
+--
+
+INSERT INTO `inventario_productos` (`id_productos`, `nombre`, `id_categoria`, `precio_compra`, `precio_venta`, `cantidad`, `imagen`, `estado`) VALUES
+(1, 'Legacy', 3, 55000, 80000, 5, NULL, 'activo'),
+(2, 'BEST', 1, 50000, 90000, 10, NULL, 'activo');
 
 -- --------------------------------------------------------
 
@@ -132,9 +150,10 @@ CREATE TABLE `registro_usuarios` (
 INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `correo`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES
 ('1', 'dwwddw|', 'effff', '2001-11-24', '41515', 'ekfnfec@nkm.com', '5151558158', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
 ('1007412611', 'Camilo', 'Castillo', '2001-11-24', '3172509264', 'horuxjcc@gmail.com', '126196196962', 4, '2023-11-19', '2023-12-19', '2023-11-19', 'Camilo', 'activo'),
-('16161', 'camilo', 'castillo', '2001-11-24', '56944194', 'camilo@gmail.com', '255626', 2, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'activo'),
-('21116969', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '2162626', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'activo'),
+('16161', 'camilo', 'castillo', '2001-11-24', '56944194', 'camilo@gmail.com', '255626', 2, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'inactivo'),
+('21116969', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '2162626', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
 ('25252', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '122622', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
+('45916126', 'Laura', 'Esguerra', '2003-12-08', '3210622652', 'laura@gmail.com', '116919611619612', 1, '2023-11-27', '2023-11-28', '2023-11-27', 'Camilo', 'inactivo'),
 ('62961112', 'cristian', 'vanegas', '2001-10-23', '141469419', 'cris@gmail.com', '541514514', 4, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo');
 
 --
@@ -181,13 +200,13 @@ ALTER TABLE `registro_usuarios`
 -- AUTO_INCREMENT de la tabla `categoria_productos`
 --
 ALTER TABLE `categoria_productos`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `inventario_productos`
 --
 ALTER TABLE `inventario_productos`
-  MODIFY `id_productos` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_productos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `membresias`

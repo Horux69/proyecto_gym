@@ -42,10 +42,10 @@
             <td>{{ resul[13] }}</td>
             <td>{{ resul[9]}}</td>
             <td class="acciones">
-                
+            {% if not session["rol"] == 'entrenador' %}
             <a onclick="return confirm('Seguro quiere eliminar a este afiliado?')" class="btn_eliminar" href="/afiliados/desactivarAfiliado/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
-
-            <a class="btn_edit" href="/afiliados/info/{{resul[0]}}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a> 
+            {% endif %}
+            <a class="btn_info" href="/afiliados/info/{{resul[0]}}"><i class="fa-solid fa-circle-info" style="color: #ffd100;"></i></a> 
 
             </td>
         </tr>
