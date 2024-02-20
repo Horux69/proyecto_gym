@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/infOperadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>DATOS DEL AFILIADO</h2>
+</div>
+
+<div class="contenedorForm">
+    <form id="formulario" action="/afiliados/actualizarUsuarios" method="POST">
+        <div class="content">
+           
+            <label for="">Cedula:</label>
+            <input type="text" class="inputText" value="{{afiliados[0]}}" id="cedula" name="cedula" readonly>
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="inputText" value="{{afiliados[1]}}" id="nombre" name="nombre" readonly>
+            
+            <label for="">Apellido:</label>
+            <input type="text" class="inputText" value="{{afiliados[2]}}" id="apellido" name="apellido" readonly>
+
+            <label for="fecha_nac" style="font-size: 14px;">Fecha de Nacimiento:</label>
+            <input type="text" class="inputText" value="{{afiliados[3]}}" id="fecha_nac" name="fecha_nac" readonly>
+
+            <label for="">Celular:</label>
+            <input type="tel" class="inputText" value="{{afiliados[4]}}" id="celular" name="celular" required>
+
+            <label for="">Correo:</label>
+            <input type="email" class="inputText" value="{{afiliados[5]}}" id="correo" name="correo" required>
+            
+            <label for="">tarjeta nfc:</label>
+            <input type="text" class="inputText" value="{{afiliados[6]}}" id="nfc" name="nfc" readonly>
+            
+            <label for="">ID membresia:</label>
+            <input type="text" class="inputText" value="{{afiliados[7]}}" id="membresia" name="membresia" readonly>
+
+            <label for="">Fecha de Inicio:</label>
+            <input type="dat" class="inputText" value="{{afiliados[8]}}" id="freinicio" name="freinicio" readonly>
+            
+            <label for="">Fecha de vencimiento:</label>
+            <input type="text" class="inputText" value="{{afiliados[9]}}" id="frevencimiento" name="frevencimiento" readonly>
+
+            <label for="">Fecha de Registro:</label>
+            <input type="text" class="inputText" value="{{afiliados[10]}}" id="fregistro" name="fregistro" readonly>
+            
+            <label for="">Usuario que lo registro:</label>
+            <input type="text" class="inputText" value="{{afiliados[11]}}" id="user_regis" name="user_regis" readonly>
+        </div>
+
+            <div class="btn_accion">
+                {% if session["rol"] == 'entrenador' or session["rol"] == 'administrador' %}
+                <button type="submit" onclick="return confirm('actualizar datos?')" class="buttonSumit2">actualizar datos</button>
+                {% endif %}
+                <a href="/afiliados" class="btn_desactivar">Cancelar</a>
+            </div>
+
+    </form>
+    
+</div>
+
+{% include 'dashboard/pie.html' %}

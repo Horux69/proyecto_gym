@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/operadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>CATEGORIAS DE INVENTARIO</h2>
+</div>
+
+<div class="boton_registrar_ope">
+    <a href="" class="boton_ope">Agregar Categoria<i class="fa-solid fa-plus"></i></a>
+</div>
+
+<div class="container_table">
+<table>
+    <thead>
+        <tr>
+            <!-- <th>Usuario</th> -->
+            <th>ID</th>
+            <!-- <th>Cedula</th> -->
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for resul in categorias %}
+        <tr>
+            <td>{{resul[0]}}</td>
+            <td>{{resul[1]}}</td>
+            <td class="acciones">
+                
+            <a onclick="return confirm('Seguro quiere eliminar esta categoria?')" class="btn_eliminar" href="/categorias/desactivarCategoria/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+
+<!-- {% if mensaje %}
+<section class="modal">
+    <div class="modal_container">
+        <a href="#" class="modal_close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+        <div class="container_form">
+            <div class="form_container">
+                <h2 class="titulo">{{ mensaje }}</h2>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %} -->
+
+
+<section class="modal">
+<div class="modal_container">
+    <a href="#" class="modal_close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+    <div class="container_form">
+        <div class="form_container">
+            <h2 class="titulo">AGREGAR UNA CATEGORIA</h2>
+            <form id="formulario" action="/categorias/agregarCategoria" method="POST">
+                <div class="content">
+                    
+                    <input type="text" class="inputText" id="nombre" name="nombre" pattern="[a-z]{2,20}" minlength="2" maxlength="20" placeholder="Ingresa el nombre" required>
+                    
+                </div>
+                <button type="submit" class="buttonSumit">Agregar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+
+
+{% include 'dashboard/pie.html' %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <title>Inicio de Sesion</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container_login">
+            <div class="imagen-lateral">
+                <img src="{{ url_for('static', filename='images/login.jpg') }}" alt="Imagen lateral">
+            </div>
+            <div class="container_form">
+                <div class="form_container">
+                    <h2 class="titulo">INICIO DE SESION</h2>
+                    <form id="formulario" action="/validationAuth" method="POST">
+                        <div class="content">
+                            <label for="usuario">Usuario:</label>
+                            <input type="text" class="inputText" id="usuario" name="usuario" placeholder="Ingresa el usuario" required>
+                            <label for="contrasena">Contraseña:</label>
+                            <input type="password" class="inputText" id="password" name="password" placeholder="Ingresa la contraseña" required>
+                        </div>
+                        <button class="buttonSumit">Ingresar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

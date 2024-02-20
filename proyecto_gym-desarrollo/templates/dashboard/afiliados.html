@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/operadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>AFILIADOS</h2>
+</div>
+
+<div class="boton_registrar_ope">
+    <a href="" class="boton_ope">Agregar Afiliados<i class="fa-solid fa-plus"></i></a>
+</div>
+
+<div class="container_table">
+<table>
+    <thead>
+        <tr>
+
+            <th>Cedula</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Membresia</th>
+            <th>Fecha vencimiento</th>
+            <th>Acciones</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for resul in afiliados %}
+        <tr>
+            <td>{{ resul[0] }}</td>
+            <td>{{ resul[1] }}</td>
+            <td>{{ resul[2] }}</td>
+            <td>{{ resul[13] }}</td>
+            <td>{{ resul[9]}}</td>
+            <td class="acciones">
+            {% if not session["rol"] == 'entrenador' %}
+            <a onclick="return confirm('Seguro quiere eliminar a este afiliado?')" class="btn_eliminar" href="/afiliados/desactivarAfiliado/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
+            {% endif %}
+            <a class="btn_info" href="/afiliados/info/{{resul[0]}}"><i class="fa-solid fa-circle-info" style="color: #ffd100;"></i></a> 
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<!-- 
+{% if mensaje %}
+<section class="modal">
+    <div class="modal_container">
+        <a href="#" class="modal_close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+        <div class="container_form">
+            <div class="form_container">
+                <h2 class="titulo">{{ mensaje }}</h2>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %} -->
+
+
+<section class="modal">
+<div class="modal_container">
+    <a href="#" class="modal_close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+    <div class="container_form">
+        <div class="form_container">
+            <h2 class="titulo">AGREGAR UN AFILIADO</h2>
+            <form id="formulario" action="/afiliados/agregarAfiliado" method="POST">
+                <div class="content">
+                    
+                    <input type="text" class="inputText" id="cedula" name="cedula" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
+                    
+                    <input type="text" class="inputText" id="nombres" name="nombres" pattern="[A-Za-z\s]{2,20}" maxlength="20" minlength="2" placeholder="Nombres" required>
+
+                    <input type="text" class="inputText" id="apellidos" name="apellidos" pattern="[A-Za-z\s]{4,20}" maxlength="20" minlength="4" placeholder="Apellidos" required>
+                    
+                    <label for="fecha_nac" style="font-size: 14px;">Fecha de Nacimiento:</label>
+                    <input type="date" class="inputText" min="{{ minima }}" max="{{ maxima }}" id="fecha_nac" name="fecha_nac" placeholder="año/mes/dia" required>
+
+                    <input type="tel" class="inputText" id="telefono" pattern="[0-9]{10}" minlength="10" maxlength="10" name="telefono" placeholder="Telefono Movil" required>
+
+                    <input type="email" class="inputText" id="email" name="email" pattern="[A-Za-z-_0-9]+@[A-Za-z]\.[a-z]{2,40}" minlength="2" maxlength="40" placeholder="Correo Electronico" required>
+
+                    <input type="number" class="inputText" id="nfc" name="nfc" placeholder="tarjeta nfc" required>
+                    
+                    <label for="membresia" style="font-size: 14px;">Membresia:</label>
+                    <select class="inputText" name="membresia" id="membresia" required>
+                        {% for resul in resulMem %}
+                        <option value="{{ resul[0] }}">{{ resul[1] }}</option>
+                        {% endfor %}
+                    </select>                                 
+                </div>
+                <button type="submit" class="buttonSumit">Agregar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+
+
+{% include 'dashboard/pie.html' %}
