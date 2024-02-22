@@ -40,3 +40,8 @@ class Afiliados:
         sql = "UPDATE registro_usuarios SET estado = 'inactivo' WHERE fecha_vencimiento <= DATE(NOW())"
         self.cursor.execute(sql)
         self.conexion.commit()
+        
+    def actualizarUsuarios(self,datos_nuevos):
+        sql = f"UPDATE registro_usuarios SET correo = '{datos_nuevos[1]}', telefono = '{datos_nuevos[2]}' WHERE cedula = '{datos_nuevos[0]}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()

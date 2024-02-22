@@ -8,7 +8,7 @@ class Operadores:
 
 
     def consultaOperadores(self):
-        sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores WHERE estado = 'activo' AND rol = 'entrenador' OR rol = 'administrador'"
+        sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores WHERE estado = 'activo' AND rol = 'entrenador'"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()

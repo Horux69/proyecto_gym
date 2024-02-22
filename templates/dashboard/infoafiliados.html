@@ -16,7 +16,7 @@
 </div>
 
 <div class="contenedorForm">
-    <form id="formulario" action="" method="POST">
+    <form id="formulario" action="/afiliados/actualizarUsuarios" method="POST">
         <div class="content">
            
             <label for="">Cedula:</label>
@@ -29,13 +29,13 @@
             <input type="text" class="inputText" value="{{afiliados[2]}}" id="apellido" name="apellido" readonly>
 
             <label for="fecha_nac" style="font-size: 14px;">Fecha de Nacimiento:</label>
-            <input type="text" class="inputText" value="{{afiliados[3]}}" id="fecha_nac" name="fecha_nac" required>
+            <input type="text" class="inputText" value="{{afiliados[3]}}" id="fecha_nac" name="fecha_nac" readonly>
 
             <label for="">Celular:</label>
-            <input type="tel" class="inputText" value="{{afiliados[4]}}" id="celular" name="celular" readonly>
+            <input type="tel" class="inputText" value="{{afiliados[4]}}" id="celular" name="celular" required>
 
             <label for="">Correo:</label>
-            <input type="email" class="inputText" value="{{afiliados[5]}}" id="correo" name="correo" readonly>
+            <input type="email" class="inputText" value="{{afiliados[5]}}" id="correo" name="correo" required>
             
             <label for="">tarjeta nfc:</label>
             <input type="text" class="inputText" value="{{afiliados[6]}}" id="nfc" name="nfc" readonly>
@@ -44,7 +44,7 @@
             <input type="text" class="inputText" value="{{afiliados[7]}}" id="membresia" name="membresia" readonly>
 
             <label for="">Fecha de Inicio:</label>
-            <input type="text" class="inputText" value="{{afiliados[8]}}" id="freinicio" name="freinicio" readonly>
+            <input type="dat" class="inputText" value="{{afiliados[8]}}" id="freinicio" name="freinicio" readonly>
             
             <label for="">Fecha de vencimiento:</label>
             <input type="text" class="inputText" value="{{afiliados[9]}}" id="frevencimiento" name="frevencimiento" readonly>
@@ -57,8 +57,8 @@
         </div>
 
             <div class="btn_accion">
-                {% if not session["rol"] == 'entrenador' %}
-                <a href="/afiliados/desactivarAfiliado/{{afiliados[0]}}" onclick="return confirm('Seguro quiere eliminar a este afiliado?')" class="buttonSumit">Eliminar</a>
+                {% if session["rol"] == 'entrenador' or session["rol"] == 'administrador' %}
+                <button type="submit" onclick="return confirm('actualizar datos?')" class="buttonSumit2">actualizar datos</button>
                 {% endif %}
                 <a href="/afiliados" class="btn_desactivar">Cancelar</a>
             </div>

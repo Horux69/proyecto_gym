@@ -46,6 +46,9 @@ LosAfiliados.desactivarUsuarios() #funcion de desactivar usuarios
 def login():
     return render_template('auth/login.html')
 
+@app.route('/Inicio')
+def Inicio():
+    return render_template('dashboard/index.html')
 # OPERADORES --------------------------------------------------------------------------------------------
 
 @app.route('/operadores')
@@ -127,7 +130,7 @@ def validacionLogin():
                 session["rol"] = resultados[0][3]
 
                 if session["rol"] == 'administrador' or session["rol"] == 'super_admin' or session["rol"] == 'entrenador':
-                    return render_template('dashboard/index.html')
+                    return redirect('/inicio')
                 else:
                     return redirect('/')
         else:
@@ -156,7 +159,7 @@ def agregarProducto():
         categoria = request.form['categoria']
         precio_compra = request.form['precio_compra']
         precio_venta = request.form['precio_venta']
-        cantidad = request.form['precio_venta']
+        cantidad = request.form['cantidad']
         estado = 'activo'
 
         InvProductos.agregarProducto([nombre, categoria, precio_compra, precio_venta, cantidad, estado])
@@ -194,7 +197,7 @@ def editProducto():
 def desactivarProducto(id_productos):
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         InvProductos.desactivarProductos(id_productos)
-        return render_template('/dashboard/inventario_productos.html')
+        return redirect('/inventario')
     else:
         return redirect('/')
 
@@ -353,6 +356,24 @@ def infoAfiliados(cedula):
         return render_template('/dashboard/infoafiliados.html', afiliados = resultado[0])
     else:
         return redirect('/')
+    
+@app.route('/afiliados/actualizarUsuarios', methods = ['POST'])
+def actualizarUsuario():
+    
+    if session.get("logueado"):
+
+        cedula = request.form['cedula']
+        correo = request.form['correo']
+        telefono = request.form['celular']
+        print(cedula, correo, telefono)
+        
+
+        LosAfiliados.actualizarUsuarios([cedula,correo,telefono])
+
+        return redirect('/afiliados')
+    else:
+        return redirect('/')
+
     
 
 
