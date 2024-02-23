@@ -301,10 +301,12 @@ def afiliados():
 
         # fecha de nacimiento maxima (hace 16 años)
         fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+        print(fecha_maxima)
 
 
         # fecha de nacimiento minima (hace 70 años)
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        print(fecha_minima)
 
         return render_template('dashboard/afiliados.html', afiliados = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
