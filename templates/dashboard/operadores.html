@@ -29,7 +29,7 @@
             <!-- <th>Cedula</th> -->
             <th>Telefono</th>
             <!-- <th>Correo</th> -->
-            <th>Cargo</th>
+            <!-- <th>Cargo</th> -->
             <!-- <th>Fecha de Registro</th>
             <th>User Registro</th> -->
             <th>Mas Info</th>
@@ -44,12 +44,12 @@
             <!-- <td>{{ resul[3] }}</td> -->
             <td>{{ resul[4] }}</td>
             <!-- <td>{{ resul[5] }}</td> -->
-            <td>{{ resul[6] }}</td>
+            <!-- <td>{{ resul[6] }}</td> -->
             <!-- <td>{{ resul[7] }}</td>
             <td>{{ resul[8] }}</td> -->
             <td class="acciones">{% if session["rol"] == 'super_admin' %} <a onclick="return confirm('Seguro quiere eliminar este operador?')" class="btn_eliminar" href="/operadores/eliminar/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> {% endif %} 
 
-            <a class="btn_info" href="/operadores/info/{{resul[0]}}"><i class="fa-solid fa-circle-info" style="color: #ffd100;"></i></a> 
+            <a class="btn_info" href="/operadores/info/{{resul[0]}}"><i class="fa-solid fa-address-card" style="color: #ffd100;"></i></a> 
 
             </td>
 

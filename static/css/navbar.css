@@ -134,7 +134,7 @@ body {
 
 .salir {
     position: absolute;
-    top: 94%;
+    top: 85%;
     
 }
     
@@ -142,7 +142,7 @@ body {
     background-color: none;
     color: #000;
     padding: 10px;
-    background-color: #d3ae0b;
+    background-color: #9D9D9D;
     border-radius: 6px;
     box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.25);
 }
