@@ -317,14 +317,18 @@ def agregarAfiliados():
         apellido = request.form['apellidos']
         fecha_nacimiento = request.form['fecha_nac']
         telefono = request.form['telefono']
+        sexo = request.form['sexo']
+        sangre = request.form['sangre']
+        huella = 'NULL'
+        telefono_emergencia = request.form['telefono_emergencia']
         correo = request.form['email']
+        contrasena = request.form['cedula']
         tarjeta_nfc = request.form['nfc']
         id_membresia = request.form['membresia']
         fecha_inicio = datetime.now()
 
         duracion_membresia = lasMembresias.consultaTiempoMembresia(id_membresia)
         duracion_timedelta = timedelta(days=duracion_membresia)
-
         fecha_vencimiento = fecha_inicio + duracion_timedelta
         
         fecha_registro = datetime.now().strftime('%Y-%m-%d')
@@ -332,7 +336,7 @@ def agregarAfiliados():
 
         if not LosAfiliados.validarDatosAfiliados(cedula,correo,telefono):
 
-            LosAfiliados.agregarAfiliados([cedula,nombre,apellido,fecha_nacimiento,telefono,correo,tarjeta_nfc,id_membresia,fecha_inicio,fecha_vencimiento,fecha_registro,estado], session['user_name'])
+            LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, contrasena, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
             return redirect('/afiliados')
         else:
             return redirect('/afiliados')
