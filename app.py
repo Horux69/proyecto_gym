@@ -121,8 +121,6 @@ def validacionLogin():
 
         resultados = validaLogin.validaLogin(usuario, contrasena)
 
-        print(resultados)
-
         if len(resultados) > 0:
             if contrasena == resultados[0][2]:
                 session["logueado"] = True
@@ -221,7 +219,6 @@ def agregarCategoria():
 def consultarCategoria():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         resultado = InvProductos.consultaCataegorias()
-        print(resultado)
         return render_template('dashboard/categoria_productos.html', categorias = resultado)
     else:
         return redirect('/')
@@ -294,19 +291,18 @@ def editMembresia():
 def afiliados():
     if session.get("logueado"):
         resultado = LosAfiliados.consultarAfiliados()
-        print(resultado)
+        
         membresias = lasMembresias.consultarMembresias()
 
         fecha_actual = datetime.now()
 
         # fecha de nacimiento maxima (hace 16 años)
         fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
-        print(fecha_maxima)
 
 
         # fecha de nacimiento minima (hace 70 años)
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
-        print(fecha_minima)
+        
 
         return render_template('dashboard/afiliados.html', afiliados = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
@@ -367,7 +363,7 @@ def actualizarUsuario():
         cedula = request.form['cedula']
         correo = request.form['correo']
         telefono = request.form['celular']
-        print(cedula, correo, telefono)
+        
         
 
         LosAfiliados.actualizarUsuarios([cedula,correo,telefono])
@@ -375,8 +371,45 @@ def actualizarUsuario():
         return redirect('/afiliados')
     else:
         return redirect('/')
-
     
+    
+@app.route('/afiliados/infomedidas/<cedula>', methods = ['GET'])
+def infomedidas(cedula):
+    if session.get("logueado"):
+
+        resultado = LosAfiliados.infoAfiliados(cedula)
+
+        return render_template('/dashboard/medidas.html', afiliados = resultado[0])
+    else:
+        return redirect('/')
+
+@app.route('/afiliados/agregarMedidas', methods = ['POST'])
+def agregarMedidas():
+    if session.get("logueado"):
+
+        cedula = request.form['cedula']
+        peso_corporal = request.form['peso_corporal']
+        bicep_der = request.form['bicep_der']
+        bicep_izq = request.form['bicep_izq']
+        pecho = request.form['pecho']
+        antebrazo_der = request.form['antebrazo_der']
+        antebrazo_izq = request.form['antebrazo_izq']
+        cintura = request.form['cintura']
+        cadera = request.form['cadera']
+        muslo_der = request.form['muslo_der']
+        muslo_izq = request.form['muslo_izq']
+        pantorrilla_der = request.form['pantorrilla_der']
+        pantorrilla_izq = request.form['pantorrilla_izq']
+        fecha_registro = datetime.now().strftime('%Y-%m-%d')
+        
+        
+        
+        
+        LosAfiliados.agregarMedidas([cedula,fecha_registro,peso_corporal,bicep_der,bicep_izq,pecho,antebrazo_der,antebrazo_izq,cintura,cadera,muslo_der,muslo_izq,pantorrilla_der,pantorrilla_izq],session['user_name'])
+        
+        return redirect('/afiliados')
+    else:
+        return redirect('/')
 
 
 

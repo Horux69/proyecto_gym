@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/infOperadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>MEDIDAS</h2>
+</div>
+
+<div class="contenedorForm">
+    <form id="formulario" action="/afiliados/agregarMedidas" method="POST">
+        <div class="content">
+            
+            <input type="text" class="inputText" id="cedula"  hidden name="cedula" value="{{afiliados[0]}}" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
+                        
+            <input type="number" class="inputText" id="peso_corporal" name="peso_corporal" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Peso corporal" required> 
+            
+            <input type="number" class="inputText" id="bicep_der" name="bicep_der" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Bicep Derecho" required>
+
+            <input type="number" class="inputText" id="bicep_izq" name="bicep_izq" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Bicep zquierdo" required>
+            
+            <input type="number" class="inputText" id="pecho" name="pecho" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Pecho" required>
+            
+            <input type="number" class="inputText" id="antebrazo_der" name="antebrazo_der" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Antebrazo Derecho" required>
+
+            <input type="number" class="inputText" id="antebrazo_izq" name="antebrazo_izq" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Antebrazo Izquierdo" required>
+
+            <input type="number" class="inputText" id="cintura" name="cintura" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Cintura" required>
+            
+            <input type="number" class="inputText" id="cadera" name="cadera" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Cadera" required>
+
+            <input type="number" class="inputText" id="muslo_der" name="muslo_der" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Muslo Derecho" required>
+
+            <input type="number" class="inputText" id="muslo_izq" name="muslo_izq" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="Muslo izquierdo" required>
+        
+            <input type="number" class="inputText" id="pantorrilla_der" name="pantorrilla_der" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="pantorrilla Derecho" required>
+
+            <input type="number" class="inputText" id="pantorrilla_izq" name="pantorrilla_izq" pattern="[0-9]{2,3}" maxlength="3" minlength="2" placeholder="pantorrilla izquierdo" required>
+
+        </div>
+        <div class="btn_accion">
+            <button type="submit" class="buttonSumit2">Agregar Medidas</button>
+            <a href="/afiliados" class="btn_desactivar">Regresar</a>
+        </div>
+    </form>
+    
+</div>
+
+{% include 'dashboard/pie.html' %}

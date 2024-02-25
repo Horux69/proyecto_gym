@@ -336,6 +336,10 @@ hr {
 width: 100%;
 
 }
+.acciones2 {
+    display: flex;
+    justify-content: space-between;
+}
 
 .acciones {
     display: flex;

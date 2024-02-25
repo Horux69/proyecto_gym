@@ -15,7 +15,6 @@ class InventarioProductos:
     
     def agregarProducto(self, producto):
         sql = f"INSERT INTO inventario_productos (nombre, id_categoria, precio_compra, precio_venta, cantidad, estado) VALUES ('{producto[0]}','{producto[1]}','{producto[2]}','{producto[3]}','{producto[4]}','{producto[5]}');"
-        print(sql)
         self.cursor.execute(sql)
         self.conexion.commit()
 
@@ -28,7 +27,6 @@ class InventarioProductos:
     
     def editProducto(self, producto):
         sql = f"UPDATE inventario_productos SET nombre = '{producto[1]}', id_categoria = '{producto[2]}', precio_compra = '{producto[3]}', precio_venta = '{producto[4]}', cantidad = '{producto[5]}' WHERE id_productos = '{producto[0]}';"
-        print(sql)
         self.cursor.execute(sql)
         self.conexion.commit()
 
@@ -53,6 +51,5 @@ class InventarioProductos:
 
     def desactivarCategoria(self, id_categoria):
         sql = f"UPDATE categoria_productos SET estado = 'inactivo' WHERE id_categoria = '{id_categoria}';"
-        print(sql)
         self.cursor.execute(sql)
         self.conexion.commit()
