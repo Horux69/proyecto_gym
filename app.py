@@ -293,7 +293,7 @@ def afiliados():
         resultado = LosAfiliados.consultarAfiliados()
         
         membresias = lasMembresias.consultarMembresias()
-        print(resultado)
+
 
         fecha_actual = datetime.now()
 
