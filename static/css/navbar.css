@@ -3,6 +3,7 @@
 * {
     box-sizing: border-box;
     transition: all 0.3s ease-in-out;
+    scrollbar-color: #FFD100;
 }
 
 body, html {
@@ -13,12 +14,14 @@ body, html {
 body {
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
-}
-
-.contenedor {
     background-color: #D6D6D6;
     min-height: 100vh;
 }
+
+/* .contenedor {
+    background-color: #D6D6D6;
+    min-height: 100vh;
+}  */
 
 .navbar {
     background-color: #333533;

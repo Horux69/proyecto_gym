@@ -18,7 +18,7 @@
 <div class="contenedorForm">
     <form id="formulario" action="/afiliados/actualizarUsuarios" method="POST">
         <div class="content">
-           
+
             <label for="">Cedula:</label>
             <input type="text" class="inputText" value="{{afiliados[0]}}" id="cedula" name="cedula" readonly>
 
@@ -34,26 +34,38 @@
             <label for="">Celular:</label>
             <input type="tel" class="inputText" value="{{afiliados[4]}}" id="celular" name="celular" required>
 
+            <label for="">Sexo:</label>
+            <input type="text" class="inputText" value="{{afiliados[5]}}" id="celular" name="celular" readonly>
+
+            <label for="">Tipo de sangre:</label>
+            <input type="text" class="inputText" value="{{afiliados[6]}}" id="celular" name="celular" readonly>
+
+            <label for="">Celular de emergencia:</label>
+            <input type="tel" class="inputText" value="{{afiliados[8]}}" id="celular" name="celular" required>
+
             <label for="">Correo:</label>
-            <input type="email" class="inputText" value="{{afiliados[5]}}" id="correo" name="correo" required>
+            <input type="email" class="inputText" value="{{afiliados[9]}}" id="correo" name="correo" required>
             
             <label for="">tarjeta nfc:</label>
-            <input type="text" class="inputText" value="{{afiliados[6]}}" id="nfc" name="nfc" readonly>
+            <input type="text" class="inputText" value="{{afiliados[11]}}" id="nfc" name="nfc" readonly>
             
             <label for="">ID membresia:</label>
-            <input type="text" class="inputText" value="{{afiliados[7]}}" id="membresia" name="membresia" readonly>
+            <input type="text" class="inputText" value="{{afiliados[12]}}" id="membresia" name="membresia" readonly>
 
             <label for="">Fecha de Inicio:</label>
-            <input type="dat" class="inputText" value="{{afiliados[8]}}" id="freinicio" name="freinicio" readonly>
+            <input type="dat" class="inputText" value="{{afiliados[13]}}" id="freinicio" name="freinicio" readonly>
             
             <label for="">Fecha de vencimiento:</label>
-            <input type="text" class="inputText" value="{{afiliados[9]}}" id="frevencimiento" name="frevencimiento" readonly>
+            <input type="text" class="inputText" value="{{afiliados[14]}}" id="frevencimiento" name="frevencimiento" readonly>
 
             <label for="">Fecha de Registro:</label>
-            <input type="text" class="inputText" value="{{afiliados[10]}}" id="fregistro" name="fregistro" readonly>
+            <input type="text" class="inputText" value="{{afiliados[15]}}" id="fregistro" name="fregistro" readonly>
             
             <label for="">Usuario que lo registro:</label>
-            <input type="text" class="inputText" value="{{afiliados[11]}}" id="user_regis" name="user_regis" readonly>
+            <input type="text" class="inputText" value="{{afiliados[16]}}" id="user_regis" name="user_regis" readonly>
+
+            <label for="">Estado:</label>
+            <input type="text" class="inputText" value="{{afiliados[17]}}" id="user_regis" name="user_regis" readonly>
         </div>
 
             <div class="btn_accion">
