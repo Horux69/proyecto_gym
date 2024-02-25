@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-02-2024 a las 01:55:04
+-- Tiempo de generación: 25-02-2024 a las 03:35:51
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -122,7 +122,8 @@ INSERT INTO `membresias` (`id_membresia`, `nombre`, `tiempo_duracion`, `precio`,
 (1, 'Diario', 1, 5000, 'activo'),
 (2, 'Semanal', 6, 15000, 'activo'),
 (3, 'Quincenal', 15, 30000, 'activo'),
-(4, 'Mensual', 30, 60000, 'activo');
+(4, 'Mensual', 30, 60000, 'activo'),
+(5, 'personalizada', 30, 300000, 'activo');
 
 -- --------------------------------------------------------
 
@@ -168,6 +169,7 @@ CREATE TABLE `registro_usuarios` (
   `fecha_nac` date NOT NULL,
   `telefono` varchar(16) NOT NULL,
   `correo` varchar(80) NOT NULL,
+  `contrasena` varchar(50) NOT NULL,
   `tarjeta_nfc` varchar(255) NOT NULL,
   `id_membresia` int(11) NOT NULL,
   `fecha_inicio` date NOT NULL,
@@ -181,15 +183,17 @@ CREATE TABLE `registro_usuarios` (
 -- Volcado de datos para la tabla `registro_usuarios`
 --
 
-INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `correo`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES
-('1', 'dwwddw|', 'effff', '2001-11-24', '41515', 'ekfnfec@nkm.com', '5151558158', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
-('1007412611', 'Camilo', 'Castillo', '2001-11-24', '3172509264', 'horuxjcc@gmail.com', '126196196962', 4, '2023-11-19', '2023-12-19', '2023-11-19', 'Camilo', 'inactivo'),
-('1193592038', 'cristian', 'vanegas', '2003-10-28', '3152085189', 'pequeflow-2003@hotmail.com', '01', 4, '2023-12-03', '2024-05-31', '2023-12-03', 'cristian', 'activo'),
-('16161', 'camilo', 'castillo', '2001-11-24', '56944194', 'camilo@gmail.com', '255626', 2, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'inactivo'),
-('21116969', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '2162626', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
-('25252', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '122622', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
-('45916126', 'Laura', 'Esguerra', '2003-12-08', '3210622652', 'laura@gmail.com', '116919611619612', 1, '2023-11-27', '2023-11-28', '2023-11-27', 'Camilo', 'inactivo'),
-('62961112', 'cristian', 'vanegas', '2001-10-23', '141469419', 'cris@gmail.com', '541514514', 4, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo');
+INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `correo`, `contrasena`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES
+('1', 'dwwddw|', 'effff', '2001-11-24', '41515', 'ekfnfec@nkm.com', '', '5151558158', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
+('1007412611', 'Camilo', 'Castillo', '2001-11-24', '3172509264', 'horuxjcc@gmail.com', '', '126196196962', 4, '2023-11-19', '2023-12-19', '2023-11-19', 'Camilo', 'inactivo'),
+('111111111111111', 'camila', 'castilla', '2008-02-05', '3152055555', 'camila@gmail.com', '111111111111111', '111111111111111', 4, '2024-02-24', '2024-03-25', '2024-02-24', 'cristian', 'activo'),
+('1193592038', 'cristian', 'vanegas', '2003-10-28', '3152085189', 'pequeflow-2003@hotmail.com', '', '01', 4, '2023-12-03', '2024-05-31', '2023-12-03', 'cristian', 'activo'),
+('16161', 'camilo', 'castillo', '2001-11-24', '56944194', 'camilo@gmail.com', '', '255626', 2, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'inactivo'),
+('21116969', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '', '2162626', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
+('25252', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '', '122622', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
+('355553', 'prueba', 'perzonalizada', '2002-04-24', '3216549856', 'prueba@prueba.com', '', '1', 5, '2024-02-24', '2024-03-25', '2024-02-24', 'cristian', 'activo'),
+('45916126', 'Laura', 'Esguerra', '2003-12-08', '3210622652', 'laura@gmail.com', '', '116919611619612', 1, '2023-11-27', '2023-11-28', '2023-11-27', 'Camilo', 'inactivo'),
+('62961112', 'cristian', 'vanegas', '2001-10-23', '141469419', 'cris@gmail.com', '', '541514514', 4, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo');
 
 --
 -- Índices para tablas volcadas
@@ -260,7 +264,7 @@ ALTER TABLE `medidas`
 -- AUTO_INCREMENT de la tabla `membresias`
 --
 ALTER TABLE `membresias`
-  MODIFY `id_membresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_membresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

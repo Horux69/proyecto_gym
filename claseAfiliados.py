@@ -13,7 +13,7 @@ class Afiliados:
         
     
     def agregarAfiliados(self, afiliados, user_registro):
-        sql = f"INSERT INTO registro_usuarios VALUES ('{afiliados[0]}','{afiliados[1]}','{afiliados[2]}','{afiliados[3]}','{afiliados[4]}','{afiliados[5]}','{afiliados[6]}','{afiliados[7]}','{afiliados[8]}','{afiliados[9]}','{afiliados[10]}','{user_registro}','{afiliados[11]}')"
+        sql = f"INSERT INTO registro_usuarios VALUES ('{afiliados[0]}','{afiliados[1]}','{afiliados[2]}','{afiliados[3]}','{afiliados[4]}','{afiliados[5]}','{afiliados[0]}','{afiliados[0]}','{afiliados[7]}','{afiliados[8]}','{afiliados[9]}','{afiliados[10]}','{user_registro}','{afiliados[11]}')"
         self.cursor.execute(sql)
         self.conexion.commit()
 
