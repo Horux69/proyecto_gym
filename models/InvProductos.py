@@ -1,3 +1,5 @@
+from conexion import *
+
 class InventarioProductos:
     def __init__(self, miBD):
         self.mysql = miBD
@@ -53,3 +55,5 @@ class InventarioProductos:
         sql = f"UPDATE categoria_productos SET estado = 'inactivo' WHERE id_categoria = '{id_categoria}';"
         self.cursor.execute(sql)
         self.conexion.commit()
+        
+InvProductos = InventarioProductos(mysql)

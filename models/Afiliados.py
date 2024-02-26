@@ -1,3 +1,5 @@
+from conexion import *
+
 class Afiliados:
     def __init__(self, miBD):
         self.mysql = miBD
@@ -57,3 +59,4 @@ class Afiliados:
         self.cursor.execute(sql)
         self.conexion.commit()
         
+LosAfiliados = Afiliados(mysql)

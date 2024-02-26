@@ -1,3 +1,5 @@
+from conexion import *
+
 class Membresias:
     def __init__(self, miBD):
         self.mysql = miBD
@@ -38,3 +40,5 @@ class Membresias:
         sql = f"UPDATE membresias SET nombre = '{membresia[1]}', tiempo_duracion = '{membresia[2]}', precio = '{membresia[3]}' WHERE id_membresia = '{membresia[0]}';"
         self.cursor.execute(sql)
         self.conexion.commit()
+        
+lasMembresias = Membresias(mysql)

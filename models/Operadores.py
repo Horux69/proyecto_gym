@@ -1,4 +1,5 @@
 from datetime import datetime
+from conexion import *
 
 class Operadores:
     def __init__(self, miBD):
@@ -47,3 +48,5 @@ class Operadores:
         self.conexion.commit()
         return resultado
         
+losOperadores = Operadores(mysql)
+
