@@ -34,6 +34,16 @@ body, html {
     box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.25);
 }
 
+.boton_ope2 {
+    text-decoration: none;
+    color: #000;
+    margin: 0 25px 0 0;
+    padding: 10px;
+    background-color: #FFD100;
+    border-radius: 6px;
+    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.25);
+}
+
 .boton_cat {
     text-decoration: none;
     color: #000;
@@ -58,7 +68,7 @@ body, html {
 
 .salir {
     position: absolute;
-    top: 94%;
+    top: 85%;
 
 }
 
@@ -189,6 +199,20 @@ transition: opacity .6s;
 --transform: translateY(-100vh);
 --transition: transform .8s;
 }
+.modal2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #111111bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .6s;
+    --transform: translateY(-100vh);
+    --transition: transform .8s;
+    }
 
 .modal_info {
     position: fixed;
@@ -336,6 +360,10 @@ hr {
 width: 100%;
 
 }
+.acciones2 {
+    display: flex;
+    justify-content: space-between;
+}
 
 .acciones {
     display: flex;
@@ -356,7 +384,7 @@ width: 100%;
     border-radius: 8px;
     color: #fff;
     padding: 8px 20px;
-    background-color: #1a3939;
+    background-color: #333533;
 }
 
 .btn_eliminar {

@@ -19,9 +19,8 @@
     <form id="formulario" action="/inventario/editProducto" method="POST">
         <div class="content">
            
-            <label for="nombre">ID: {{editProducto[0]}}</label>
-            <input type="text" class="inputText" value="{{editProducto[0]}}" id="txtID" name="txtID" hidden>
-            <br>
+            <label for="nombre">ID:</label>
+            <input type="text" class="inputText" value="{{editProducto[0]}}" id="txtID" name="txtID">
             <br>
             <label for="nombre">Nombre:</label>
             <input type="text" class="inputText" value="{{editProducto[1]}}" id="nombre" name="nombre">
@@ -34,7 +33,8 @@
                 <option value="{{resul[0]}}">{{resul[1]}}</option>
                 {% endfor %}
             </select>
-
+            <br>
+            <br>
             <label for="precio_compra">Precio de Compra:</label>
             <input type="text" class="inputText" value="{{editProducto[3]}}" id="precio_compra" name="precio_compra">
             

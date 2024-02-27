@@ -37,7 +37,7 @@
             <td>{{resul[1]}}</td>
             <td class="acciones">
                 
-            <a onclick="return confirm('Seguro quiere eliminar este operador?')" class="btn_eliminar" href="/categorias/desactivarCategoria/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
+            <a onclick="return confirm('Seguro quiere eliminar esta categoria?')" class="btn_eliminar" href="/categorias/desactivarCategoria/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
 
             </td>
         </tr>
@@ -70,7 +70,7 @@
             <form id="formulario" action="/categorias/agregarCategoria" method="POST">
                 <div class="content">
                     
-                    <input type="text" class="inputText" id="nombre" name="nombre" placeholder="Ingresa el nombre" required>
+                    <input type="text" class="inputText" id="nombre" name="nombre" pattern="[a-z]{2,20}" minlength="2" maxlength="20" placeholder="Ingresa el nombre" required>
                     
                 </div>
                 <button type="submit" class="buttonSumit">Agregar</button>

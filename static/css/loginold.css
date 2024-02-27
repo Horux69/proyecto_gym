@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    background: url(../images/bg_login.jpg) center center / cover no-repeat;
+    backdrop-filter: blur(2px);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+}
+
+.container_form {
+    background-color: #FFFFFF;
+    overflow: hidden;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0px 8px 16px rgba(11, 11, 11, 0.56);
+    width: 400px;
+}
+
+.container_form {
+    padding: 30px 60px;
+}
+
+.content {
+    text-align: justify;
+}
+
+.container_login {
+    display: flex;
+}
+
+.imagen-lateral img {
+    width: 100%;
+    max-width: 400px; 
+    object-fit: cover;
+    height: 100%; 
+    display: flex;
+    align-items: flex-end; 
+    border-radius: 8px 0 0 8px; 
+    box-shadow: 8px 0 12px rgba(0, 0, 0, 0.2);
+}
+
+
+.inputText {
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    height: 26px;
+    padding: 8px;
+}
+
+.inputText:focus {
+    outline-style: none;
+    
+}
+
+.inputText {
+    width: 100%;
+    height: 8%;
+}
+
+input {
+    margin-bottom: 25px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #EEEEEE;
+}
+
+.inputText::placeholder {
+    padding-left: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+
+#formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titulo {
+    margin: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: #000;
+}
+
+.buttonSumit {
+  padding: 8px 15px;
+  border-radius: 6px;
+  border: 0;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  background-color: #FFD100;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.buttonSumit:hover {
+  background-color: #e7bd00;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgb(168, 137, 0);
+  cursor: pointer;
+}
+
+button {
+    margin-top: 5px;
+}
+
+hr {
+    width: 100%;
+    
+}
+
+

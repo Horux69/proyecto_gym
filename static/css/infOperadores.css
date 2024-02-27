@@ -66,6 +66,7 @@ input {
     font-family: 'Poppins', sans-serif;
     color: #000;
 }
+
     
 .buttonSumit {
     text-decoration: none;
@@ -85,6 +86,27 @@ input {
         box-shadow: 0 0 15px rgba(212, 0, 0, 0.466);
         cursor: pointer;
     }
+
+
+.buttonSumit2 {
+    text-decoration: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    border: 0;
+    font-size: 16px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    background-color: #FFD100;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+}
+    
+    .buttonSumit2:hover {
+        background-color: #d3ae0b;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 208, 0, 0.288);
+        cursor: pointer;
+    }
+
 
 .buttonEdit {
     text-decoration: none;
@@ -117,7 +139,7 @@ hr {
 .btn_accion {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .btn_desactivar {

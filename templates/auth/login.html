@@ -3,30 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    <title>Inicio de Sesion</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Login</title>
 </head>
 <body>
-    <div class="container">
-        <div class="container_login">
-            <div class="imagen-lateral">
-                <img src="{{ url_for('static', filename='images/login.jpg') }}" alt="Imagen lateral">
-            </div>
-            <div class="container_form">
-                <div class="form_container">
-                    <h2 class="titulo">INICIO DE SESION</h2>
-                    <form id="formulario" action="/validationAuth" method="POST">
-                        <div class="content">
-                            <label for="usuario">Usuario:</label>
-                            <input type="text" class="inputText" id="usuario" name="usuario" placeholder="Ingresa el usuario" required>
-                            <label for="contrasena">Contraseña:</label>
-                            <input type="password" class="inputText" id="password" name="password" placeholder="Ingresa la contraseña" required>
-                        </div>
-                        <button class="buttonSumit">Ingresar</button>
-                    </form>
+    <main id="inicio">
+        <div class="contenedor">
+            <figure class="logo-gym">
+                <img src="/static/images/gymcontrol.svg" alt="">
+            </figure>
+            
+            <h2 class="titulo-login">INICIAR SESIÓN</h2>
+            <form  action="/validationAuth" method="POST">
+
+                <div class="input_contenedor">
+                    <div class="input-container">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text"  id="usuario" name="usuario" placeholder="Ingresa el usuario" pattern="[A-Za-z0-9]{2,20}" autocomplete="name" required tabindex="1">
+                    </div>
+                    
+                    <div class="input-container">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Ingresa la contraseña" pattern="[A-Za-z0-9]{2,20}" required tabindex="2">
+                    </div>
                 </div>
-            </div>
+                <div class="boton">
+                    <button type="submit" class="boton_entrar" tabindex="3">LOGIN</button>
+                </div>
+            </form>
+            
+          <!--  <div id="contenedorbtn" class="tipo">
+                 <button class="btssesion" id="rats">GYM RATS</button> 
+                <button class="btssesion" id="corporativo">CORPORATIVO</button>
+            </div>-->
+
         </div>
-    </div>
+        
+    </main>
 </body>
 </html>

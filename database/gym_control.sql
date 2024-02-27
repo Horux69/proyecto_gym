@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2023 a las 05:17:41
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 25-02-2024 a las 05:34:28
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -64,7 +64,41 @@ CREATE TABLE `inventario_productos` (
 
 INSERT INTO `inventario_productos` (`id_productos`, `nombre`, `id_categoria`, `precio_compra`, `precio_venta`, `cantidad`, `imagen`, `estado`) VALUES
 (1, 'Legacy', 3, 55000, 80000, 5, NULL, 'activo'),
-(2, 'BEST', 1, 50000, 90000, 10, NULL, 'activo');
+(2, 'BEST', 1, 50000, 90000, 10, NULL, 'activo'),
+(3, 'alminoasidos a', 1, 150000, 260000, 260000, NULL, 'activo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `medidas`
+--
+
+CREATE TABLE `medidas` (
+  `Id` int(11) NOT NULL,
+  `cedula` varchar(16) NOT NULL,
+  `user_registro` varchar(50) NOT NULL,
+  `mes_registro` date NOT NULL,
+  `peso_corporal` int(11) NOT NULL,
+  `bicep_derecho` int(11) NOT NULL,
+  `bicep_izquierdo` int(11) NOT NULL,
+  `pecho` int(11) NOT NULL,
+  `antebrazo_derecho` int(11) NOT NULL,
+  `antebrazo_izquierdo` int(11) NOT NULL,
+  `cintura` int(11) NOT NULL,
+  `cadera` int(11) NOT NULL,
+  `muslo_derecho` int(11) NOT NULL,
+  `muslo_izquierdo` int(11) NOT NULL,
+  `pantorrilla_derecha` int(11) NOT NULL,
+  `pantorrilla_izquierda` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `medidas`
+--
+
+INSERT INTO `medidas` (`Id`, `cedula`, `user_registro`, `mes_registro`, `peso_corporal`, `bicep_derecho`, `bicep_izquierdo`, `pecho`, `antebrazo_derecho`, `antebrazo_izquierdo`, `cintura`, `cadera`, `muslo_derecho`, `muslo_izquierdo`, `pantorrilla_derecha`, `pantorrilla_izquierda`) VALUES
+(1, '16161', 'dscsd', '2024-02-20', 222, 22, 22, 22, 222, 22, 22, 22, 22, 22, 22, 22),
+(2, '1193592038', 'cristian', '2024-02-24', 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11);
 
 -- --------------------------------------------------------
 
@@ -88,7 +122,8 @@ INSERT INTO `membresias` (`id_membresia`, `nombre`, `tiempo_duracion`, `precio`,
 (1, 'Diario', 1, 5000, 'activo'),
 (2, 'Semanal', 6, 15000, 'activo'),
 (3, 'Quincenal', 15, 30000, 'activo'),
-(4, 'Mensual', 30, 60000, 'activo');
+(4, 'Mensual', 30, 60000, 'activo'),
+(5, 'personalizada', 30, 300000, 'activo');
 
 -- --------------------------------------------------------
 
@@ -133,7 +168,12 @@ CREATE TABLE `registro_usuarios` (
   `apellido` varchar(50) NOT NULL,
   `fecha_nac` date NOT NULL,
   `telefono` varchar(16) NOT NULL,
+  `sexo` varchar(6) NOT NULL,
+  `tipo_sangre` varchar(2) NOT NULL,
+  `huella` varchar(500) NOT NULL,
+  `nuemero_emergencia` int(16) NOT NULL,
   `correo` varchar(80) NOT NULL,
+  `contrasena` varchar(50) NOT NULL,
   `tarjeta_nfc` varchar(255) NOT NULL,
   `id_membresia` int(11) NOT NULL,
   `fecha_inicio` date NOT NULL,
@@ -147,14 +187,11 @@ CREATE TABLE `registro_usuarios` (
 -- Volcado de datos para la tabla `registro_usuarios`
 --
 
-INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `correo`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES
-('1', 'dwwddw|', 'effff', '2001-11-24', '41515', 'ekfnfec@nkm.com', '5151558158', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
-('1007412611', 'Camilo', 'Castillo', '2001-11-24', '3172509264', 'horuxjcc@gmail.com', '126196196962', 4, '2023-11-19', '2023-12-19', '2023-11-19', 'Camilo', 'activo'),
-('16161', 'camilo', 'castillo', '2001-11-24', '56944194', 'camilo@gmail.com', '255626', 2, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'inactivo'),
-('21116969', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '2162626', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
-('25252', 'cristian', 'vanegas', '2001-10-23', '41515', 'horuxjcc@gmail.com', '122622', 1, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo'),
-('45916126', 'Laura', 'Esguerra', '2003-12-08', '3210622652', 'laura@gmail.com', '116919611619612', 1, '2023-11-27', '2023-11-28', '2023-11-27', 'Camilo', 'inactivo'),
-('62961112', 'cristian', 'vanegas', '2001-10-23', '141469419', 'cris@gmail.com', '541514514', 4, '2023-11-19', '1999-01-10', '2023-11-19', 'Camilo', 'inactivo');
+INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `sexo`, `tipo_sangre`, `huella`, `nuemero_emergencia`, `correo`, `contrasena`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES
+('0202020202', 'Carlos Alberto', 'Posada', '2008-02-14', '3152085189', 'hombre', 'AB', 'NULL', 2147483647, 'lokobrs143@gmail.com', '0202020202', '10', 5, '2024-02-24', '2024-03-25', '2024-02-24', 'cristian', 'activo'),
+('1007412611', 'Camilo', 'Castillo', '2001-11-24', '3172509264', '', '', '', 0, 'horuxjcc@gmail.com', '', '126196196962', 4, '2023-11-19', '2023-12-19', '2023-11-19', 'Camilo', 'inactivo'),
+('1193592038', 'cristian', 'vanegas', '2003-10-28', '3152085189', '', '', '', 0, 'pequeflow-2003@hotmail.com', '', '01', 4, '2023-12-03', '2024-05-31', '2023-12-03', 'cristian', 'activo'),
+('16161', 'camilo', 'castillo', '2001-11-24', '56944194', '', '', '', 0, 'camilo@gmail.com', '', '255626', 2, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'inactivo');
 
 --
 -- Índices para tablas volcadas
@@ -172,6 +209,13 @@ ALTER TABLE `categoria_productos`
 ALTER TABLE `inventario_productos`
   ADD PRIMARY KEY (`id_productos`),
   ADD KEY `fk_categoria_productos` (`id_categoria`);
+
+--
+-- Indices de la tabla `medidas`
+--
+ALTER TABLE `medidas`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `cedula` (`cedula`);
 
 --
 -- Indices de la tabla `membresias`
@@ -206,13 +250,19 @@ ALTER TABLE `categoria_productos`
 -- AUTO_INCREMENT de la tabla `inventario_productos`
 --
 ALTER TABLE `inventario_productos`
-  MODIFY `id_productos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_productos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `medidas`
+--
+ALTER TABLE `medidas`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `membresias`
 --
 ALTER TABLE `membresias`
-  MODIFY `id_membresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_membresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -223,6 +273,12 @@ ALTER TABLE `membresias`
 --
 ALTER TABLE `inventario_productos`
   ADD CONSTRAINT `fk_categoria_productos` FOREIGN KEY (`id_categoria`) REFERENCES `categoria_productos` (`id_categoria`);
+
+--
+-- Filtros para la tabla `medidas`
+--
+ALTER TABLE `medidas`
+  ADD CONSTRAINT `medidas_ibfk_1` FOREIGN KEY (`cedula`) REFERENCES `registro_usuarios` (`cedula`);
 
 --
 -- Filtros para la tabla `registro_usuarios`

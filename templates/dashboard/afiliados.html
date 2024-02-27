@@ -39,14 +39,19 @@
             <td>{{ resul[0] }}</td>
             <td>{{ resul[1] }}</td>
             <td>{{ resul[2] }}</td>
-            <td>{{ resul[13] }}</td>
+            <td>{{ resul[18] }}</td>
             <td>{{ resul[9]}}</td>
-            <td class="acciones">
+            <td class="acciones2">
             {% if not session["rol"] == 'entrenador' %}
             <a onclick="return confirm('Seguro quiere eliminar a este afiliado?')" class="btn_eliminar" href="/afiliados/desactivarAfiliado/{{resul[0]}}"><i class="fa-solid fa-trash"></i></a> 
             {% endif %}
-            <a class="btn_info" href="/afiliados/info/{{resul[0]}}"><i class="fa-solid fa-circle-info" style="color: #ffd100;"></i></a> 
+            {% if resul[18] == 'personalizada' and resul[17] == 'activo' %}
+            <a class="btn_info" href="/afiliados/infomedidas/{{resul[0]}}"><i class="fa-solid fa-weight-scale" style="color: #ffd100;"></i></a> 
+            {% endif %}
+            <a class="btn_info" href="/afiliados/info/{{resul[0]}}"><i class="fa-solid fa-address-card" style="color: #ffd100;"></i></a>
+            <a class="btn_info" href="/afiliados/actualizarMembresias/{{resul[0]}}"><i class="fa-solid fa-credit-card" style="color: #ffd100;"></i></a>
 
+            </div>
             </td>
         </tr>
         {% endfor %}
@@ -78,18 +83,38 @@
             <form id="formulario" action="/afiliados/agregarAfiliado" method="POST">
                 <div class="content">
                     
-                    <input type="text" class="inputText" id="cedula" name="cedula" placeholder="Cedula" required> 
+                    <input type="text" class="inputText" id="cedula" name="cedula" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
                     
-                    <input type="text" class="inputText" id="nombres" name="nombres" placeholder="Nombres" required>
+                    <input type="text" class="inputText" id="nombres" name="nombres" pattern="[A-Za-z\s]{2,20}" maxlength="20" minlength="2" placeholder="Nombres" required>
 
-                    <input type="text" class="inputText" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+                    <input type="text" class="inputText" id="apellidos" name="apellidos" pattern="[A-Za-z\s]{4,20}" maxlength="20" minlength="4" placeholder="Apellidos" required>
                     
                     <label for="fecha_nac" style="font-size: 14px;">Fecha de Nacimiento:</label>
-                    <input type="date" class="inputText" id="fecha_nac" name="fecha_nac" placeholder="año/mes/dia" required>
+                    <input type="date" class="inputText" min="{{ minima.strftime('%Y-%m-%d') }}" max="{{ maxima.strftime('%Y-%m-%d') }}" id="fecha_nac" name="fecha_nac" placeholder="año/mes/dia" required>
 
-                    <input type="tel" class="inputText" id="telefono" name="telefono" placeholder="Telefono Movil" required>
+                    <input type="tel" class="inputText" id="telefono" pattern="[0-9]{10}" minlength="10" maxlength="10" name="telefono" placeholder="Telefono Movil" required>
 
-                    <input type="email" class="inputText" id="email" name="email" placeholder="Correo Electronico" required>
+                    <input type="email" class="inputText" id="email" name="email" pattern="[A-Za-z-_0-9]+@[A-Za-z]\.[a-z]{2,40}" minlength="2" maxlength="40" placeholder="Correo Electronico" required>
+
+                    <select class="inputText" name="sexo" id="sexo" required>
+                        <option value="">Elije un genero</option>
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                    </select>
+
+                    <select class="inputText" name="sangre" id="sangre" required>
+                        <option value="">Elije un tipo de sangre</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+
+                    <input type="tel" class="inputText" id="telefono_emergencia" pattern="[0-9]{10}" minlength="10" maxlength="10" name="telefono_emergencia" placeholder="Telefono de emergencia" required>
 
                     <input type="number" class="inputText" id="nfc" name="nfc" placeholder="tarjeta nfc" required>
                     
@@ -106,6 +131,9 @@
     </div>
 </div>
 </section>
+
+
+    
 
 
 {% include 'dashboard/pie.html' %}

@@ -1,3 +1,5 @@
+from conexion import *
+
 class ValidationLogin:
     def __init__(self, miBD):
         self.mysql = miBD
@@ -10,3 +12,5 @@ class ValidationLogin:
         resultado = self.cursor.fetchall()
         self.conexion.commit()
         return resultado
+    
+validaLogin = ValidationLogin(mysql)
