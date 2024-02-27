@@ -134,6 +134,36 @@ def agregarMedidas():
         return redirect('/afiliados')
     else:
         return redirect('/')
+    
+@app.route('/afiliados/actualizarMembresias/<cedula>', methods = ['GET'])
+def actualizarMembresiasInicio(cedula):
+    
+    membresias = lasMembresias.consultarMembresias()
+    
+    resultado = LosAfiliados.infoAfiliados(cedula)
+    
+    return render_template('/dashboard/actualizar_membresias.html', resulMem = membresias, afiliados = resultado)  
+    
+@app.route('/afiliados/actulizarMembresias', methods = ['POST'])
+def actualizarMembresias():
+    if session.get("logueado"):
+        
+        cedula = request.form['cedula']
+        id_membresia = request.form['membresia']
+        fec_vencimiento = datetime.strptime(request.form['frevencimiento'], '%Y-%m-%d') 
+        fec_inicio = request.form['freinicio']
+        fecha_actual = datetime.now()
+        resultado_dia = lasMembresias.consultaDias(id_membresia)
+        
+        if fecha_actual > fec_vencimiento:
+            
+            LosAfiliados.actualizarMembresias_y_fechaInico([cedula,fecha_actual,resultado_dia[0],id_membresia,fec_inicio])
+            return redirect('/afiliados')
+        
+        else:
+            LosAfiliados.actualizarMembresias([cedula,resultado_dia[0],id_membresia])
+            return redirect('/afiliados')
+
 
 
 

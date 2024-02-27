@@ -41,4 +41,12 @@ class Membresias:
         self.cursor.execute(sql)
         self.conexion.commit()
         
+    def consultaDias(self, dia):
+        sql = f"SELECT tiempo_duracion from membresias WHERE id_membresia = {dia}"
+        self.cursor.execute(sql)
+        resultado = self.cursor.fetchone()
+        self.conexion.commit()
+        
+        return resultado
+        
 lasMembresias = Membresias(mysql)

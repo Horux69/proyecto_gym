@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/infOperadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>Control Gym</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+<div class="titulo_operadores">
+    <h2>DATOS DEL OPERADOR</h2>
+</div>
+
+<div class="contenedorForm">
+    <form id="formulario" action="/afiliados/actulizarMembresias" method="POST">
+        <div class="content">
+
+            <input type="text" hidden class="inputText" value="{{afiliados[0][13]}}" id="freinicio" name="freinicio" readonly>
+
+            <input type="text" hidden class="inputText" value="{{afiliados[0][14]}}" id="frevencimiento" name="frevencimiento" readonly>
+
+            <input type="text" hidden value="{{afiliados[0][0]}}" class="inputText" id="cedula" name="cedula" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
+
+            <label for="membresia" style="font-size: 14px;">Membresia:</label>
+                    <select class="inputText" name="membresia" id="membresia" required>
+                        {% for resul in resulMem %}
+                        <option value="{{ resul[0] }}">{{ resul[1] }}</option>
+                        {% endfor %}
+                    </select>
+
+        </div>
+        <br>
+            <div class="btn_accion">
+                <button type="submit" class="buttonSumit2">Agregar</button>
+
+                <a href="/afiliados" class="btn_desactivar">Regresar</a>
+            </div>
+
+    </form>
+    
+</div>
+
+{% include 'dashboard/pie.html' %}
+

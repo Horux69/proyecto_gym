@@ -7,7 +7,7 @@ class Afiliados:
         self.cursor = self.conexion.cursor()
 
     def consultarAfiliados(self):
-        sql = "SELECT registro_usuarios.*, membresias.nombre AS nombre_membresia FROM registro_usuarios JOIN membresias ON registro_usuarios.id_membresia = membresias.id_membresia WHERE registro_usuarios.estado = 'activo';"
+        sql = "SELECT registro_usuarios.*, membresias.nombre AS nombre_membresia FROM registro_usuarios JOIN membresias ON registro_usuarios.id_membresia = membresias.id_membresia;"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
@@ -43,7 +43,7 @@ class Afiliados:
         return resultado
     
     def desactivarUsuarios(self):
-        sql = "UPDATE registro_usuarios SET estado = 'inactivo' WHERE fecha_vencimiento <= DATE(NOW())"
+        sql = "UPDATE registro_usuarios SET estado = 'inactivo', id_membresia = '6' WHERE fecha_vencimiento <= DATE(NOW())"
         self.cursor.execute(sql)
         self.conexion.commit()
         
@@ -54,9 +54,21 @@ class Afiliados:
         self.conexion.commit()
         
     def agregarMedidas(self,medidas,session):
-       
+
         sql = f"INSERT INTO `medidas` (`Id`, `cedula`, `user_registro`, `mes_registro`, `peso_corporal`, `bicep_derecho`, `bicep_izquierdo`, `pecho`, `antebrazo_derecho`, `antebrazo_izquierdo`, `cintura`, `cadera`, `muslo_derecho`, `muslo_izquierdo`, `pantorrilla_derecha`, `pantorrilla_izquierda`) VALUES (NULL, '{medidas[0]}', '{session}', '{medidas[1]}', '{medidas[2]}', '{medidas[3]}', '{medidas[4]}', '{medidas[5]}', '{medidas[6]}', '{medidas[7]}', '{medidas[8]}', '{medidas[9]}', '{medidas[10]}', '{medidas[11]}', '{medidas[12]}', '{medidas[13]}');"
         self.cursor.execute(sql)
         self.conexion.commit()
         
+    def actualizarMembresias_y_fechaInico(self,nuevMen):
+        
+        sql =f"UPDATE registro_usuarios SET fecha_vencimiento = date_add('{nuevMen[1]}',interval '{nuevMen[2]}' day), fecha_inicio = '{nuevMen[3]}', id_membresia = {nuevMen[3]}, estado = 'activo' WHERE cedula = '{nuevMen[0]}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()
+    
+    def actualizarMembresias(self,nuevMen):
+        
+        sql =f"UPDATE registro_usuarios SET fecha_vencimiento = date_add(fecha_vencimiento,interval '{nuevMen[1]}' day), id_membresia = {nuevMen[2]}, estado = 'activo' WHERE cedula = '{nuevMen[0]}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()
+
 LosAfiliados = Afiliados(mysql)
