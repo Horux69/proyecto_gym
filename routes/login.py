@@ -1,6 +1,9 @@
 from flask import session, redirect, request, render_template
 from conexion import *
-from models.ValidaLogin import validaLogin 
+from models.ValidaLogin import validaLogin
+from datetime import datetime, timedelta
+from models.Membresias import lasMembresias
+
 
 
 
@@ -8,9 +11,10 @@ from models.ValidaLogin import validaLogin
 def validacionLogin():
     if request.method == 'POST':
         usuario = request.form['usuario']
-        contrasena = request.form['password']
+        contrasena = request.form['password'].lower()
 
         resultados = validaLogin.validaLogin(usuario, contrasena)
+        
 
         if len(resultados) > 0:
             if contrasena == resultados[0][2]:
@@ -29,7 +33,21 @@ def validacionLogin():
 @app.route('/inicio')
 def inicio():
     if session.get("logueado"):
-        return render_template('dashboard/index.html')
+        
+        membresias = lasMembresias.consultarMembresias()
+
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        
+        
+        return render_template('dashboard/index.html', resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
 

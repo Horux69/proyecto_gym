@@ -1,16 +1,40 @@
 from flask import session, redirect, request, render_template
 from conexion import *
 from models.InvProductos import InvProductos
+from datetime import datetime, timedelta
+from models.Membresias import lasMembresias
+
+
 
 # ----------------------------- INVENTARIO PRODUCTOS ------------------------------------#
 
 @app.route('/inventario')
 def inventario():
-    resultado = InvProductos.consultarProductos()
+    if session.get("logueado"):
+    
+        resultado = InvProductos.consultarProductos()
 
-    resulCate = InvProductos.consultaCataegorias()
+        resulCate = InvProductos.consultaCataegorias()
+        
+        membresias = lasMembresias.consultarMembresias()
 
-    return render_template('/dashboard/inventario_productos.html', productos = resultado, categorias = resulCate)
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        
+
+        return render_template('/dashboard/inventario_productos.html', productos = resultado, categorias = resulCate, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+    
+    else:
+        return redirect('/')
+    
+    
 
 @app.route('/inventario/agregarProducto', methods = ['POST'])
 def agregarProducto():
@@ -27,15 +51,33 @@ def agregarProducto():
         return redirect('/inventario')
     else:
         return redirect('/')
+    
+    
 
 @app.route('/inventario/infoEditProducto/<id_producto>', methods = ['GET'])
 def infoEdirProducto(id_producto):
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        
         resultado = InvProductos.infoEditProducto(id_producto)
         resultadoCate = InvProductos.consultaCataegorias()
-        return render_template('dashboard/editProducto.html', editProducto = resultado[0], resulCate = resultadoCate)
+        
+        membresias = lasMembresias.consultarMembresias()
+
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        
+        return render_template('dashboard/editProducto.html', editProducto = resultado[0], resulCate = resultadoCate, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
+    
+    
 
 @app.route('/inventario/editProducto', methods = ['POST'])
 def editProducto():
@@ -52,6 +94,8 @@ def editProducto():
         return redirect('/inventario')
     else:
         return redirect('/')
+    
+    
 
 @app.route('/inventario/desactivar/<id_productos>')
 def desactivarProducto(id_productos):
@@ -68,22 +112,42 @@ def desactivarProducto(id_productos):
 @app.route('/categorias/agregarCategoria',methods=['POST'])
 def agregarCategoria():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        
         nombre=request.form['nombre']
         estado = 'activo'
+        
+        
 
         InvProductos.agregarCategoria([nombre, estado])
 
         return redirect('/categorias')
     else:
         return redirect('/')
+    
+    
 
 @app.route("/categorias")
 def consultarCategoria():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         resultado = InvProductos.consultaCataegorias()
-        return render_template('dashboard/categoria_productos.html', categorias = resultado)
+        
+        membresias = lasMembresias.consultarMembresias()
+
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        
+        return render_template('dashboard/categoria_productos.html', categorias = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
+    
+    
 
 @app.route('/categorias/desactivarCategoria/<id_categoria>')
 def desactivarCategoria(id_categoria):

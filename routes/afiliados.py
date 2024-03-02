@@ -27,6 +27,8 @@ def afiliados():
         return render_template('dashboard/afiliados.html', afiliados = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
+    
+    
 
 @app.route('/afiliados/agregarAfiliado', methods = ['GET', 'POST'])
 def agregarAfiliados():
@@ -61,6 +63,8 @@ def agregarAfiliados():
         else:
             return redirect('/afiliados')
         
+        
+        
 
 @app.route('/afiliados/desactivarAfiliado/<cedula>')
 def desactivarAfiliados(cedula):
@@ -69,15 +73,31 @@ def desactivarAfiliados(cedula):
         return redirect('/afiliados')
     
     
+    
+    
 @app.route('/afiliados/info/<cedula>', methods = ['GET'])
 def infoAfiliados(cedula):
     if session.get("logueado"):
+        
+        membresias = lasMembresias.consultarMembresias()
+
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
 
         resultado = LosAfiliados.infoAfiliados(cedula)
 
-        return render_template('/dashboard/infoafiliados.html', afiliados = resultado[0])
+        return render_template('/dashboard/infoafiliados.html', afiliados = resultado[0], resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
+    
+    
     
 @app.route('/afiliados/actualizarUsuarios', methods = ['POST'])
 def actualizarUsuario():
@@ -97,15 +117,30 @@ def actualizarUsuario():
         return redirect('/')
     
     
+    
 @app.route('/afiliados/infomedidas/<cedula>', methods = ['GET'])
 def infomedidas(cedula):
     if session.get("logueado"):
 
         resultado = LosAfiliados.infoAfiliados(cedula)
+        
+        membresias = lasMembresias.consultarMembresias()
 
-        return render_template('/dashboard/medidas.html', afiliados = resultado[0])
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+
+        return render_template('/dashboard/medidas.html', afiliados = resultado[0], resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
+    
+    
 
 @app.route('/afiliados/agregarMedidas', methods = ['POST'])
 def agregarMedidas():
@@ -126,23 +161,37 @@ def agregarMedidas():
         pantorrilla_izq = request.form['pantorrilla_izq']
         fecha_registro = datetime.now().strftime('%Y-%m-%d')
         
-        
-        
-        
         LosAfiliados.agregarMedidas([cedula,fecha_registro,peso_corporal,bicep_der,bicep_izq,pecho,antebrazo_der,antebrazo_izq,cintura,cadera,muslo_der,muslo_izq,pantorrilla_der,pantorrilla_izq],session['user_name'])
         
         return redirect('/afiliados')
     else:
         return redirect('/')
     
+    
+    
 @app.route('/afiliados/actualizarMembresias/<cedula>', methods = ['GET'])
 def actualizarMembresiasInicio(cedula):
+    if session.get("logueado"):
+        
+        membresias = lasMembresias.consultarMembresias()
+        
+        resultado = LosAfiliados.infoAfiliados(cedula)
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        
+        return render_template('/dashboard/actualizar_membresias.html', resulMem = membresias, afiliados = resultado, minima = fecha_minima, maxima = fecha_maxima)  
     
-    membresias = lasMembresias.consultarMembresias()
+    else:
+        return redirect('/')
     
-    resultado = LosAfiliados.infoAfiliados(cedula)
     
-    return render_template('/dashboard/actualizar_membresias.html', resulMem = membresias, afiliados = resultado)  
     
 @app.route('/afiliados/actulizarMembresias', methods = ['POST'])
 def actualizarMembresias():
@@ -163,7 +212,8 @@ def actualizarMembresias():
         else:
             LosAfiliados.actualizarMembresias([cedula,resultado_dia[0],id_membresia])
             return redirect('/afiliados')
-
+    else:
+        return redirect('/')
 
 
 

@@ -1,6 +1,10 @@
 from flask import session, redirect, request, render_template
 from conexion import *
 from models.Operadores import losOperadores
+from datetime import datetime, timedelta
+from models.Membresias import lasMembresias
+
+
 
 # OPERADORES --------------------------------------------------------------------------------------------
 
@@ -8,7 +12,20 @@ from models.Operadores import losOperadores
 def consultaOperadores():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         resultado = losOperadores.consultaOperadores()
-        return render_template('dashboard/operadores.html', operadores = resultado)
+        
+        membresias = lasMembresias.consultarMembresias()
+
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        
+        return render_template('dashboard/operadores.html', operadores = resultado,  resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     
     elif session.get("logueado") and session.get("rol") == 'operador':
         return redirect('/inicio')
@@ -59,7 +76,19 @@ def infoOperadores(usuario):
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
 
         resultado = losOperadores.infoOperadores(usuario)
+        
+        membresias = lasMembresias.consultarMembresias()
 
-        return render_template('/dashboard/infoperador.html', operadores = resultado[0])
+
+        fecha_actual = datetime.now()
+
+        # fecha de nacimiento maxima (hace 16 años)
+        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+        # fecha de nacimiento minima (hace 70 años)
+        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+
+        return render_template('/dashboard/infoperador.html', operadores = resultado[0], resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
