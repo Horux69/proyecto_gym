@@ -55,7 +55,7 @@ def agregarProducto():
     
 
 @app.route('/inventario/infoEditProducto/<id_producto>', methods = ['GET'])
-def infoEdirProducto(id_producto):
+def infoEditProducto(id_producto):
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         
         resultado = InvProductos.infoEditProducto(id_producto)
@@ -108,7 +108,6 @@ def desactivarProducto(id_productos):
 
 
 #----------------------- CATEGORIA DE PRODUCTOS ---------------------------------#
-
 @app.route('/categorias/agregarCategoria',methods=['POST'])
 def agregarCategoria():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
@@ -131,6 +130,9 @@ def consultarCategoria():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         resultado = InvProductos.consultaCataegorias()
         
+        
+        
+        """ MODAL DE REGISTRO AFILIADOS DEL NABVAR """
         membresias = lasMembresias.consultarMembresias()
 
 
