@@ -140,6 +140,7 @@ hr {
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
+    width: 60vw;
 }
 
 .btn_desactivar {

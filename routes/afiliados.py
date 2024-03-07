@@ -136,7 +136,7 @@ def infomedidas(cedula):
         # fecha de nacimiento minima (hace 70 años)
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
 
-        return render_template('/dashboard/medidas.html', afiliados = resultado[0], resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+        return render_template('/dashboard/medidas.html', afiliados = resultado[0], resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima, oculta=1)
     else:
         return redirect('/')
     
