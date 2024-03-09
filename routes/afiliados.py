@@ -216,9 +216,9 @@ def actualizarMembresias():
         return redirect('/')
     
 @app.route('/afiliados/actualizarContra', methods=['POST'])
-def actualizarContra(cedula):
+def actualizarContra():
     if session.get("logueado"):
-       
+
         contra1 = request.form['contra1']
         contra2 = request.form['contra2']
         cedula = request.form['cedula']
@@ -227,9 +227,8 @@ def actualizarContra(cedula):
             nuevaContra = contra1
             
             LosAfiliados.actualizarContra([cedula, nuevaContra])
-
-        
-        return redirect('/afiliados')  
+            
+            return redirect('/afiliados')  
     
     else:
         return redirect('/')
@@ -249,8 +248,10 @@ def nuevacontra(cedula):
 
             # fecha de nacimiento minima (hace 70 años)
             fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+            
+            print(cedula)
 
-        return render_template('/dashboard/nuevacontra.html',cedula = cedula , resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+            return render_template('/dashboard/nuevacontra.html',cedula = cedula , resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
 
 
 

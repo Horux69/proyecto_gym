@@ -73,9 +73,9 @@ class Afiliados:
         
     def actualizarContra(self,nuevContra):
          
-         sql =  f"UPDATE registro_usuarios SET contrasena = '{nuevContra[1]}' WHERE cedula = '{nuevContra[0]}'"
-         self.cursor.execute(sql)
-         self.conexion.commit()
+        sql =  f"UPDATE registro_usuarios SET contrasena = '{nuevContra[1]}' WHERE cedula = '{nuevContra[0]}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()
         
 
 LosAfiliados = Afiliados(mysql)

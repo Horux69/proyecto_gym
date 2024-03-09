@@ -18,11 +18,11 @@
     <form id="formulario" action="/afiliados/actualizarContra" method="POST">
         <div class="content">
             
-            <input type="text" class="inputText" id="cedula"  hidden name="cedula" value="{{cedula[0]}}" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
+            <input type="text" class="inputText" id="cedula"  name="cedula" hidden value="{{cedula}}" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
 
-            <input type="text" class="inputText" id="contra1" name="contra1" pattern="[a-z0-9]{5,8}" maxlength="8" minlength="5" placeholder="nueva contraseña" required>
+            <input type="text" class="inputText" id="contra1" name="contra1" pattern="[a-z0-9]{5,8}" maxlength="50" minlength="8" placeholder="nueva contraseña" required>
 
-            <input type="text" class="inputText" id="contra2" name="contra2" pattern="[a-z0-9]{5,8}" maxlength="8" minlength="5" placeholder="confirme su contraseña" required>
+            <input type="text" class="inputText" id="contra2" name="contra2" pattern="[a-z0-9]{5,8}" maxlength="50" minlength="8" placeholder="confirme su contraseña" required>
 
         </div>
         <div class="btn_accion">
