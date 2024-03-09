@@ -70,5 +70,12 @@ class Afiliados:
         sql =f"UPDATE registro_usuarios SET fecha_vencimiento = date_add(fecha_vencimiento,interval '{nuevMen[1]}' day), id_membresia = {nuevMen[2]}, estado = 'activo' WHERE cedula = '{nuevMen[0]}'"
         self.cursor.execute(sql)
         self.conexion.commit()
+        
+    def actualizarContra(self,nuevContra):
+         
+         sql =  f"UPDATE registro_usuarios SET contrasena = '{nuevContra[1]}' WHERE cedula = '{nuevContra[0]}'"
+         self.cursor.execute(sql)
+         self.conexion.commit()
+        
 
 LosAfiliados = Afiliados(mysql)

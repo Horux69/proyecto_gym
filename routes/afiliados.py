@@ -214,7 +214,43 @@ def actualizarMembresias():
             return redirect('/afiliados')
     else:
         return redirect('/')
+    
+@app.route('/afiliados/actualizarContra', methods=['POST'])
+def actualizarContra(cedula):
+    if session.get("logueado"):
+       
+        contra1 = request.form['contra1']
+        contra2 = request.form['contra2']
+        cedula = request.form['cedula']
+        
+        if contra1 == contra2:
+            nuevaContra = contra1
+            
+            LosAfiliados.actualizarContra([cedula, nuevaContra])
 
+        
+        return redirect('/afiliados')  
+    
+    else:
+        return redirect('/')
+    
+@app.route('/afiliados/nuevacontra/<cedula>')
+def nuevacontra(cedula): 
+        if session.get("logueado"):
+        
+            membresias = lasMembresias.consultarMembresias()
+            
+
+            fecha_actual = datetime.now()
+
+            # fecha de nacimiento maxima (hace 16 años)
+            fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+            # fecha de nacimiento minima (hace 70 años)
+            fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+
+        return render_template('/dashboard/nuevacontra.html',cedula = cedula , resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
 
 
 
