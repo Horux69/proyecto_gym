@@ -138,9 +138,9 @@ hr {
 
 .btn_accion {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: flex-end;
-    width: 60vw;
+    width: 30vw;
 }
 
 .btn_desactivar {

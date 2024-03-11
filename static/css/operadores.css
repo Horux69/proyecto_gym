@@ -337,7 +337,8 @@ font-family: 'Poppins', sans-serif;
 font-weight: 200;
 }
 
-#formulario {
+#formulario { 
+position: relative;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -362,7 +363,23 @@ background-color: #FFD100;
 color: black;
 font-family: 'Poppins', sans-serif;
 }
-
+#actualizarbutton{
+padding: 8px;
+border-radius: 10px;
+border: 0;
+font-size: 16px;
+box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+background-color: #FFD100;
+color: black;
+font-family: 'Poppins', sans-serif;
+}
+#desactivar{
+    text-decoration: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 8px;
+    background-color: #666;
+}
 .buttonSumit:hover {
 background-color: #e7bd00;
 transform: scale(1.1);
@@ -420,4 +437,26 @@ width: 100%;
     padding: 8px 11px;
     background-color: #d3ae0b; 
 }
+#inputcontra{
+    right: -100px;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center center;
+    width: 500px;
+    height: 150px;
+}
 
+#contra1{
+    text-align: center;
+    width: 300px;
+    height: 35px;
+    position: absolute;
+}
+#contra2{
+    text-align: center;
+    width: 300px;
+    height: 35px;
+    top: 80px;
+    position: absolute;
+}
