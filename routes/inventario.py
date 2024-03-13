@@ -11,6 +11,10 @@ from models.Membresias import lasMembresias
 @app.route('/inventario')
 def inventario():
     if session.get("logueado"):
+        
+        mensaje = ''  # Inicializar mensaje como None por defecto
+        if 'mensaje' in session:
+            mensaje = session.pop('mensaje')
     
         resultado = InvProductos.consultarProductos()
 
@@ -45,10 +49,19 @@ def agregarProducto():
         precio_venta = request.form['precio_venta']
         cantidad = request.form['cantidad']
         estado = 'activo'
+        
+        if precio_venta > precio_compra:
+            if cantidad > 0:
+                InvProductos.agregarProducto([nombre, categoria, precio_compra, precio_venta, cantidad, estado])
 
-        InvProductos.agregarProducto([nombre, categoria, precio_compra, precio_venta, cantidad, estado])
-
-        return redirect('/inventario')
+                return redirect('/inventario')
+            else:
+                session['mensaje'] = "La cantidad tiene que ser mayor a 0"
+                return redirect('/inventario')
+        else:
+            session['mensaje'] = "El precio de venta tiene que ser mayor al de compra"
+            return redirect('/inventario')
+    
     else:
         return redirect('/')
     
