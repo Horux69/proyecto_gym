@@ -121,18 +121,29 @@ def desactivarProducto(id_productos):
 
 
 #----------------------- CATEGORIA DE PRODUCTOS ---------------------------------#
-@app.route('/categorias/agregarCategoria',methods=['POST'])
+@app.route('/categorias/agregarCategoria', methods=['POST' , 'GET'])
 def agregarCategoria():
-    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
-        
-        nombre=request.form['nombre']
-        estado = 'activo'
-        
-        
-
-        InvProductos.agregarCategoria([nombre, estado])
-
-        return redirect('/categorias')
+    if session.get("logueado") and (session.get("rol") == 'administrador' or session.get("rol") == 'super_admin'):
+            # esto es para que cuando verifique si existe o no use el medoto post
+        if request.method == 'GET':
+            nombre = request.form['nombre']
+            estado = 'activo'
+            
+            # hacer la consulta de las categorías existentes para esta consulta deje el GET
+            categorias = InvProductos.consultaCataegorias()
+            
+            # esto verifica si el nombre de la categoría ya existe o no en la base de datos
+            nombres_categorias = [categoria[1] for categoria in categorias]  # tomamos los nombres de las categorías
+            
+            if nombre in nombres_categorias: # aqui verificamos si existe si no existe ejecuta el agregar si existe le recarga la pagina
+                session['mensaje'] = "La categoria ya existe en la base de datos"
+                return redirect('/categorias')
+            else  : 
+                InvProductos.agregarCategoria([nombre, estado])
+                return redirect('/categorias')
+        else:
+            
+            return render_template('/categorias') 
     else:
         return redirect('/')
     
