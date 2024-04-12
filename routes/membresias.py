@@ -12,6 +12,10 @@ from models.Membresias import lasMembresias
 @app.route('/membresias')
 def membresias():
     if session.get("logueado"):
+        mensaje = ''  # Inicializar mensaje como None por defecto
+        if 'mensaje' in session:
+            mensaje = session.pop('mensaje')
+            
         resultado = lasMembresias.consultarMembresias()
         
         fecha_actual = datetime.now()
@@ -34,15 +38,18 @@ def membresias():
 def agregarMembresia():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         
-        
-        nombre = request.form['nombre']
-        duracion = request.form['duracion']
-        precio = request.form['precio']
-        estado = 'activo'
+        if request.method == 'POST':    
+            nombre = request.form['nombre']
+            duracion = request.form['duracion']
+            precio = request.form['precio']
+            estado = 'activo'
 
-        lasMembresias.agregarMembresia([nombre, duracion, precio, estado])
+            lasMembresias.agregarMembresia([nombre, duracion, precio, estado])
 
-        return redirect('/membresias')
+            return redirect('/membresias')
+        else:
+            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
+            return redirect('/membresias')
     else:
         return redirect('/')
     
@@ -87,16 +94,18 @@ def infoMembresiaEdit(id_membresia):
 @app.route('/membresias/editarMembresia', methods = ['POST'])
 def editMembresia():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
-        
-        _id = request.form['txtID']
-        nombre = request.form['nombre']
-        duracion = request.form['duracion']
-        precio = request.form['precio']
+        if request.method == 'POST':
+            _id = request.form['txtID']
+            nombre = request.form['nombre']
+            duracion = request.form['duracion']
+            precio = request.form['precio']
+            
+            lasMembresias.editMembresia([_id, nombre, duracion, precio])
 
-        lasMembresias.editMembresia([_id, nombre, duracion, precio])
-
-        return redirect('/membresias')
-    
+            return redirect('/membresias')
+        else:
+            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
+            return redirect('/membresias')
     else:
         return redirect('/')
 

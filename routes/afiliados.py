@@ -9,6 +9,10 @@ from models.Membresias import lasMembresias
 @app.route('/afiliados')
 def afiliados():
     if session.get("logueado"):
+        mensaje = ''  # Inicializar mensaje como None por defecto
+        if 'mensaje' in session:
+            mensaje = session.pop('mensaje')
+            
         resultado = LosAfiliados.consultarAfiliados()
         
         membresias = lasMembresias.consultarMembresias()
@@ -30,38 +34,46 @@ def afiliados():
     
     
 
-@app.route('/afiliados/agregarAfiliado', methods = ['GET', 'POST'])
+@app.route('/afiliados/agregarAfiliado', methods = ['POST'])
 def agregarAfiliados():
     if session.get("logueado"):
+        if request.method == "POST":
 
-        cedula = request.form['cedula']
-        nombre = request.form['nombres']
-        apellido = request.form['apellidos']
-        fecha_nacimiento = request.form['fecha_nac']
-        telefono = request.form['telefono']
-        sexo = request.form['sexo']
-        sangre = request.form['sangre']
-        huella = 'NULL'
-        telefono_emergencia = request.form['telefono_emergencia']
-        correo = request.form['email']
-        contrasena = request.form['cedula']
-        tarjeta_nfc = request.form['nfc']
-        id_membresia = request.form['membresia']
-        fecha_inicio = datetime.now()
+            cedula = request.form['cedula']
+            nombre = request.form['nombres']
+            apellido = request.form['apellidos']
+            fecha_nacimiento = request.form['fecha_nac']
+            telefono = request.form['telefono']
+            sexo = request.form['sexo']
+            sangre = request.form['sangre']
+            huella = 'NULL'
+            telefono_emergencia = request.form['telefono_emergencia']
+            correo = request.form['email']
+            contrasena = request.form['cedula']
+            tarjeta_nfc = request.form['nfc']
+            id_membresia = request.form['membresia']
+            fecha_inicio = datetime.now()
 
-        duracion_membresia = lasMembresias.consultaTiempoMembresia(id_membresia)
-        duracion_timedelta = timedelta(days=duracion_membresia)
-        fecha_vencimiento = fecha_inicio + duracion_timedelta
-        
-        fecha_registro = datetime.now().strftime('%Y-%m-%d')
-        estado = 'activo'
+            duracion_membresia = lasMembresias.consultaTiempoMembresia(id_membresia)
+            duracion_timedelta = timedelta(days=duracion_membresia)
+            fecha_vencimiento = fecha_inicio + duracion_timedelta
+            
+            fecha_registro = datetime.now().strftime('%Y-%m-%d')
+            estado = 'activo'
 
-        if not LosAfiliados.validarDatosAfiliados(cedula,correo,telefono):
+            if not LosAfiliados.validarDatosAfiliados(cedula,correo,telefono):
 
-            LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, contrasena, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
-            return redirect('/afiliados')
+                LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, contrasena, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
+                return redirect('/afiliados')
+            else:
+                session['mensaje'] = "Por favor verifica (cedula, correo,telefono) alguno esta en uso )"
+                return redirect('/afiliados')
         else:
+            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
             return redirect('/afiliados')
+            
+    else:
+        return redirect('/afiliados')
         
         
         

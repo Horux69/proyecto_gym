@@ -40,26 +40,31 @@ def consultaOperadores():
 
 @app.route('/operadores/agregarOperador', methods= ["POST"])
 def agregarOperadores():
-    if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
-        usuario = request.form['usuario']
-        nombre = request.form['nombre']
-        apellido = request.form['apellido']
-        cedula = request.form ['cedula']
-        telefono = request.form['celular']
-        correo = request.form['correo']
-        contrasena = request.form['password']
-        rol = request.form['rol']
-        estado = 'activo'
+    if  session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        if request.method == 'POST':
+            usuario = request.form['usuario']
+            nombre = request.form['nombre']
+            apellido = request.form['apellido']
+            cedula = request.form ['cedula']
+            telefono = request.form['celular']
+            correo = request.form['correo']
+            contrasena = request.form['password']
+            rol = request.form['rol']
+            estado = 'activo'
         
 
-        if losOperadores.validarDatosOpe(usuario, cedula, correo, telefono):
+            if not losOperadores.validarDatosOpe(usuario, cedula, correo, telefono):
 
-            losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, contrasena,  rol,  estado], session['user_name'])
+                losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, contrasena,  rol,  estado], session['user_name'])
 
-            return redirect('/operadores')
+                return redirect('/operadores')
+            else:
+                session['mensaje'] = "Cedula, Correo o Telefono no disponible."
+                return redirect('/operadores')
+            
         else:
-            session['mensaje'] = "Cedula, Correo o Telefono no disponible."
-            return redirect('/operadores')
+            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
+            return redirect('/operadores')    
     else:
         return redirect('/')
     

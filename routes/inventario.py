@@ -43,25 +43,28 @@ def inventario():
 @app.route('/inventario/agregarProducto', methods = ['POST'])
 def agregarProducto():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
-        nombre = request.form['nombre']
-        categoria = request.form['categoria']
-        precio_compra = request.form['precio_compra']
-        precio_venta = request.form['precio_venta']
-        cantidad = request.form['cantidad']
-        estado = 'activo'
-        
-        if precio_venta > precio_compra:
-            if cantidad > 0:
-                InvProductos.agregarProducto([nombre, categoria, precio_compra, precio_venta, cantidad, estado])
+        if request.method == 'POST':
+            nombre = request.form['nombre']
+            categoria = request.form['categoria']
+            precio_compra = request.form['precio_compra']
+            precio_venta = request.form['precio_venta']
+            cantidad:int = request.form['cantidad']
+            estado = 'activo'
+            
+            if precio_venta > precio_compra:
+                if cantidad > 0:
+                    InvProductos.agregarProducto([nombre, categoria, precio_compra, precio_venta, cantidad, estado])
 
-                return redirect('/inventario')
+                    return redirect('/inventario')
+                else:
+                    session['mensaje'] = "La cantidad tiene que ser mayor a 0"
+                    return redirect('/inventario')
             else:
-                session['mensaje'] = "La cantidad tiene que ser mayor a 0"
+                session['mensaje'] = "El precio de venta tiene que ser mayor al de compra"
                 return redirect('/inventario')
         else:
-            session['mensaje'] = "El precio de venta tiene que ser mayor al de compra"
+            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
             return redirect('/inventario')
-    
     else:
         return redirect('/')
     
@@ -95,16 +98,20 @@ def infoEditProducto(id_producto):
 @app.route('/inventario/editProducto', methods = ['POST'])
 def editProducto():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
-        id_producto = request.form['txtID']
-        nombre = request.form['nombre']
-        categoria = request.form['categoria']
-        precio_compra = request.form['precio_compra']
-        precio_venta = request.form['precio_venta']
-        cantidad = request.form['cantidad']
+        if request.method == 'POST':
+            id_producto = request.form['txtID']
+            nombre = request.form['nombre']
+            categoria = request.form['categoria']
+            precio_compra = request.form['precio_compra']
+            precio_venta = request.form['precio_venta']
+            cantidad = request.form['cantidad']
 
-        InvProductos.editProducto([id_producto, nombre, categoria, precio_compra, precio_venta, cantidad])
+            InvProductos.editProducto([id_producto, nombre, categoria, precio_compra, precio_venta, cantidad])
 
-        return redirect('/inventario')
+            return redirect('/inventario')
+        else:
+            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
+            return redirect('/inventario')
     else:
         return redirect('/')
     
@@ -121,11 +128,11 @@ def desactivarProducto(id_productos):
 
 
 #----------------------- CATEGORIA DE PRODUCTOS ---------------------------------#
-@app.route('/categorias/agregarCategoria', methods=['POST' , 'GET'])
+@app.route('/categorias/agregarCategoria', methods=['POST'])
 def agregarCategoria():
     if session.get("logueado") and (session.get("rol") == 'administrador' or session.get("rol") == 'super_admin'):
             # esto es para que cuando verifique si existe o no use el medoto post
-        if request.method == 'GET':
+        if request.method == 'POST':
             nombre = request.form['nombre']
             estado = 'activo'
             
@@ -142,7 +149,7 @@ def agregarCategoria():
                 InvProductos.agregarCategoria([nombre, estado])
                 return redirect('/categorias')
         else:
-            
+            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
             return render_template('/categorias') 
     else:
         return redirect('/')
@@ -152,6 +159,9 @@ def agregarCategoria():
 @app.route("/categorias")
 def consultarCategoria():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+        mensaje = ''  # Inicializar mensaje como None por defecto
+        if 'mensaje' in session:
+            mensaje = session.pop('mensaje')
         resultado = InvProductos.consultaCataegorias()
         
         
@@ -169,7 +179,7 @@ def consultarCategoria():
         # fecha de nacimiento minima (hace 70 años)
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
         
-        return render_template('dashboard/categoria_productos.html', categorias = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+        return render_template('dashboard/categoria_productos.html',mensaje = mensaje, categorias = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
     

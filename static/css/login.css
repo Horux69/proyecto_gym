@@ -100,14 +100,14 @@ input {
     position: relative;
   }
   
-  .input-container i {
-    position:absolute;
-    top: 50%;
-    left: 90%;
-    transform: translateY(-50%);
-    /* color: #3F4464; */
-    color: var(--gris_claro);
-  }
+    .input-container i {
+        position:absolute;
+        top: 50%;
+        left: 90%;
+        transform: translateY(-50%);
+        /* color: #3F4464; */
+        color: var(--gris_claro);
+    }
   
 .logo-gym {
     position: absolute;

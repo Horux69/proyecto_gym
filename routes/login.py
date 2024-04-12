@@ -7,7 +7,7 @@ from models.Membresias import lasMembresias
 
 
 
-@app.route('/validationAuth', methods = ['GET', 'POST'])
+@app.route('/validationAuth', methods = ['POST'])
 def validacionLogin():
     if request.method == 'POST':
         usuario = request.form['usuario']
