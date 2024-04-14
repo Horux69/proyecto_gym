@@ -7,9 +7,11 @@ class Operadores:
         self.conexion = self.mysql.connect()
         self.cursor = self.conexion.cursor()
 
-
-    def consultaOperadores(self):
-        sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores WHERE estado = 'activo' AND rol = 'entrenador'"
+    def consultaOperadores(self, rol):
+        if (rol == 'administrador'):
+            sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores"
+        else:
+            sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores WHERE estado = 'activo'"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
@@ -30,9 +32,11 @@ class Operadores:
 
         self.cursor.execute(sql)
         self.conexion.commit()
+        return True
 
-    def desactivarOpe(self, usuario):
-        sql = f"UPDATE `operadores` SET `estado`='inactivo' WHERE `usuario` = '{usuario}'"
+    def desactivarOpe(self, usuario, usuarioDelete):
+        fecha_delete = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sql = f"UPDATE `operadores` SET `estado`='inactivo', delete_at = '{fecha_delete}', delete_by = '{usuarioDelete}' WHERE `usuario` = '{usuario}'"
         self.cursor.execute(sql)
         self.conexion.commit()
 
