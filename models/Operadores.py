@@ -32,6 +32,7 @@ class Operadores:
 
         self.cursor.execute(sql)
         self.conexion.commit()
+        return True
 
     def desactivarOpe(self, usuario, usuarioDelete):
         fecha_delete = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

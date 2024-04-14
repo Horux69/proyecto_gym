@@ -1,4 +1,4 @@
-from flask import session, redirect, request, render_template, jsonify
+from flask import session, redirect, request, render_template, jsonify, flash
 from conexion import *
 from models.Operadores import losOperadores
 
@@ -78,22 +78,17 @@ def agregarOperadores():
         rol = request.form['rol']
         estado = 'activo'
 
-        if not losOperadores.validarDatosOpe(usuario, cedula, correo, telefono):
-
-            registroOperadores = losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, contrasena,  rol,  estado], session['user_name'])
-
-            if registroOperadores:
-                mensajeConfirmacion = f"""<script language="javascript">swal("Registro Exitoso", "El operador fue registrado correctamente.", "success");</script>"""
-                return render_template('dashboard/operadores.html', mensajeConfirmacion = mensajeConfirmacion)
-            else:
-                mensajeError = f"""<script language="javascript">swal("Error al Registrar", "El operador no fue registrado correctamente.", "error");</script>"""
-                return render_template('dashboard/operadores.html', mensajeConfirmacion = mensajeError)
-
-
-            # return redirect('/operadores')
+        if losOperadores.validarDatosOpe(usuario, cedula, correo, telefono):
+            flash('Cedula, Usuario o Correo ya Existentes.', 'error')
+            return redirect('/operadores')
         else:
-            mensajeError = f"""<script language="javascript">swal("Error al Registrar", "Cedula, Correo o Telefono no disponible.", "error");</script>"""
-            return render_template('dashboard/operadores.html', mensaje = mensajeError)
+            registroOperadores = losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, contrasena, rol, estado], session['user_name'])
+            if registroOperadores:
+                flash('El operador fue registrado exitosamente', 'success')
+                return redirect('/operadores')
+            else:
+                flash('El operador no fue registrado correctamente.', 'error')
+                return redirect('/operadores')
     else:
         return redirect('/')
     

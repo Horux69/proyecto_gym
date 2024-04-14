@@ -114,7 +114,7 @@
                     <input type="text" class="inputText" id="apellidos" name="apellidos" pattern="[A-Za-z\s]{4,20}" maxlength="20" minlength="4" placeholder="Apellidos" required>
                     
                     <label for="fecha_nac" style="font-size: 14px;">Fecha de Nacimiento:</label>
-                    <input type="date" class="inputText" min="{{ minima.strftime('%Y-%m-%d') }}" max="{{ maxima.strftime('%Y-%m-%d') }}" id="fecha_nac" name="fecha_nac" placeholder="año/mes/dia" required>
+                    <input type="date" class="inputText" min="" max="" id="fecha_nac" name="fecha_nac" placeholder="año/mes/dia" required>
 
                     <input type="tel" class="inputText" id="telefono" pattern="[0-9]{10}" minlength="10" maxlength="10" name="telefono" placeholder="Telefono Movil" required>
 
@@ -165,7 +165,7 @@
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/preview/searchPane/dataTables.searchPane.min.js"></script>
 <script src="{{ url_for('static', filename='js/filtrosDataTables.js') }}"></script>
-<script src="{{ url_for('static', filename='js/eliminarOperadores.js') }}"></script>
+<script src="{{ url_for('static', filename='js/eliminarAfiliado.js') }}"></script>
 
 <script>
     $(document).ready(function () {
