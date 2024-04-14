@@ -11,9 +11,8 @@ import os
 
 def obtener_datos_operadores():
     try:
-        rol = session["rol"]
         # Aquí realizas la consulta a tu base de datos o donde tengas los datos
-        resultados = losOperadores.consultaOperadores(rol)
+        resultados = losOperadores.consultaOperadores()
         data = []
 
         for row in resultados:

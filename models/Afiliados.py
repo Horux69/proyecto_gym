@@ -21,9 +21,9 @@ class Afiliados:
         return True
 
 
-    def validarDatosAfiliados(self,cedula,correo,telefono):
-        sql = f"SELECT * FROM operadores WHERE  cedula = '{cedula}' AND correo = '{correo}' AND telefono = '{telefono}'"
-        self.cursor.execute(sql)
+    def validarDatosAfiliados(self, cedula, correo, telefono):
+        consulta = f"SELECT * FROM registro_usuarios WHERE cedula = '{cedula}' OR correo = '{correo}' OR telefono = '{telefono}'"
+        self.cursor.execute(consulta)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
         return len(resultado) > 0

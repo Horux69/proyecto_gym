@@ -1,4 +1,4 @@
-from flask import session, render_template, redirect, request, jsonify
+from flask import session, render_template, redirect, request, jsonify, flash
 from conexion import *
 from datetime import datetime, timedelta
 from models.Afiliados import LosAfiliados
@@ -115,15 +115,19 @@ def agregarAfiliados():
             fecha_registro = datetime.now().strftime('%Y-%m-%d')
             estado = 'activo'
 
-            if not LosAfiliados.validarDatosAfiliados(cedula,correo,telefono):
-
-                LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, contrasena, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
+            if LosAfiliados.validarDatosAfiliados(cedula,correo,telefono):
+                flash('Cedula, Telefono o Correo ya Existentes.', 'error')
                 return redirect('/afiliados')
             else:
-                session['mensaje'] = "Por favor verifica (cedula, correo,telefono) alguno esta en uso )"
-                return redirect('/afiliados')
+                registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, contrasena, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
+                if registroAfiliado:
+                    flash('El nuevo usuario fue registrado exitosamente', 'success')
+                    return redirect('/afiliados')
+                else:
+                    flash('El usuario no fue registrado correctamente.', 'error')
+                    return redirect('/afiliados')
         else:
-            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
+            flash('El usuario no fue registrado correctamente.', 'error')
             return redirect('/afiliados')
             
     else:

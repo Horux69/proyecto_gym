@@ -1,4 +1,4 @@
-from flask import session, redirect, request, render_template
+from flask import session, redirect, request, render_template, jsonify, flash
 from conexion import *
 from models.Membresias import lasMembresias
 from datetime import datetime, timedelta
@@ -8,6 +8,51 @@ from models.Membresias import lasMembresias
 
 
 # ------------------------ MEMBRESIAS ---------------------------------------------#
+
+def obtener_datos_membresias():
+    try:
+        # Aquí realizas la consulta a tu base de datos o donde tengas los datos
+        resultados = lasMembresias.consultarMembresias()
+        data = []
+
+        for row in resultados:
+
+            verMas = f"""<div class='btn-group'>
+                            <button type='button' class='btn btn-primary' data-toggle='tooltip' data-placement='top' title='Ver más'>
+                                <i class='fa fa-plus-circle' aria-hidden='true'></i>
+                            </button>
+                        </div>"""
+            
+            acciones = f"""<div class='btn-group'>
+                            <a onclick='return confirm('Seguro quiere eliminar este operador?')' class='btn btn-danger delete-afiliado' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
+                            <a class="btn btn-info" href="/afiliados/info/{row[0]}"><i class="fa-solid fa-address-card" style="color: #fff;"></i></a>
+                            <a class="btn btn-primary" href="/afiliados/actualizarMembresias/{row[0]}"><i class="fa-solid fa-credit-card" style="color: #fff;"></i></a>
+                            </div>"""
+
+            precio = "${:,.2f}".format(row[3])
+            caso = {
+                "VerMas": verMas,
+                "Acciones": acciones,
+                "Nombre": row[1],
+                "TiempoDuracion": row[2],
+                "Precio": precio,
+                "Estado": row[4]
+            }
+
+            data.append(caso)
+
+        return data
+
+    except Exception as e:
+        # Manejo de errores
+        print("Error:", e)
+        return []
+    
+@app.route('/consultarDatosMembresias')
+def consultarDatosMembresias():
+    data = obtener_datos_membresias()
+
+    return jsonify(data)
 
 @app.route('/membresias')
 def membresias():

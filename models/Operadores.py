@@ -7,11 +7,8 @@ class Operadores:
         self.conexion = self.mysql.connect()
         self.cursor = self.conexion.cursor()
 
-    def consultaOperadores(self, rol):
-        if (rol == 'administrador'):
-            sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores"
-        else:
-            sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores WHERE estado = 'activo'"
+    def consultaOperadores(self):
+        sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
