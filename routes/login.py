@@ -17,7 +17,9 @@ def validacionLogin():
                 session["logueado"] = True
                 session["user_name"] = resultados[0][0] 
                 session["rol"] = resultados[0][3]
+                session["usuario"] = resultados[0][1]
 
+                print(session['usuario'])
                 if session["rol"] == 'administrador' or session["rol"] == 'super_admin' or session["rol"] == 'entrenador':
                     return redirect('/inicio')
                 else:

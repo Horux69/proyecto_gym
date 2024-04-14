@@ -1,19 +1,69 @@
-from flask import session, redirect, request, render_template
+from flask import session, redirect, request, render_template, jsonify
 from conexion import *
 from models.Operadores import losOperadores
 
 # OPERADORES --------------------------------------------------------------------------------------------
 
+def obtener_datos_operadores():
+    try:
+        rol = session["rol"]
+        # Aquí realizas la consulta a tu base de datos o donde tengas los datos
+        resultados = losOperadores.consultaOperadores(rol)
+        data = []
+
+        for row in resultados:
+
+            verMas = f"""<div class='btn-group'>
+                            <button type='button' class='btn btn-primary' data-toggle='tooltip' data-placement='top' title='Ver más'>
+                                <i class='fa fa-plus-circle' aria-hidden='true'></i>
+                            </button>
+                        </div>"""
+            
+            acciones = f"""<div class='btn-group'>
+                            <a onclick='return confirm('Seguro quiere eliminar este operador?')' class='btn btn-danger delete-operador' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
+                            
+                            </div>"""
+
+            caso = {
+                "VerMas": verMas,
+                "Acciones": acciones,
+                "Usuario": row[0],
+                "Nombre": row[1],
+                "Apellido": row[2],
+                "Cedula": row[3],
+                "Telefono": row[4],
+                "Correo": row[5],
+                "Rol": row[6],
+                "FechaRegistro": row[7],
+                "Creador": row[8],
+                "Estado": row[9],
+            }
+
+            data.append(caso)
+
+        return data
+
+    except Exception as e:
+        # Manejo de errores
+        print("Error:", e)
+        return []
+
 @app.route('/operadores')
 def consultaOperadores():
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
-        resultado = losOperadores.consultaOperadores()
-        return render_template('dashboard/operadores.html', operadores = resultado)
+
+        return render_template('dashboard/operadores.html')
     
     elif session.get("logueado") and session.get("rol") == 'operador':
         return redirect('/inicio')
     else:
         return redirect('/')
+    
+@app.route('/consultarDatosOperadores')
+def consultarDatosOperadores():
+    data = obtener_datos_operadores()
+
+    return jsonify(data)
 
 @app.route('/operadores/agregarOperador', methods= ["POST"])
 def agregarOperadores():
@@ -30,18 +80,28 @@ def agregarOperadores():
 
         if not losOperadores.validarDatosOpe(usuario, cedula, correo, telefono):
 
-            losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, contrasena,  rol,  estado], session['user_name'])
+            registroOperadores = losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, contrasena,  rol,  estado], session['user_name'])
 
-            return redirect('/operadores')
+            if registroOperadores:
+                mensajeConfirmacion = f"""<script language="javascript">swal("Registro Exitoso", "El operador fue registrado correctamente.", "success");</script>"""
+                return render_template('dashboard/operadores.html', mensajeConfirmacion = mensajeConfirmacion)
+            else:
+                mensajeError = f"""<script language="javascript">swal("Error al Registrar", "El operador no fue registrado correctamente.", "error");</script>"""
+                return render_template('dashboard/operadores.html', mensajeConfirmacion = mensajeError)
+
+
+            # return redirect('/operadores')
         else:
-            return render_template('dashboard/operadores.html', mensaje = 'Cedula, Correo o Telefono no disponible.')
+            mensajeError = f"""<script language="javascript">swal("Error al Registrar", "Cedula, Correo o Telefono no disponible.", "error");</script>"""
+            return render_template('dashboard/operadores.html', mensaje = mensajeError)
     else:
         return redirect('/')
     
 @app.route('/operadores/desactivar/<usuario>')
 def desactivarOperador(usuario):
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
-        losOperadores.desactivarOpe(usuario)
+        usuarioDelete = session['usuario']
+        losOperadores.desactivarOpe(usuario, usuarioDelete)
         return redirect('/operadores')
     else:
         return redirect('/')

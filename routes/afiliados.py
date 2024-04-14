@@ -1,4 +1,4 @@
-from flask import session, render_template, redirect, request
+from flask import session, render_template, redirect, request, jsonify
 from conexion import *
 from datetime import datetime, timedelta
 from models.Afiliados import LosAfiliados
@@ -6,10 +6,63 @@ from models.Membresias import lasMembresias
 
 # ------------------------ AFILIADOS ---------------------------------------------#
 
+def obtener_datos_afiliados():
+    try:
+        # Aquí realizas la consulta a tu base de datos o donde tengas los datos
+        resultados = LosAfiliados.consultarAfiliados()
+        data = []
+
+        for row in resultados:
+
+            verMas = f"""<div class='btn-group'>
+                            <button type='button' class='btn btn-primary' data-toggle='tooltip' data-placement='top' title='Ver más'>
+                                <i class='fa fa-plus-circle' aria-hidden='true'></i>
+                            </button>
+                        </div>"""
+            
+            acciones = f"""<div class='btn-group'>
+                            <a onclick='return confirm('Seguro quiere eliminar este operador?')' class='btn btn-danger delete-afiliado' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
+                            <a class="btn btn-info" href="/afiliados/info/{row[0]}"><i class="fa-solid fa-address-card" style="color: #fff;"></i></a>
+                            <a class="btn btn-primary" href="/afiliados/actualizarMembresias/{row[0]}"><i class="fa-solid fa-credit-card" style="color: #fff;"></i></a>
+                            </div>"""
+
+            caso = {
+                "VerMas": verMas,
+                "Acciones": acciones,
+                "Nombre": row[1],
+                "Apellido": row[2],
+                "Cedula": row[0],
+                "Telefono": row[4],
+                "Correo": row[9],
+                "FechaNac": row[3],
+                "FechaRegistro": row[15],
+                "Creador": row[16],
+                "EstadoMembresia": row[17],
+                "Sexo": row[5],
+                "TipoSangre": row[6],
+                "NumEmergencia": row[8],
+                "FechaInicioM": row[13],
+                "FechaFinalM": row[14],
+            }
+
+            data.append(caso)
+
+        return data
+
+    except Exception as e:
+        # Manejo de errores
+        print("Error:", e)
+        return []
+    
+@app.route('/consultarDatosAfiliados')
+def consultarDatosAfiliados():
+    data = obtener_datos_afiliados()
+
+    return jsonify(data)
+
 @app.route('/afiliados')
 def afiliados():
     if session.get("logueado"):
-        resultado = LosAfiliados.consultarAfiliados()
         
         membresias = lasMembresias.consultarMembresias()
 
@@ -24,7 +77,7 @@ def afiliados():
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
         
 
-        return render_template('dashboard/afiliados.html', afiliados = resultado, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+        return render_template('dashboard/afiliados.html', resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
 
