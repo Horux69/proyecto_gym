@@ -27,6 +27,8 @@ def obtener_datos_operadores():
                             <a onclick='return confirm('Seguro quiere eliminar este operador?')' class='btn btn-danger delete-operador' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
                             
                             </div>"""
+            
+            cedula_formateada = "{0:,}".format(int(row[3])).replace(",", ".")
 
             caso = {
                 "VerMas": verMas,
@@ -34,7 +36,7 @@ def obtener_datos_operadores():
                 "Usuario": row[0],
                 "Nombre": row[1],
                 "Apellido": row[2],
-                "Cedula": row[3],
+                "Cedula": cedula_formateada,
                 "Telefono": row[4],
                 "Correo": row[5],
                 "Rol": row[6],

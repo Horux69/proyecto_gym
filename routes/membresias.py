@@ -24,17 +24,22 @@ def obtener_datos_membresias():
                         </div>"""
             
             acciones = f"""<div class='btn-group'>
-                            <a onclick='return confirm('Seguro quiere eliminar este operador?')' class='btn btn-danger delete-afiliado' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
-                            <a class="btn btn-info" href="/afiliados/info/{row[0]}"><i class="fa-solid fa-address-card" style="color: #fff;"></i></a>
-                            <a class="btn btn-primary" href="/afiliados/actualizarMembresias/{row[0]}"><i class="fa-solid fa-credit-card" style="color: #fff;"></i></a>
+                            <a onclick='return confirm('Seguro quiere eliminar esta membresia?')' class='btn btn-danger delete-membresia' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
+                            <a class="btn btn-primary" href="/membresias/infoEdit/{row[0]}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a>
                             </div>"""
 
             precio = "${:,.2f}".format(row[3])
+
+            if row[2] == 1:
+                tiempoDuracion = str(row[2]) + " Dia"
+            else:
+                tiempoDuracion = str(row[2]) + " Dias"
+
             caso = {
                 "VerMas": verMas,
                 "Acciones": acciones,
                 "Nombre": row[1],
-                "TiempoDuracion": row[2],
+                "TiempoDuracion": tiempoDuracion,
                 "Precio": precio,
                 "Estado": row[4]
             }
@@ -89,11 +94,16 @@ def agregarMembresia():
             precio = request.form['precio']
             estado = 'activo'
 
-            lasMembresias.agregarMembresia([nombre, duracion, precio, estado])
+            registrarMembresia = lasMembresias.agregarMembresia([nombre, duracion, precio, estado])
 
-            return redirect('/membresias')
+            if registrarMembresia:
+                flash('La membresia fue registrada exitosamente', 'success')
+                return redirect('/membresias')
+            else:
+                flash('La membresia no fue registrada correctamente.', 'error')
+                return redirect('/membresias')
+
         else:
-            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
             return redirect('/membresias')
     else:
         return redirect('/')

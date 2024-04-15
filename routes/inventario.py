@@ -1,4 +1,4 @@
-from flask import session, redirect, request, render_template
+from flask import session, redirect, request, render_template, jsonify, flash
 from conexion import *
 from models.InvProductos import InvProductos
 from datetime import datetime, timedelta
@@ -7,6 +7,50 @@ from models.Membresias import lasMembresias
 
 
 # ----------------------------- INVENTARIO PRODUCTOS ------------------------------------#
+
+def obtener_datos_inventario():
+    try:
+        # Aquí realizas la consulta a tu base de datos o donde tengas los datos
+        resultados = InvProductos.consultarProductos()
+        data = []
+
+        for row in resultados:
+
+            verMas = f"""<div class='btn-group'>
+                            <button type='button' class='btn btn-primary' data-toggle='tooltip' data-placement='top' title='Ver más'>
+                                <i class='fa fa-plus-circle' aria-hidden='true'></i>
+                            </button>
+                        </div>"""
+            
+            acciones = f"""<div class='btn-group'>
+                            <a class='btn btn-danger delete-producto' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
+                            <a class="btn btn-primary" href="/inventario/infoEditProducto/{row[0]}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a>
+                            </div>"""
+
+            caso = {
+                "VerMas": verMas,
+                "Acciones": acciones,
+                "Nombre": row[1],
+                "NombreCategoria": row[2],
+                "PrecioCompra": row[3],
+                "PrecioVenta": row[4],
+                "Cantidad": row[5]
+            }
+
+            data.append(caso)
+
+        return data
+
+    except Exception as e:
+        # Manejo de errores
+        print("Error:", e)
+        return []
+    
+@app.route('/consultarDatosInventario')
+def consultarDatosInventario():
+    data = obtener_datos_inventario()
+
+    return jsonify(data)
 
 @app.route('/inventario')
 def inventario():
@@ -48,22 +92,21 @@ def agregarProducto():
             categoria = request.form['categoria']
             precio_compra = request.form['precio_compra']
             precio_venta = request.form['precio_venta']
-            cantidad:int = request.form['cantidad']
+            cantidad = int(request.form['cantidad'])
             estado = 'activo'
             
             if precio_venta > precio_compra:
                 if cantidad > 0:
                     InvProductos.agregarProducto([nombre, categoria, precio_compra, precio_venta, cantidad, estado])
-
+                    flash('El producto fue registra correctamente.', 'success')
                     return redirect('/inventario')
                 else:
-                    session['mensaje'] = "La cantidad tiene que ser mayor a 0"
+                    flash('La cantidad tiene que ser mayor a 0.', 'info')
                     return redirect('/inventario')
             else:
-                session['mensaje'] = "El precio de venta tiene que ser mayor al de compra"
+                flash('El precio de venta tiene que ser mayor al de compra.', 'info')
                 return redirect('/inventario')
         else:
-            session['mensaje'] = "Lo sentimos hubo un error de seguridad."
             return redirect('/inventario')
     else:
         return redirect('/')

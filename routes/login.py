@@ -1,4 +1,4 @@
-from flask import session, redirect, request, render_template
+from flask import session, redirect, request, render_template, flash
 from conexion import *
 from models.ValidaLogin import validaLogin
 from datetime import datetime, timedelta
@@ -27,6 +27,7 @@ def validacionLogin():
                 if session["rol"] == 'administrador' or session["rol"] == 'super_admin' or session["rol"] == 'entrenador':
                     return redirect('/inicio')
                 else:
+                    flash('Credenciales incorrectas.', 'error')
                     return redirect('/')
         else:
             return render_template('auth/login.html', mensaje = "Acesso denegado")
@@ -47,9 +48,14 @@ def inicio():
 
         # fecha de nacimiento minima (hace 70 años)
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+
+         # Datos de ejemplo
+        renovadas = 75
+        no_renovadas = 100 - renovadas
+
+        data = [renovadas, no_renovadas]
         
-        
-        return render_template('dashboard/index.html', resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+        return render_template('dashboard/index.html', resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima, data=data)
     else:
         return redirect('/')
 

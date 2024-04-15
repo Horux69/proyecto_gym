@@ -26,12 +26,13 @@ def obtener_datos_afiliados():
                             <a class="btn btn-primary" href="/afiliados/actualizarMembresias/{row[0]}"><i class="fa-solid fa-credit-card" style="color: #fff;"></i></a>
                             </div>"""
 
+            cedula_formateada = "{0:,}".format(int(row[0])).replace(",", ".")
             caso = {
                 "VerMas": verMas,
                 "Acciones": acciones,
                 "Nombre": row[1],
                 "Apellido": row[2],
-                "Cedula": row[0],
+                "Cedula": cedula_formateada,
                 "Telefono": row[4],
                 "Correo": row[9],
                 "FechaNac": row[3],

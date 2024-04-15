@@ -22,14 +22,18 @@ class Operadores:
         return len(resultado) > 0
     
     def agregarOperador(self, operadores, user_registro):
-        fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        try:
+            fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 
-        sql = f"INSERT INTO operadores (usuario, nombre, apellido, cedula, telefono, correo, contrasena, rol, fecha_registro, user_registro, estado) VALUES ('{operadores[0]}', '{operadores[1]}', '{operadores[2]}', '{operadores[3]}', '{operadores[4]}', '{operadores[5]}', '{operadores[6]}', '{operadores[7]}', '{fecha_actual}', '{user_registro}', '{operadores[8]}')"
+            sql = f"INSERT INTO operadores (usuario, nombre, apellido, cedula, telefono, correo, contrasena, rol, fecha_registro, user_registro, estado) VALUES ('{operadores[0]}', '{operadores[1]}', '{operadores[2]}', '{operadores[3]}', '{operadores[4]}', '{operadores[5]}', '{operadores[6]}', '{operadores[7]}', '{fecha_actual}', '{user_registro}', '{operadores[8]}')"
 
-        self.cursor.execute(sql)
-        self.conexion.commit()
-        return True
+            self.cursor.execute(sql)
+            self.conexion.commit()
+            return True
+        except Exception as e:
+            print("Error al insertar operador:", e)
+            return False
 
     def desactivarOpe(self, usuario, usuarioDelete):
         fecha_delete = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

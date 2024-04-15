@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Login</title>
 </head>
 <body>
@@ -41,5 +42,17 @@
         </div>
         
     </main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<script>
+    swal({
+        title: "{{ message }}",
+        icon: "{{ category }}",
+    });
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %}
 </body>
 </html>

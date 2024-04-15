@@ -20,9 +20,15 @@ class Membresias:
         return resultado
     
     def agregarMembresia(self, membresias):
-        sql = f"INSERT INTO membresias (id_membresia, nombre, tiempo_duracion, precio, estado) VALUES ('NULL', '{membresias[0]}','{membresias[1]}','{membresias[2]}','{membresias[3]}');"
-        self.cursor.execute(sql)
-        self.conexion.commit()
+        try:
+            sql = "INSERT INTO membresias (nombre, tiempo_duracion, precio, estado) VALUES (%s, %s, %s, %s)"
+            valores = (membresias[0], membresias[1], membresias[2], membresias[3])
+            self.cursor.execute(sql, valores)
+            self.conexion.commit()
+            return True
+        except Exception as e:
+            print("Error al insertar membresia:", e)
+            return False
 
     def desactivarMembresia(self, id_membresia):
         sql = f"UPDATE membresias SET estado = 'inactivo' WHERE id_membresia = {id_membresia};"

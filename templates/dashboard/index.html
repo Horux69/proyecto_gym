@@ -7,13 +7,61 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/operadores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Control Gym</title>
+    <style>
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 
 {% include 'dashboard/cabecera.html' %}
 
+<h1 style="text-align: center;">Estadísticas de Renovación de Membresías</h1>
+<div class="container">
+    <div class="grafico" style="width: 500px;">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
 
-
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Renovadas', 'No renovadas'],
+                datasets: [{
+                    label: 'Renovación de Membresías',
+                    data: {{ data | tojson }},
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Renovación de Membresías'
+                    }
+                }
+            }
+        });
+    </script>
 
 
 {% include 'dashboard/pie.html' %}
