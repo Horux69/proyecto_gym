@@ -1,48 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rutinas | Gym control</title>
 </head>
 <body>
-    <section>
-        <form action="/rutinas/agregar" method="post" enctype="multipart/form-data">
+    <main>
 
-            <label for="">Nombre:</label>
-            <input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9\s]{1,50}" minlength="1" min="1" maxlength="50" max="50" required >
+        <h3>Agregar ejercicios</h3>
 
-            <label for="">Repeticiones: </label>
-            <input type="number" name="repeticiones" placeholder="repeticiones" pattern="[0-9]{1,2}" minlength="1" min="1" maxlength="2" max="2" required>
+        <section>
+            <form action="/rutinas/agregar" method="post" enctype="multipart/form-data">
 
-            <label for="">Series: </label>
-            <input type="number" name="series" placeholder="series" pattern="[0-9]{1,2}" minlength="1" min="1" maxlength="2" max="2" required>
+                <label for="">Nombre:</label>
+                <input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9\s]{1,50}" minlength="1" min="1" maxlength="50" max="50" required >
 
-            <label for="">Tipo: </label>
-            <select class="inputText" name="tipo" required>
-                {% for resul in resulTipos %}
-                <option value="{{resul[0]}}">{{resul[1]}}</option>
-                {% endfor %}
-            </select>
+                <label for="">Repeticiones: </label>
+                <input type="number" name="repeticiones" placeholder="repeticiones" pattern="[0-9]{1,2}" minlength="1" maxlength="2"  required>
 
-            <label for="Foto">Imagen: </label>
-            <input id="Foto" required type="file" name="Foto">
+                <label for="">Series: </label>
+                <input type="number" name="series" placeholder="series" pattern="[0-9]{1,2}" minlength="1"  maxlength="2"  required>
 
-            <button type="submit">Agregar</button>
+                <label for="">Tipo: </label>
+                <select class="inputText" name="tipo" required>
+                    {% for resul in resulTipos %}
+                    <option value="{{resul[0]}}">{{resul[1]}}</option>
+                    {% endfor %}
+                </select>
 
-        </form>
-    </section>
+                <label for="Foto">Imagen: </label>
+                <input id="Foto" required type="file" name="Foto">
 
-    <section>
-        <form action="/rutinas/agregar/tipos" method="post">
+                <button type="submit">Agregar</button>
 
-            <h3>el de abajo es un modal o si le parece lo coloca de otra manera, como tu quieras</h3>
+            </form>
+        </section>
 
-            <input type="text" name="NombreTipo" placeholder="Tipo de ejercicio" pattern="[A-Za-z]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
 
-            <button type="submit">Agregar</button>
+        <h3>Tipos de entrenamientos</h3>
 
-        </form>
-    </section>
+        <section>
+            <form action="/rutinas/agregar/tipos" method="post">
+
+                <input type="text" name="NombreTipo" placeholder="Tipo de ejercicio" pattern="[A-Za-z]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
+
+                <button type="submit">Agregar</button>
+
+            </form>
+        </section>
+
+
+        <h3>Rutina cliente</h3>
+
+        <section>
+            <form action="/Rutina/cliente" method="post">
+
+                <label for="">Rutina: </label>
+                <select name="rutina" required>
+                    {% for resul in resulRutinas %}
+                    <option value="{{resul[0]}}">{{resul[0]}}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="">Cliente: </label>
+                <select name="cliente" required>
+                    {% for resul in resulClientes %}
+                    <option value="{{resul[0]}}">{{resul[0]}}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="">Dia: </label>
+                <input type="date" name="dia">
+
+                <button type="submit">Agregar</button>
+
+            </form>
+        </section>
+
+        <h3>Creador rutina</h3>
+
+        <section>
+
+            <form action="/rutinas/creador_rutina" method="post">
+
+                <label for="">Duracion: </label>
+                <input type="date" name="fecha" required>
+
+                <label for="">Descripcion: </label>
+                <input type="text" part="[A-Za-z]{10,100}" name="descripcion" minlength="10" min="10" max="100" maxlength="100" required>
+
+                <button type="submit">Agregar</button>
+            </form>
+        </section>
+
+        <h3>ejercicio Rutina</h3>
+
+        <section>
+
+        </section>
+
+    </main>
 </body>
 </html>

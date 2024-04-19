@@ -5,6 +5,11 @@ import os
 from datetime import datetime
 
 
+
+""" ------------------------------------------------------------------------------------------------------------ """
+
+
+
 carpeta_up = os.path.join('static\imagenes_rutinas')
 app.config['carpeta_up'] = carpeta_up
 
@@ -14,12 +19,25 @@ def imagenes_rutinas(nombre):
 
 
 
+""" ------------------------------------------------------------------------------------------------------------ """
+
+
+
 @app.route('/rutinas')
 def rutinas():
     
     resultado_tipos = LasRutinas.consultaTipos()
     
-    return render_template('dashboard/rutinas.html', resulTipos = resultado_tipos)
+    resultado_cliente = LasRutinas.cedulaCliente()
+    
+    resultado_Idrutina = LasRutinas.Id_rutina()
+    
+    return render_template('dashboard/rutinas.html', resulTipos = resultado_tipos, resulRutinas= resultado_Idrutina, resulClientes = resultado_cliente)
+
+
+
+""" ------------------------------------------------------------------------------------------------------------ """
+
 
 
 @app.route('/rutinas/agregar', methods = ['POST'])
@@ -53,7 +71,12 @@ def agregarRutinas():
     else:
         return redirect('/')
     
-    
+
+
+""" ------------------------------------------------------------------------------------------------------------ """
+
+
+
 @app.route('/rutinas/agregar/tipos', methods = ['POST'])
 def agregarTipos():
     
@@ -72,4 +95,32 @@ def agregarTipos():
     
     else:
         return redirect('/')
+
+
+
+""" ------------------------------------------------------------------------------------------------------------ """
+
+@app.route('/Rutina/cliente', methods = ['POST'])
+def RutinaCliente():
     
+    rutina = request.form['rutina']
+    cliente = request.form['cliente']
+    dia = request.form['dia']
+    
+    LasRutinas.Rutina_cliente([rutina, cliente, dia])
+    
+    return redirect('/rutinas')
+
+
+""" ------------------------------------------------------------------------------------------------------------ """
+
+
+@app.route('/rutinas/creador_rutina', methods = ['POST'])
+def creador_rutina():
+    
+    fecha = request.form['fecha']
+    descripcion = request.form['descripcion']
+    
+    LasRutinas.creador_rutina([fecha, descripcion])
+    
+    return redirect('/rutinas')
