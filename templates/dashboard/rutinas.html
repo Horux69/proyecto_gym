@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutinas | Gym control</title>
+</head>
+<body>
+    <section>
+        <form action="/rutinas/agregar" method="post" enctype="multipart/form-data">
+
+            <label for="">Nombre:</label>
+            <input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9\s]{1,50}" minlength="1" min="1" maxlength="50" max="50" required >
+
+            <label for="">Repeticiones: </label>
+            <input type="number" name="repeticiones" placeholder="repeticiones" pattern="[0-9]{1,2}" minlength="1" min="1" maxlength="2" max="2" required>
+
+            <label for="">Series: </label>
+            <input type="number" name="series" placeholder="series" pattern="[0-9]{1,2}" minlength="1" min="1" maxlength="2" max="2" required>
+
+            <label for="">Tipo: </label>
+            <select class="inputText" name="tipo" required>
+                {% for resul in resulTipos %}
+                <option value="{{resul[0]}}">{{resul[1]}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="Foto">Imagen: </label>
+            <input id="Foto" required type="file" name="Foto">
+
+            <button type="submit">Agregar</button>
+
+        </form>
+    </section>
+
+    <section>
+        <form action="/rutinas/agregar/tipos" method="post">
+
+            <h3>el de abajo es un modal o si le parece lo coloca de otra manera, como tu quieras</h3>
+
+            <input type="text" name="NombreTipo" placeholder="Tipo de ejercicio" pattern="[A-Za-z]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
+
+            <button type="submit">Agregar</button>
+
+        </form>
+    </section>
+</body>
+</html>
