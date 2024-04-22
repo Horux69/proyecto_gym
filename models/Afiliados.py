@@ -12,6 +12,13 @@ class Afiliados:
         resultado = self.cursor.fetchall()
         self.conexion.commit()
         return resultado
+    
+    def consultarUsuariosPorEstadoMembresia(self):
+        sql = "SELECT estado, COUNT(*) as cantidad FROM registro_usuarios GROUP BY estado;"
+        self.cursor.execute(sql)
+        resultados = self.cursor.fetchall()
+        self.conexion.commit()
+        return resultados
         
     
     def agregarAfiliados(self, afiliados, user_registro):

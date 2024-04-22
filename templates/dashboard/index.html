@@ -12,18 +12,24 @@
     <style>
         .container {
             width: 100vw;
-            height: 100vh;
             display: flex;
             justify-content: center;
+        }
+        .grafico {
+            margin-top: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 0 10px 20px 10px;
+            box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 
 {% include 'dashboard/cabecera.html' %}
 
-<h1 style="text-align: center;">Estadísticas de Renovación de Membresías</h1>
 <div class="container">
-    <div class="grafico" style="width: 500px;">
+    <div class="grafico" style="width: 400px;">
+        <h3 style="text-align: center;">Estadísticas de Afiliados Activos y Inactivos Actualmente</h3>
         <canvas id="myChart"></canvas>
     </div>
 </div>
@@ -53,10 +59,6 @@
                 plugins: {
                     legend: {
                         position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Renovación de Membresías'
                     }
                 }
             }

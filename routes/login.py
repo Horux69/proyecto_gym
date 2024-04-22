@@ -3,6 +3,7 @@ from conexion import *
 from models.ValidaLogin import validaLogin
 from datetime import datetime, timedelta
 from models.Membresias import lasMembresias
+from models.Afiliados import LosAfiliados
 
 
 
@@ -39,19 +40,20 @@ def inicio():
         
         membresias = lasMembresias.consultarMembresias()
 
+        afiliadosActivos = LosAfiliados.consultarUsuariosPorEstadoMembresia()
 
         fecha_actual = datetime.now()
+
+        print(afiliadosActivos)
 
         # fecha de nacimiento maxima (hace 16 años)
         fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
 
-
         # fecha de nacimiento minima (hace 70 años)
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
 
-         # Datos de ejemplo
-        renovadas = 75
-        no_renovadas = 100 - renovadas
+        renovadas = afiliadosActivos[0][1]
+        no_renovadas = afiliadosActivos[1][1]
 
         data = [renovadas, no_renovadas]
         
