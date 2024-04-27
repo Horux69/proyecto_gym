@@ -4,6 +4,7 @@ from models.ValidaLogin import validaLogin
 from datetime import datetime, timedelta
 from models.Membresias import lasMembresias
 from models.Afiliados import LosAfiliados
+from models.IngresoAfiliados import IngresoAfiliados
 
 
 
@@ -40,24 +41,33 @@ def inicio():
         
         membresias = lasMembresias.consultarMembresias()
 
+        # ESTADISTICAS PARA CONSULTAR LA CANTIDAD DE USUARIOS CON MEMBRESIA ACTIVA E INACTIVA
+        
         afiliadosActivos = LosAfiliados.consultarUsuariosPorEstadoMembresia()
 
-        fecha_actual = datetime.now()
+        # fecha_actual = datetime.now()
 
-        print(afiliadosActivos)
+        # # fecha de nacimiento maxima (hace 16 años)
+        # fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
 
-        # fecha de nacimiento maxima (hace 16 años)
-        fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
-
-        # fecha de nacimiento minima (hace 70 años)
-        fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+        # # fecha de nacimiento minima (hace 70 años)
+        # fecha_minima = fecha_actual - timedelta(days=(70 * 365))
 
         renovadas = afiliadosActivos[0][1]
         no_renovadas = afiliadosActivos[1][1]
 
         data = [renovadas, no_renovadas]
+
+        # ESTADISTICAS PARA CONSULTAR LAS HORAS MAS CONCURRIDAS DE INGRESO AL GYM
+
+        datos_por_hora = IngresoAfiliados.consultarHorasConcurridas()
+
+        labels = list(range(24))
+        datos = [datos_por_hora.get(hora, 0) for hora in labels]
+
+        # minima = fecha_minima, maxima = fecha_maxima,
         
-        return render_template('dashboard/index.html', resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima, data=data)
+        return render_template('dashboard/index.html', resulMem = membresias, data=data, labels=labels, datos = datos)
     else:
         return redirect('/')
 

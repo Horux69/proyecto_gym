@@ -3,23 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../static/images/gymcontrol.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="../../static/images/gymcontrol.svg" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/operadores.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <title>Control Gym</title>
     <style>
         .container {
             width: 100vw;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
         }
         .grafico {
             margin-top: 40px;
             background-color: #fff;
             border-radius: 8px;
-            padding: 0 10px 20px 10px;
+            padding: 0 20px 20px 20px;
+            box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .ingresoAfiliado {
+            margin-top: 40px;
+            background-color: #fff;
+            height: 270px;
+            border-radius: 8px;
+            padding: 0 20px 20px 20px;
             box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
         }
         .linea-grafico {
@@ -32,6 +45,41 @@
         #myChart {
             margin-top: 10px;
         }
+
+        #graficoHorasConcurridas {
+            margin-top: 10px;
+        }
+
+        #ingreso-afiliado {
+            margin-top: 20px;
+        }
+
+        #cedula {
+            margin-top: 10px;
+        }
+
+        .diasRestantes {
+            background-color: #008f39;
+            padding: 2px 5px;
+            border-radius: 2px;
+            color: #fff;
+        }
+
+        .diasRestantesVencida {
+            background-color: #cc0605;
+            padding: 2px 5px;
+            border-radius: 2px;
+            color: #fff;
+        }
+
+        .titulos_card_sta {
+            text-align: center;
+        }
+
+        .botonIngreso {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -39,11 +87,86 @@
 
 <div class="container">
     <div class="grafico" style="width: 400px;">
-        <h3 style="text-align: center;">Estadísticas de Afiliados Activos y Inactivos Actualmente</h3>
+        <h3 class="titulos_card_sta">Estadísticas de Afiliados Activos y Inactivos Actualmente</h3>
         <div class="linea-grafico"></div>
         <canvas id="myChart"></canvas>
     </div>
+    <div class="grafico">
+        <h3 class="titulos_card_sta">Estadísticas de Horas Concurridas</h3>
+        <div class="linea-grafico"></div>
+        <canvas id="graficoHorasConcurridas" width="800" height="400"></canvas>
+    </div>
+    <div class="ingresoAfiliado">
+        <h3 class="titulos_card_sta">Ingreso de Afiliados al Gym</h3>
+        <div class="linea-grafico"></div>
+        <form action="" method="post" id="ingreso-afiliado">
+            <label for="cedula">Cedula del Afiliado:</label>
+            <input type="text" name="cedula" id="cedula" class="inputText">
+            <div class="botonIngreso">
+                <button type="submit" class="buttonSumit">Ingresar</button>
+            </div>
+        </form>
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#ingreso-afiliado').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/afiliados/ingresoAfiliado',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.valido == 'Valido') {
+                        swal({
+                            title: "Afiliado válido",
+                            content: {
+                                element: "div",
+                                attributes: {
+                                    style: "text-align: center;",
+                                    innerHTML: "Nombre: " + response.nombreAfiliado + 
+                                                "<br>Tipo de Membresia: " +
+                                                "<br>Días restantes de la membresía: <strong class='diasRestantes'>" + response.restantes + "</strong>",
+                                }
+                            },
+                            icon: "success",
+                            button: "Aceptar"
+                        }).then(function() {
+                            location.reload(); // Recargar la página
+                        });
+                    } else if (response.valido == 'Invalido') {
+                        swal({
+                            title: "Afiliado inválido",
+                            content: {
+                                element: "div",
+                                attributes: {
+                                    style: "text-align: center;",
+                                    innerHTML: "Nombre: " + response.nombreAfiliado + 
+                                                "<br>Tipo de Membresia: Sin Membresia" +
+                                                "<br>Días restantes de la membresía: <strong class='diasRestantesVencida'>" + response.restantes + "</strong>",
+                                }
+                            },
+                            icon: "error",
+                            button: "Aceptar"
+                        });
+                    } else if (response.valido == 'Error'){
+                        swal({
+                            title: "Afiliado No Existe",
+                            text: "El Afiliado no existe en el sistema.",
+                            icon: "error",
+                            button: "Aceptar"
+                        });
+                    }
+                },
+                error: function() {
+                    swal("Error", "Hubo un error en la solicitud", "error");
+                }
+            });
+        });
+    });
+</script>
 
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -70,6 +193,30 @@
                 plugins: {
                     legend: {
                         position: 'top',
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        var ctx = document.getElementById('graficoHorasConcurridas').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels | tojson }},
+                datasets: [{
+                    label: 'Cantidad de Ingresos',
+                    data: {{ datos | tojson }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }

@@ -1,10 +1,52 @@
 from flask import session, render_template, redirect, request, jsonify, flash
 from conexion import *
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from models.Afiliados import LosAfiliados
 from models.Membresias import lasMembresias
+from models.IngresoAfiliados import IngresoAfiliados
 
 # ------------------------ AFILIADOS ---------------------------------------------#
+
+@app.route('/afiliados/ingresoAfiliado', methods = ['POST'])
+def consultarEstadoAfiliado():
+    cedula_afiliado = request.form['cedula']
+
+    infoAfiliado = LosAfiliados.infoAfiliados(cedula_afiliado)
+
+    if infoAfiliado:
+
+        id_afiliado = infoAfiliado[0][0]
+
+        fecha_actual = datetime.now().date()
+
+        fecha_vencimiento = infoAfiliado[0][14]
+
+        dias_restantes = (fecha_vencimiento - fecha_actual).days
+
+        nombre_afiliado = infoAfiliado[0][1] + ' ' + infoAfiliado[0][2]
+        
+        if infoAfiliado[0][17] == 'activo':
+            fecha_ingreso = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+            IngresoAfiliados.agregarIngresoAfiliado(id_afiliado, fecha_ingreso)
+
+            return jsonify({
+                            'valido': 'Valido',
+                            'nombreAfiliado': nombre_afiliado,
+                            'restantes': dias_restantes
+                            })
+        else:
+            dias_restantes = 0
+
+            return jsonify({
+                            'valido': 'Invalido',
+                            'nombreAfiliado': nombre_afiliado,
+                            'restantes': dias_restantes
+                            })
+    else:
+        return jsonify({
+                            'valido': 'Error',
+                            })
 
 def obtener_datos_afiliados():
     try:
