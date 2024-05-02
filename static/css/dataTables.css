@@ -123,7 +123,13 @@ a,
             position: relative; /* Asegura que el DataTable tenga un contexto de apilamiento */
             z-index: 1; /* Asigna un índice de apilamiento menor al del DataTable */
         }        
-        
+        div.dt-searchPanes div.pane {
+            position:relative;
+            flex:1;
+            margin:1em -0.5%;
+            border:1px solid #ccc;
+            border-radius:3px
+          }
         @media(maz-width:768px) {
             #sidebar {
                 margin-left: -200px

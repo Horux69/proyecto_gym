@@ -11,7 +11,9 @@
                 <li><a href="/afiliados">Afiliados</a></li>
                 <li><a href="/membresias">Membresias</a></li>
                 <li><a href="/rutinas">Rutinas</a></li>
-               
+                {% if session["rol"] == 'super_admin' or session["rol"] == 'administrador' %}
+                <li><a href="/contactanos">Contactanos</a></li>                
+                {% endif %}
                 <!-- <li><a href="#">Servicios</a></li> 
                 <li><a href="#">Contacto</a></li> -->
                 </div>

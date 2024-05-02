@@ -66,6 +66,8 @@ def obtener_datos_afiliados():
                             <a onclick='return confirm('Seguro quiere eliminar este operador?')' class='btn btn-danger delete-afiliado' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
                             <a class="btn btn-info" href="/afiliados/info/{row[0]}"><i class="fa-solid fa-address-card" style="color: #fff;"></i></a>
                             <a class="btn btn-primary" href="/afiliados/actualizarMembresias/{row[0]}"><i class="fa-solid fa-credit-card" style="color: #fff;"></i></a>
+                            <a class="btn btn-primary" href="/afiliados/nuevacontra/{row[0]}"><i class="fa-solid fa-key" ></i></i></a>
+                            
                             </div>"""
 
             cedula_formateada = "{0:,}".format(int(row[0])).replace(",", ".")
@@ -346,7 +348,7 @@ def actualizarContra():
     
     else:
         
-        return redirect('/')
+        return redirect('/afiliados')
     
 @app.route('/afiliados/nuevacontra/<cedula>')
 def nuevacontra(cedula): 
