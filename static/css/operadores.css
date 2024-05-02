@@ -19,19 +19,16 @@ body, html {
     justify-content: flex-end;
 }
 
-.boton_agregar_pro {
-    display: flex;
-    justify-content: flex-end;
-}
+
 
 .boton_ope {
     text-decoration: none;
     color: #000;
+    font-size: 14px;
     margin: 0 25px 0 0;
-    padding: 10px;
+    padding: 5px 10px;
     background-color: #FFD100;
     border-radius: 6px;
-    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.25);
 }
 
 .boton_ope2 {
@@ -47,11 +44,11 @@ body, html {
 .boton_cat {
     text-decoration: none;
     color: #000;
+    font-size: 14px;
     margin: 0 25px 0 0;
-    padding: 10px;
+    padding: 5px 10px;
     background-color: #FFD100;
     border-radius: 6px;
-    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.25);
 }
 
 .boton_cat:hover {
@@ -92,6 +89,7 @@ body, html {
 .container_table {
 margin: 30px 25px 70px;
 box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+border: solid 1px;
 }
 
 table {
@@ -279,6 +277,24 @@ border-radius: 8px;
 background-color: #5a5a5a;
 }
 
+.modal_close2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    }
+    
+    .modal_close2:hover {
+    color: #fff;
+    border-radius: 8px;
+    background-color: #5a5a5a;
+    }
+    
+
 /* FORMULARIO */
 
 
@@ -286,7 +302,7 @@ background-color: #5a5a5a;
 border-radius: 5px;
 border: none;
 box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-height: 26px;
+height: 35px;
 padding: 8px;
 }
 
@@ -297,7 +313,7 @@ outline-style: none;
 
 .inputText {
 width: 100%;
-height: 8%;
+height: 35px;
 }
 
 
@@ -319,7 +335,8 @@ font-family: 'Poppins', sans-serif;
 font-weight: 200;
 }
 
-#formulario {
+#formulario { 
+position: relative;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -344,7 +361,23 @@ background-color: #FFD100;
 color: black;
 font-family: 'Poppins', sans-serif;
 }
-
+#actualizarbutton{
+padding: 8px;
+border-radius: 10px;
+border: 0;
+font-size: 16px;
+box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+background-color: #FFD100;
+color: black;
+font-family: 'Poppins', sans-serif;
+}
+#desactivar{
+    text-decoration: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 8px;
+    background-color: #666;
+}
 .buttonSumit:hover {
 background-color: #e7bd00;
 transform: scale(1.1);
@@ -402,4 +435,26 @@ width: 100%;
     padding: 8px 11px;
     background-color: #d3ae0b; 
 }
+#inputcontra{
+    right: -100px;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center center;
+    width: 500px;
+    height: 150px;
+}
 
+#contra1{
+    text-align: center;
+    width: 300px;
+    height: 35px;
+    position: absolute;
+}
+#contra2{
+    text-align: center;
+    width: 300px;
+    height: 35px;
+    top: 80px;
+    position: absolute;
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactanos</title>
+</head>
+<body>
+    <main >
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <th>nombre</th>
+                        <th>telefono</th>
+                        <th>correo</th>
+                        <th>hubicacion</th>
+                        <th>barrio</th>
+                        <th>direccion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for dato_gym in contacto_gym %}
+                    <tr>
+                        <td>{{dato_gym[1]}}</td>
+                        <td>{{dato_gym[2]}}</td>
+                        <td>{{dato_gym[3]}}</td>
+                        <td>{{dato_gym[4]}}</td>
+                        <td>{{dato_gym[5]}}</td>
+                        <td>{{dato_gym[6]}}</td>
+                    </tr>
+                    
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </section>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <section >
+            <!-- este es el formulario para agragar es un modal -->
+            <form action="/contactanos/agregar" method="post" >
+            
+
+            <label for="nombre_gym">proporcione el nombre del gimnasio</label>
+            <input type="text" placeholder="Nombre" name="nombre_gym" id="nombre_gym" pattern="[A-Za-z\s]{5,50}" maxlength="50" minlength="5" tabindex="1" required >
+
+            <label for="telefono_gym">proporcione el telefono del gimnasio</label>
+            <input type="tel" placeholder="Teléfono" name="telefono_gym" id="telefono_gym" pattern="[0-9]{10}" maxlength="10" minlength="10" tabindex="2" required >
+
+            <label for="correo_gym">proporcione el correo del gimnasio</label>
+            <input type="email"  id="correo_gym" name="correo_gym" pattern="[A-Za-z-_0-9]+@[A-Za-z]\.[a-z]{11,65}" minlength="11" maxlength="65" placeholder="Correo Electronico" tabindex="3" required>
+
+            <label for="hubicacion_gym">proporcione la hubicacion del gimnasio</label>
+            <input type="text"  id="hubicacion_gym" name="hubicacion_gym" pattern="[A-Za-z\s]{10,50}" maxlength="50" minlength="10" placeholder="Hubicación" tabindex="4" required>
+
+            <label for="barrio_gym">proporcione el barrio del gimnasio</label>
+            <input type="text" placeholder="Barrio" name="barrio_gym" id="barrio_gym" pattern="[A-Za-z\s]{10,50}" maxlength="50" minlength="10" tabindex="5" required >
+
+            <label for="direccion_gym">proporcione la dirección del gimnasio</label>
+            <input type="text" placeholder="Direccion" name="direccion_gym" id="direccion_gym" pattern="[A-Za-z\s]{10,50}" maxlength="50" minlength="10" tabindex=6" required >          
+
+            <button type="submit" tabindex="7" >guardar</button>
+        </form>
+        </section>
+         
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+         <br/>
+        <section>
+            <!-- este es el de el update es un modal -->
+            <form action="/contactanos/actualizar" method="post" >
+            
+                <input type="text" name="id_contacto" id="id_contacto" value="{{contacto_gym[0][0]}}" hidden readonly>
+
+                <label for="nombre_gym">nombre del gimnasio</label>
+                <input type="text" value="{{contacto_gym[0][1]}}" name="nombre_gym" id="nombre_gym" pattern="[A-Za-z\s]{5,50}" maxlength="50" minlength="5" tabindex="1" required >
+    
+                <label for="telefono_gym">telefono del gimnasio</label>
+                <input type="tel" value="{{contacto_gym[0][2]}}" name="telefono_gym" id="telefono_gym" pattern="[0-9]{10}" maxlength="10" minlength="10" tabindex="2" required >
+    
+                <label for="correo_gym">correo del gimnasio</label>
+                <input type="email" value="{{contacto_gym[0][3]}}" id="correo_gym" name="correo_gym" pattern="[A-Za-z-_0-9]+@[A-Za-z]\.[a-z]{11,65}" minlength="11" maxlength="65"  tabindex="3" required>
+                
+                <label for="direccion_gym">dirección del gimnasio</label>
+                <input type="text" value="{{contacto_gym[0][6]}}" name="direccion_gym" id="direccion_gym" pattern="[A-Za-z\s]{10,50}" maxlength="50" minlength="10" tabindex=6" required >          
+    
+                <label for="hubicacion_gym">hubicacion del gimnasio</label>
+                <input type="text" value="{{contacto_gym[0][4]}}" id="hubicacion_gym" name="hubicacion_gym" pattern="[A-Za-z\s-#]{10,50}" maxlength="50" minlength="10"  tabindex="4" required>
+    
+                <label for="barrio_gym">
+                    barrio del gimnasio</label>
+                <input type="text" value="{{contacto_gym[0][5]}}" name="barrio_gym" id="barrio_gym" pattern="[A-Za-z\s]{10,50}" maxlength="50" minlength="10" tabindex="5" required >
+    
+                
+                <button type="submit" tabindex="7" >actualizar</button>
+            </form>
+        </section>
+    </main>
+    
+
+</body>
+
+</html>

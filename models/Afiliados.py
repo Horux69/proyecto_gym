@@ -12,17 +12,28 @@ class Afiliados:
         resultado = self.cursor.fetchall()
         self.conexion.commit()
         return resultado
+    
+    def consultarUsuariosPorEstadoMembresia(self):
+        sql = "SELECT estado, COUNT(*) as cantidad FROM registro_usuarios GROUP BY estado;"
+        self.cursor.execute(sql)
+        resultados = self.cursor.fetchall()
+        self.conexion.commit()
+        return resultados
         
     
     def agregarAfiliados(self, afiliados, user_registro):
-        sql = f"INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `sexo`, `tipo_sangre`, `huella`, `nuemero_emergencia`, `correo`, `contrasena`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES ('{afiliados[0]}','{afiliados[1]}','{afiliados[2]}','{afiliados[3]}','{afiliados[4]}','{afiliados[5]}','{afiliados[6]}','{afiliados[7]}','{afiliados[8]}','{afiliados[9]}','{afiliados[10]}','{afiliados[11]}','{afiliados[12]}','{afiliados[13]}','{afiliados[14]}','{afiliados[15]}','{user_registro}','{afiliados[16]}')"
-        self.cursor.execute(sql)
-        self.conexion.commit()
+        try:
+            sql = f"INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `sexo`, `tipo_sangre`, `huella`, `nuemero_emergencia`, `correo`, `contrasena`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES ('{afiliados[0]}','{afiliados[1]}','{afiliados[2]}','{afiliados[3]}','{afiliados[4]}','{afiliados[5]}','{afiliados[6]}','{afiliados[7]}','{afiliados[8]}','{afiliados[9]}','{afiliados[10]}','{afiliados[11]}','{afiliados[12]}','{afiliados[13]}','{afiliados[14]}','{afiliados[15]}','{user_registro}','{afiliados[16]}')"
+            self.cursor.execute(sql)
+            self.conexion.commit()
+            return True
+        except Exception as e:
+            print("Error al insertar usuario:", e)
+            return False
 
-
-    def validarDatosAfiliados(self,cedula,correo,telefono):
-        sql = f"SELECT * FROM operadores WHERE  cedula = '{cedula}' AND correo = '{correo}' AND telefono = '{telefono}'"
-        self.cursor.execute(sql)
+    def validarDatosAfiliados(self, cedula, correo, telefono):
+        consulta = f"SELECT * FROM registro_usuarios WHERE cedula = '{cedula}' OR correo = '{correo}' OR telefono = '{telefono}'"
+        self.cursor.execute(consulta)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
         return len(resultado) > 0
@@ -70,5 +81,12 @@ class Afiliados:
         sql =f"UPDATE registro_usuarios SET fecha_vencimiento = date_add(fecha_vencimiento,interval '{nuevMen[1]}' day), id_membresia = {nuevMen[2]}, estado = 'activo' WHERE cedula = '{nuevMen[0]}'"
         self.cursor.execute(sql)
         self.conexion.commit()
+        
+    def actualizarContra(self,nuevContra):
+         
+        sql =  f"UPDATE registro_usuarios SET contrasena = '{nuevContra[1]}' WHERE cedula = '{nuevContra[0]}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()
+        
 
 LosAfiliados = Afiliados(mysql)

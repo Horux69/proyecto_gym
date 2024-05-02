@@ -6,6 +6,8 @@ from routes.inventario import inventario
 from routes.membresias import membresias
 from routes.operadores import consultaOperadores
 from models.Afiliados import LosAfiliados
+from routes.rutinas import rutinas
+from routes.contactanos import contactanos
 from conexion import *
 
 
