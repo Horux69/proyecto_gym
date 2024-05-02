@@ -127,7 +127,7 @@ def infoMembresiaEdit(id_membresia):
         
         resultado = lasMembresias.infoMembresia(id_membresia)
         
-        esultado = lasMembresias.consultarMembresias()
+        resultado = lasMembresias.consultarMembresias()
         
         fecha_actual = datetime.now()
 

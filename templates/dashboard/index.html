@@ -92,12 +92,12 @@
         <canvas id="myChart"></canvas>
     </div>
     <div class="grafico">
-        <h3 class="titulos_card_sta">Estadísticas de Horas Concurridas</h3>
+        <h3 class="titulos_card_sta">Estadísticas de las Horas Mas Concurridas</h3>
         <div class="linea-grafico"></div>
         <canvas id="graficoHorasConcurridas" width="800" height="400"></canvas>
     </div>
     <div class="ingresoAfiliado">
-        <h3 class="titulos_card_sta">Ingreso de Afiliados al Gym</h3>
+        <h3 class="titulos_card_sta">Ingreso de Afiliados</h3>
         <div class="linea-grafico"></div>
         <form action="" method="post" id="ingreso-afiliado">
             <label for="cedula">Cedula del Afiliado:</label>
@@ -206,7 +206,7 @@
             data: {
                 labels: {{ labels | tojson }},
                 datasets: [{
-                    label: 'Cantidad de Ingresos',
+                    label: 'Afiliados Ingresados',
                     data: {{ datos | tojson }},
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',

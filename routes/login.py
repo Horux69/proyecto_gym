@@ -29,11 +29,13 @@ def validacionLogin():
                 if session["rol"] == 'administrador' or session["rol"] == 'super_admin' or session["rol"] == 'entrenador':
                     return redirect('/inicio')
                 else:
-                    flash('Credenciales incorrectas.', 'error')
                     return redirect('/')
         else:
-            return render_template('auth/login.html', mensaje = "Acesso denegado")
+            flash('Usuario o Contraseña Incorrectas.', 'error')
+            return render_template('auth/login.html')
         
+def convertir_a_formato_12_horas(hora):
+    return datetime.strptime(hora, "%H").strftime("%I %p")
 
 @app.route('/inicio')
 def inicio():
@@ -42,8 +44,10 @@ def inicio():
         membresias = lasMembresias.consultarMembresias()
 
         # ESTADISTICAS PARA CONSULTAR LA CANTIDAD DE USUARIOS CON MEMBRESIA ACTIVA E INACTIVA
-        
+
         afiliadosActivos = LosAfiliados.consultarUsuariosPorEstadoMembresia()
+
+        print(afiliadosActivos)
 
         # fecha_actual = datetime.now()
 
@@ -53,17 +57,22 @@ def inicio():
         # # fecha de nacimiento minima (hace 70 años)
         # fecha_minima = fecha_actual - timedelta(days=(70 * 365))
 
+        if afiliadosActivos[0][0] == 'inactivo':
+            afiliadosActivos = (('activo', 0),) + afiliadosActivos
+
         renovadas = afiliadosActivos[0][1]
-        no_renovadas = afiliadosActivos[1][1]
+        no_renovadas = afiliadosActivos[1][1] if afiliadosActivos and len(afiliadosActivos) > 1 else 0
 
         data = [renovadas, no_renovadas]
+
+        print(data)
 
         # ESTADISTICAS PARA CONSULTAR LAS HORAS MAS CONCURRIDAS DE INGRESO AL GYM
 
         datos_por_hora = IngresoAfiliados.consultarHorasConcurridas()
 
-        labels = list(range(24))
-        datos = [datos_por_hora.get(hora, 0) for hora in labels]
+        labels = [convertir_a_formato_12_horas(str(hora)) for hora in range(24)]
+        datos = [datos_por_hora.get(hora, 0) for hora in range(24)]
 
         # minima = fecha_minima, maxima = fecha_maxima,
         
