@@ -3,16 +3,16 @@
     <nav class="navbar">
         <ul class="menu">
             <div class="links">
-                <li><a href="/inicio">Inicio</a></li>
+                <li><a href="/inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="/afiliados"><i class="fas fa-users"></i>  Afiliados</a></li>
+                <li><a href="/membresias"><i class="fa-solid fa-address-card"></i>  Membresias</a></li>
+                <li><a href="/rutinas"><i class="fa-solid fa-dumbbell"></i>  Rutinas</a></li>
                 {% if session["rol"] == 'super_admin' or session["rol"] == 'administrador' %}
-                <li><a href="/operadores">Operadores</a></li>
+                <li><a href="/operadores"><i class="fa-solid fa-user-tie"></i>  Operadores</a></li>
                 {% endif %}
-                <li><a href="/inventario">Inventario de Productos</a></li>
-                <li><a href="/afiliados">Afiliados</a></li>
-                <li><a href="/membresias">Membresias</a></li>
-                <li><a href="/rutinas">Rutinas</a></li>
+                <li><a href="/inventario"><i class="fa-solid fa-store"></i>  Inventario de Productos</a></li>
                 {% if session["rol"] == 'super_admin' or session["rol"] == 'administrador' %}
-                <li><a href="/contactanos">Contactanos</a></li>                
+                <li><a href="/contactanos"><i class="fa-sharp fa-solid fa-shop"></i>  Contactanos</a></li>                
                 {% endif %}
                 <!-- <li><a href="#">Servicios</a></li> 
                 <li><a href="#">Contacto</a></li> -->
