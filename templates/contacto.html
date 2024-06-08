@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contacto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <title>contacto</title>
+</head>
+
+{% include 'dashboard/cabecera.html' %}
+
+
+{% if session["rol"] == 'super_admin' %}
+<a class="boton_agregar" href="#">agregar contacto</a>
+{% endif %}
+
+
+<!-- <a class="boton_actualizar" href="#">actualizar contacto</a> -->
+    
+        <div class="contenedor_tabla">
+            <table>
+                <thead>
+                    <tr> 
+                        <th>Nombre</th>
+                        <th>telefono</th>
+                        <th>correo</th>
+                        <th>ubicacion</th>
+                        <th>barrio</th>
+                        <th>dirección</th>
+                        <th>mas info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for dato_gym in contacto_gym %}
+                    <tr>
+                        <td>{{dato_gym[1]}}</td>
+                        <td>{{dato_gym[2]}}</td>
+                        <td>{{dato_gym[3]}}</td>
+                        <td>{{dato_gym[4]}}</td>
+                        <td>{{dato_gym[5]}}</td>
+                        <td>{{dato_gym[6]}}</td>
+                        <td><a href="/contacto/actualizar" class="boton_actualizar"><li class="fa-solid fa-pen-to-square" style="color: #FFD100;"></li></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            
+
+
+        <section class="modal_agregar ">
+            <div class="contenedor_modal">
+                <a href="#" class="modal_close"><i class="fa-solid fa-xmark fa-xl"></i></a>
+                <form action="/contacto/agregar" method="post" class="form-grid">
+                    <h2 class="titulo">AGREGAR UN CONTACTO</h2>
+                    <label for="nombre_gym" class="nombre_gym">nombre:</label>
+                    <input type="text" placeholder="Nombre" name="nombre_gym" class="nombre" required >
+
+                    <label for="telefono_gym" class="telefono_gym">telefono:</label>
+                    <input type="tel" placeholder="Teléfono" name="telefono_gym" class="telefono" required >
+
+                    
+                    <label for="correo_gym" class="correo_gym">correo:</label>
+                    <input type="email"  class="correo" name="correo_gym" placeholder="Correo Electronico"  required>
+        
+                    <label for="ubicacion_gym" class="ubicacion_gym">ubicacion:</label>
+                    <input type="text"  class="ubicacion" name="ubicacion_gym" placeholder="ubicacion"  required>
+        
+                    <label for="barrio_gym" class="barrio_gym">barrio:</label>
+                    <input type="text" placeholder="Barrio" name="barrio_gym" class="barrio" required >
+
+                    <label for="direccion_gym" class="direccion_gym">direccion:</label>
+                    <input type="text" placeholder="Direccion" name="direccion_gym" class="direccion"   required >
+
+
+        
+                    <button type="submit" tabindex="7" class="boton__">GUARDAR CAMBIOS</button>
+                    </form>
+            </div>
+            </section>
+
+            <!-- este es el formulario para agragar es un modal -->
+
+            <section class="modal_actualizar">
+                <div class="contenedor_modal">
+                    <a href="#" class="cerrar_modal"><i class="fa-solid fa-xmark fa-xl"></i></a>
+                    <form action="/contacto/actualizar" method="post" >
+                        <h2 class="titulo">ACTUALIZAR CONTACTO</h2>
+                        <input type="text"  name="id_contacto" id="id_actualizar" value="{{contacto_gym[0][0]}}"  hidden readonly>
+        
+                        <label for="nombre_gym" class="nombre_gym">nombre:</label>
+                        <input type="text" value="{{contacto_gym[0][1]}}" name="nombre_gym" class="nombre"   required >
+            
+                        <label for="telefono_gym" class="telefono_gym">telefono:</label>
+                        <input type="tel" value="{{contacto_gym[0][2]}}" name="telefono_gym" class="telefono"  required >
+            
+                        <label for="correo_gym" class="correo_gym">correo:</label>
+                        <input type="email" value="{{contacto_gym[0][3]}}" id="correo_gym" class="correo"  name="correo_gym"  required>
+                        
+                        <label for="direccion_gym" class="direccion_gym">dirección:</label>
+                        <input type="text" value="{{contacto_gym[0][6]}}" name="direccion_gym" class="direccion"  required >          
+            
+                        <label for="barrio_gym" class="barrio_gym">barrio:</label>
+                        <input type="text" value="{{contacto_gym[0][5]}}" name="barrio_gym" class="barrio"   required >
+            
+                        <label for="ubicacion_gym" class="ubicacion_gym">ubicacion:</label>
+                        <input type="text" value="{{contacto_gym[0][4]}}" class="ubicacion" name="ubicacion_gym"  required>
+            
+                        
+                        <button type="submit" tabindex="7" class="boton__">ACTUALIZAR CAMBIOS</button>
+                    </form>
+                </div>
+                </section>
+    
+        </section> 
+
+    <script>
+        const abrir = document.querySelector('.boton_agregar');
+        const agregar = document.querySelector('.modal_agregar ');
+        const cerrar = document.querySelector('.modal_close');
+
+        abrir.addEventListener('click', (e)=>{
+            e.preventDefault();
+            agregar.classList.add('modal--show');
+        });
+
+        cerrar.addEventListener('click', (e)=>{
+            e.preventDefault();
+            agregar.classList.remove('modal--show');
+        });
+
+        const btn_actualizar = document.querySelector('.boton_actualizar');
+        const modal_actualizar = document.querySelector('.modal_actualizar');
+        const modal_cerrar = document.querySelector('.cerrar_modal');
+
+        btn_actualizar.addEventListener('click', (e)=>{
+            e.preventDefault();
+            modal_actualizar.classList.add('mostrar_modal');
+        });
+
+        modal_cerrar.addEventListener('click', (e)=>{
+            e.preventDefault();
+            modal_actualizar.classList.remove('mostrar_modal');
+        });
+
+        </script>
+
+{% include 'dashboard/pie.html' %}

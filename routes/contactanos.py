@@ -3,17 +3,17 @@ from flask import session, redirect, request, render_template
 from models.contactanos import Datoscontacto
 
 
-@app.route('/contactanos')
-def contactanos():
+@app.route('/contacto')
+def contacto():
     
-    resultado = Datoscontacto.consultaDatosgym()
+    contacto_gym =Datoscontacto.consultaDatosgym()
     
-    return render_template('dashboard/contactanos.html', contacto_gym=resultado)
+    return render_template('contacto.html',contacto_gym = contacto_gym)
 
 
 
 
-@app.route('/contactanos/agregar', methods = ['POST'])
+@app.route('/contacto/agregar', methods = ['POST'])
 def agregarDatosgym():
     
     if session.get("logueado") and  session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
@@ -23,22 +23,22 @@ def agregarDatosgym():
             nombre_gym = request.form['nombre_gym']
             telefono_gym = request.form['telefono_gym']
             correo_gym = request.form['correo_gym']
-            hubicacion_gym = request.form['hubicacion_gym']
+            ubicacion_gym = request.form['ubicacion_gym']
             barrio_gym = request.form['barrio_gym']
             direccion_gym = request.form['direccion_gym']
             
-            Datoscontacto.agregarDatosgym([nombre_gym,telefono_gym,correo_gym,direccion_gym,barrio_gym,hubicacion_gym])
-            return redirect('/contactanos')
+            Datoscontacto.agregarDatosgym([nombre_gym,telefono_gym,correo_gym,direccion_gym,barrio_gym,ubicacion_gym])
+            return redirect('/contacto')
             
         else:
-            return redirect('/contactanos')
+            return redirect('/contacto')
     
     else:
         
         return redirect('/')
     
     
-@app.route('/contactanos/actualizar', methods=['POST'])
+@app.route('/contacto/actualizar', methods=['POST'])
 def actualizarDatosgym():
     if session.get("logueado") and  session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
     
@@ -48,14 +48,14 @@ def actualizarDatosgym():
             nombre_gym = request.form['nombre_gym']
             telefono_gym = request.form['telefono_gym']
             correo_gym = request.form['correo_gym']
-            hubicacion_gym = request.form['hubicacion_gym']
+            ubicacion_gym = request.form['ubicacion_gym']
             barrio_gym = request.form['barrio_gym']
             direccion_gym = request.form['direccion_gym']
             
-            Datoscontacto.actualizarDatosgym([id_contacto,nombre_gym,telefono_gym,correo_gym,hubicacion_gym,barrio_gym,direccion_gym])
-            return redirect('/contactanos')
+            Datoscontacto.actualizarDatosgym([id_contacto,nombre_gym,telefono_gym,correo_gym,ubicacion_gym,barrio_gym,direccion_gym])
+            return redirect('/contacto')
         else:
-            return redirect('/contactanos')    
+            return redirect('/contacto')    
             
             
     else:
