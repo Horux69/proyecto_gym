@@ -5,23 +5,26 @@ from datetime import datetime, timedelta
 from models.Membresias import lasMembresias
 from models.Afiliados import LosAfiliados
 from models.IngresoAfiliados import IngresoAfiliados
+import hashlib
 
 
 
 
-@app.route('/validationAuth', methods = ['POST'])
+
+@app.route('/validationAuth', methods=['POST'])
 def validacionLogin():
     if request.method == 'POST':
         usuario = request.form['usuario']
         contrasena = request.form['password'].lower()
+        cifrada = hashlib.sha512(contrasena.encode('utf-8')).hexdigest()
+        print(cifrada)
 
-        resultados = validaLogin.validaLogin(usuario, contrasena)
-        
+        resultados = validaLogin.validaLogin(usuario, cifrada)
 
         if len(resultados) > 0:
-            if contrasena == resultados[0][2]:
+            if cifrada == resultados[0][2]:
                 session["logueado"] = True
-                session["user_name"] = resultados[0][0] 
+                session["user_name"] = resultados[0][0]
                 session["rol"] = resultados[0][3]
                 session["usuario"] = resultados[0][1]
 
@@ -33,6 +36,9 @@ def validacionLogin():
         else:
             flash('Usuario o Contraseña Incorrectas.', 'error')
             return render_template('auth/login.html')
+    else:
+        return render_template('auth/login.html')
+
         
 def convertir_a_formato_12_horas(hora):
     return datetime.strptime(hora, "%H").strftime("%I %p")

@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, date
 from models.Afiliados import LosAfiliados
 from models.Membresias import lasMembresias
 from models.IngresoAfiliados import IngresoAfiliados
+import hashlib
 
 # ------------------------ AFILIADOS ---------------------------------------------#
 
@@ -149,6 +150,7 @@ def agregarAfiliados():
             telefono_emergencia = request.form['telefono_emergencia']
             correo = request.form['email']
             contrasena = request.form['cedula']
+            cifrada = hashlib.sha512(contrasena.encode('utf-8')).hexdigest()
             tarjeta_nfc = request.form['nfc']
             id_membresia = request.form['membresia']
             fecha_inicio = datetime.now()
@@ -164,7 +166,7 @@ def agregarAfiliados():
                 flash('Cedula, Telefono o Correo ya Existentes.', 'error')
                 return redirect('/afiliados')
             else:
-                registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, contrasena, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
+                registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, cifrada, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
                 if registroAfiliado:
                     flash('El nuevo usuario fue registrado exitosamente', 'success')
                     return redirect('/afiliados')
@@ -339,9 +341,9 @@ def actualizarContra():
         cedula = request.form['cedula']
         
         if contra1 == contra2:
-            nuevaContra = contra1
+            cifrada = hashlib.sha512(contra1.encode('utf-8')).hexdigest()
             
-            LosAfiliados.actualizarContra([cedula, nuevaContra])
+            LosAfiliados.actualizarContra([cedula, cifrada])
 
             print("la contraseña se cambio correctamente")
         return redirect('/afiliados')  

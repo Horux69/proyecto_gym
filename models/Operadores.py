@@ -52,6 +52,13 @@ class Operadores:
         resultado = self.cursor.fetchall()
         self.conexion.commit()
         return resultado
+    
+    def actualizarContra(self,nuevContra):
+        
+        sql = f"UPDATE operadores SET contrasena = '{nuevContra[1]}' WHERE cedula = '{nuevContra[0]}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()
+        
         
 losOperadores = Operadores(mysql)
 
