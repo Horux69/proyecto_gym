@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/operadores.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    
+    <title>Cambio De Contraseña</title>
+</head>
+{% include 'dashboard/cabecera.html' %}
+<div class="titulo_operadores">
+    <h2>Nueva Contraseña ope</h2>
+</div>
+
+<div class="contenedorForm">
+    <form id="formulario" action="/operadores/actualizarContra" method="POST">
+        <div class="content" id="inputcontra">
+            
+            <input type="text" class="inputText" id="cedula"  name="cedula" hidden value="{{cedula}}" pattern="[0-9]{6,15}" maxlength="15" minlength="6" placeholder="Cedula" required> 
+
+            <input type="text" class="inputText" id="contra1" name="contra1" pattern="[a-z0-9]{5,50}" title="Debe de tener letras minuculas y numeros, minimo tiene que tener 5 caracteres" maxlength="50" minlength="5" placeholder="nueva contraseña" required>
+
+            <input type="text" class="inputText" id="contra2" name="contra2" pattern="[a-z0-9]{5,50}" title="Debe de tener letras minuculas y numeros, minimo tiene que tener 5 caracteres" maxlength="50" minlength="5" placeholder="confirme su contraseña" required>
+
+        </div>
+        <div class="btn_accion">
+            <button type="submit" id="actualizarbutton" class="buttonSumit">Actualizar Contraseña</button>
+            <a href="/operadores" id="desactivar" class="btn_desactivar">Regresar</a>
+        </div>
+    </form>
+    
+</div>
+{% include 'dashboard/pie.html' %}

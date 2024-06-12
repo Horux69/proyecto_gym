@@ -4,6 +4,7 @@ from models.Operadores import losOperadores
 from datetime import datetime, timedelta
 from models.Membresias import lasMembresias
 import os
+import hashlib
 
 
 
@@ -25,7 +26,7 @@ def obtener_datos_operadores():
             
             acciones = f"""<div class='btn-group'>
                             <a onclick='return confirm('Seguro quiere eliminar este operador?')' class='btn btn-danger delete-operador' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
-                            
+                            <a class="btn btn-primary" href="/operadores/nuevacontra/{row[3]}"><i class="fa-solid fa-key" ></i></i></a>
                             </div>"""
             
             cedula_formateada = "{0:,}".format(int(row[3])).replace(",", ".")
@@ -100,6 +101,7 @@ def agregarOperadores():
             telefono = request.form['celular']
             correo = request.form['correo']
             contrasena = request.form['password']
+            cifrada = hashlib.sha512(contrasena.encode('utf-8')).hexdigest()
             rol = request.form['rol']
             estado = 'activo'
         
@@ -108,7 +110,7 @@ def agregarOperadores():
             flash('Cedula, Usuario o Correo ya Existentes.', 'error')
             return redirect('/operadores')
         else:
-            registroOperadores = losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, contrasena, rol, estado], session['user_name'])
+            registroOperadores = losOperadores.agregarOperador([usuario, nombre, apellido, cedula, telefono, correo, cifrada, rol, estado], session['user_name'])
             if registroOperadores:
                 flash('El operador fue registrado exitosamente', 'success')
                 return redirect('/operadores')
@@ -156,3 +158,44 @@ def infoOperadores(usuario):
         return render_template('/dashboard/infoperador.html', operadores = resultado[0], resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
     else:
         return redirect('/')
+
+
+@app.route('/operadores/actualizarContra', methods=['POST'])
+def actualizarContraOpe():
+    if session.get("logueado"):
+       
+        contra1 = request.form['contra1']
+        contra2 = request.form['contra2']
+        cedula = request.form['cedula']
+        
+        if contra1 == contra2:
+            cifrada = hashlib.sha512(contra1.encode('utf-8')).hexdigest()
+            
+            losOperadores.actualizarContra([cedula, cifrada])
+
+            print("la contraseña se cambio correctamente")
+        return redirect('/operadores')  
+    
+    else:
+        
+        return redirect('/operadores')
+    
+@app.route('/operadores/nuevacontra/<cedula>')
+def nuevacontraOpe(cedula): 
+        if session.get("logueado"):
+        
+            membresias = lasMembresias.consultarMembresias()
+
+
+            fecha_actual = datetime.now()
+
+            # fecha de nacimiento maxima (hace 16 años)
+            fecha_maxima = fecha_actual - timedelta(days=(16 * 365))
+
+
+            # fecha de nacimiento minima (hace 70 años)
+            fecha_minima = fecha_actual - timedelta(days=(70 * 365))
+
+        return render_template('/dashboard/nuevacontraOpe.html',cedula = cedula , resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+
+

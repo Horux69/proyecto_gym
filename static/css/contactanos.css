@@ -1,0 +1,249 @@
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+.boton_agregar{
+    text-decoration: none;
+    position: relative;
+    padding: 10px;
+    background-color: #FFD100;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    left: 1120px;
+    top: 15px;
+}
+.contenedor_tabla {
+    margin: 30px 25px 70px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 100px;
+    border: solid 1px;
+    }
+    
+    table {
+    font-size: 16px;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: #EEEEEE;
+    }
+    
+    td, th {
+    text-align: center;
+    padding: 10px;
+    border-right: 1px solid #333533;
+    }
+    
+    td {
+    font-size: 14px;
+    }
+    
+    thead th {
+    color: #fff;
+    background: #333533;
+    }
+    
+    tr:nth-child(even){
+    background: #BEBEBE;
+    }
+
+#informacion{
+    text-align: center;
+    font-weight: bold;
+
+}
+.titulo{
+    position: relative;
+    bottom: 40px;
+}
+
+
+
+.modal_actualizar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #111111bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .6s;
+    --transform: translateY(-100vh);
+    --transition: transform .8s;
+
+
+}
+
+
+.contenedor_modal_actualizar{
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90%;
+    border-radius: 6px;
+    padding: 3em 2.5em;
+    background-color: #fff;
+    margin: auto;
+    display: grid;
+    gap: 1em;
+    place-items: center;
+    grid-auto-columns: 100%;
+    transform: var(--transform);
+    transition: var(--transition);
+    
+}
+
+.nombre{
+    position: absolute;
+    top: 85px;
+    right: 460px;
+}
+
+.telefono{
+    position: absolute;
+    top: 150px;
+    right: 460px;
+}
+
+
+.correo{
+    position: absolute;
+    top: 215px;
+    right: 460px;
+    
+}
+.ubicacion{
+    position: absolute;
+    top: 85px;
+    left: 460px;
+
+}
+.barrio{
+    position: absolute;
+    top: 150px;
+    left: 460px;
+    
+}
+
+.direccion{
+    position: absolute;
+    top: 215px;
+    left: 460px;
+    
+
+}
+
+
+.nombre_gym{
+    position: absolute;
+    top: 60px;
+    right: 680px;
+}
+
+.telefono_gym{
+    position: absolute;
+    top: 125px;
+    right: 680px;
+}
+
+
+.correo_gym{
+    position: absolute;
+    top: 190px;
+    right: 695px;
+    
+}
+.hubicacion_gym{
+    position: absolute;
+    top: 60px;
+    left: 474px;
+
+}
+.barrio_gym{
+    position: absolute;
+    top: 125px;
+    left: 475px;
+    
+}
+
+.direccion_gym{
+    position: absolute;
+    top: 190px;
+    left: 475px;
+    
+
+}
+
+
+
+
+.modal--show {
+opacity: 1;
+pointer-events: unset;
+transition: opacity .6s;
+--transform: translateY(0);
+}
+.mostrar_modal{
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .6s;
+    --transform: translateY(0);
+
+}
+.cerrar_modal{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+
+}
+
+.modal_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    }
+
+
+input{
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    height: 35px;
+    padding-left: 10px;
+    align-items: center;
+    width: 300px;
+    }
+
+
+label{
+    position: relative;
+    bottom: 5px;
+}
+.boton__{
+    padding: 8px;
+    border-radius: 10px;
+    border: 0;
+    font-size: 16px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    background-color: #FFD100;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 65px;
+    margin-top: 155px;
+    }
