@@ -61,20 +61,7 @@
     bottom: 40px;
 }
 
-.modal_agregar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #111111bd;
-    display: flex;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .6s;
-    --transform: translateY(-100vh);
-    --transition: transform .8s;
-    }
+
 
 .modal_actualizar{
     position: fixed;
@@ -94,7 +81,7 @@
 }
 
 
-.contenedor_modal{
+.contenedor_modal_actualizar{
     position: relative;
     width: 90%;
     max-width: 800px;
@@ -111,7 +98,6 @@
     transition: var(--transition);
     
 }
-
 
 .nombre{
     position: absolute;
