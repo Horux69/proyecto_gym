@@ -120,7 +120,7 @@
                     <input type="email" class="inputText" id="email" name="email" pattern="[A-Za-z-_0-9]+@[A-Za-z]\.[a-z]{2,40}" minlength="2" maxlength="40" placeholder="Correo Electronico" required>
 
                     <select class="inputText" name="sexo" id="sexo" required>
-                        <option value="">Elije un genero</option>
+                        <option value="">Elije un sexo</option>
                         <option value="hombre">Hombre</option>
                         <option value="mujer">Mujer</option>
                     </select>
@@ -139,7 +139,11 @@
 
                     <input type="tel" class="inputText" id="telefono_emergencia" pattern="[0-9]{10}" minlength="10" maxlength="10" name="telefono_emergencia" placeholder="Telefono de emergencia" required>
 
-                    <input type="number" class="inputText" id="nfc" name="nfc" placeholder="tarjeta nfc" required>
+                    <select class="inputText" name="leciones" id="leciones" required>
+                        <option value="">Tiene alguna lecion?</option>
+                        <option value="si">Si</option>
+                        <option value="no">n</option>
+                    </select>
                     
                     <label for="membresia" style="font-size: 14px;">Membresia:</label>
                     <select class="inputText" name="membresia" id="membresia" required>

@@ -151,7 +151,7 @@ def agregarAfiliados():
             correo = request.form['email']
             contrasena = request.form['cedula']
             cifrada = hashlib.sha512(contrasena.encode('utf-8')).hexdigest()
-            tarjeta_nfc = request.form['nfc']
+            leciones = request.form['leciones']
             id_membresia = request.form['membresia']
             fecha_inicio = datetime.now()
 
@@ -166,7 +166,7 @@ def agregarAfiliados():
                 flash('Cedula, Telefono o Correo ya Existentes.', 'error')
                 return redirect('/afiliados')
             else:
-                registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, cifrada, tarjeta_nfc, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
+                registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, cifrada, leciones, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
                 if registroAfiliado:
                     flash('El nuevo usuario fue registrado exitosamente', 'success')
                     return redirect('/afiliados')

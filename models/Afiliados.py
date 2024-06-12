@@ -23,7 +23,7 @@ class Afiliados:
     
     def agregarAfiliados(self, afiliados, user_registro):
         try:
-            sql = f"INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `sexo`, `tipo_sangre`, `huella`, `nuemero_emergencia`, `correo`, `contrasena`, `tarjeta_nfc`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES ('{afiliados[0]}','{afiliados[1]}','{afiliados[2]}','{afiliados[3]}','{afiliados[4]}','{afiliados[5]}','{afiliados[6]}','{afiliados[7]}','{afiliados[8]}','{afiliados[9]}','{afiliados[10]}','{afiliados[11]}','{afiliados[12]}','{afiliados[13]}','{afiliados[14]}','{afiliados[15]}','{user_registro}','{afiliados[16]}')"
+            sql = f"INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `telefono`, `sexo`, `tipo_sangre`, `huella`, `nuemero_emergencia`, `correo`, `contrasena`, `leciones`, `id_membresia`, `fecha_inicio`, `fecha_vencimiento`, `fecha_registro`, `user_registro`, `estado`) VALUES ('{afiliados[0]}','{afiliados[1]}','{afiliados[2]}','{afiliados[3]}','{afiliados[4]}','{afiliados[5]}','{afiliados[6]}','{afiliados[7]}','{afiliados[8]}','{afiliados[9]}','{afiliados[10]}','{afiliados[11]}','{afiliados[12]}','{afiliados[13]}','{afiliados[14]}','{afiliados[15]}','{user_registro}','{afiliados[16]}')"
             self.cursor.execute(sql)
             self.conexion.commit()
             return True
