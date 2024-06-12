@@ -12,6 +12,7 @@ a,
         
         .card {
             width: 100%;
+            background-color: #FAFAFA; /* Color de todo el contenedor de los datatables */
         }
 
         .content {

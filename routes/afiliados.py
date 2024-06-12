@@ -100,6 +100,69 @@ def obtener_datos_afiliados():
         print("Error:", e)
         return []
     
+def obtener_datos_medidas():
+    try:
+        # Aquí realizas la consulta a tu base de datos o donde tengas los datos
+        resultados = LosAfiliados.consultarMedidasAfiliados()
+        data = []
+
+        for row in resultados:
+
+            verMas = f"""<div class='btn-group'>
+                            <button type='button' class='btn btn-primary' data-toggle='tooltip' data-placement='top' title='Ver más'>
+                                <i class='fa fa-plus-circle' aria-hidden='true'></i>"""
+    
+            acciones = f"""<div class='btn-group'>
+                            <a class="btn btn-success" href="#"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a>
+                            </div>"""   
+            
+            datos = {
+                "VerMas": verMas,
+                "Acciones": acciones,
+                "cedula": row[1],
+                "creador": row[2],
+                "fecha_registro": row[3],
+                "peso_corporal": row[4],
+                "bicep_der": row[5],
+                "bicep_izq": row[6],
+                "pecho": row[7],
+                "antebrazo_der": row[8],
+                "antebrazo_izq": row[9],
+                "cintura": row[10],
+                "cadera": row[11],
+                "muslo_der": row[12],
+                "muslo_izq": row[13],
+                "pantorrilla_der": row[14],
+                "pantorrilla_izq": row[15]
+            }
+
+            data.append(datos)
+
+        return data
+            
+    except Exception as e:
+        # Manejo de errores
+        print("Error:", e)
+        return []
+    
+
+@app.route('/consultarMedidasAfiliados')
+def consultarMedidasAfiliados():
+    data = obtener_datos_medidas()
+
+    return jsonify(data)
+
+@app.route('/medidas')
+def medidas():
+    if session.get("logueado"): 
+        afiliados = LosAfiliados.consultarAfiliados()
+        # print(afiliados)
+        return render_template('dashboard/medidas.html', afiliados = afiliados)
+    else:
+        return redirect('/')
+
+
+    
 @app.route('/consultarDatosAfiliados')
 def consultarDatosAfiliados():
     data = obtener_datos_afiliados()
@@ -234,7 +297,6 @@ def actualizarUsuario():
         return redirect('/')
     
     
-    
 @app.route('/afiliados/infomedidas/<cedula>', methods = ['GET'])
 def infomedidas(cedula):
     if session.get("logueado"):
@@ -278,9 +340,15 @@ def agregarMedidas():
         pantorrilla_izq = request.form['pantorrilla_izq']
         fecha_registro = datetime.now().strftime('%Y-%m-%d')
         
-        LosAfiliados.agregarMedidas([cedula,fecha_registro,peso_corporal,bicep_der,bicep_izq,pecho,antebrazo_der,antebrazo_izq,cintura,cadera,muslo_der,muslo_izq,pantorrilla_der,pantorrilla_izq],session['user_name'])
+        registroMedidas = LosAfiliados.agregarMedidas([cedula,fecha_registro,peso_corporal,bicep_der,bicep_izq,pecho,antebrazo_der,antebrazo_izq,cintura,cadera,muslo_der,muslo_izq,pantorrilla_der,pantorrilla_izq],session['user_name'])
+
+        if registroMedidas:
+            flash('Las medidas fueron registradas exitosamente', 'success')
+            return redirect('/medidas')
+        else:
+            flash('Las medidas no fueron registradas correctamente.', 'error')
+            return redirect('/medidas')
         
-        return redirect('/afiliados')
     else:
         return redirect('/')
     

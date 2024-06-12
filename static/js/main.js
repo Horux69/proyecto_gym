@@ -31,6 +31,7 @@ modalClose.addEventListener('click', (e)=>{
 });
 
 
+
 // Modal Registro de usuarios
 
 /* const openModalUser = document.querySelector('.boton_user');
