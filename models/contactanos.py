@@ -8,7 +8,7 @@ class Contactanos:
         
         
     def consultaDatosgym(self):
-        sql = "SELECT id_contacto,nombre_gym,telefono_gym,correo_gym,direccion_gym, barrio_gym,ubicacion_gym FROM contacto_gym"
+        sql = "SELECT id_contacto,nombre_gym,telefono_gym,correo_gym,direccion_gym, barrio_gym,ubicacion_gym FROM contacto_gym WHERE id_contacto = 1"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
@@ -20,7 +20,7 @@ class Contactanos:
         self.cursor.execute(sql)
         self.conexion.commit()
     
-    def     actualizarDatosgym(self,datoscontacto):
+    def actualizarDatosgym(self,datoscontacto):
         sql= f"UPDATE `contacto_gym` SET `nombre_gym`='{datoscontacto[1]}', `telefono_gym`='{datoscontacto[2]}', `correo_gym`='{datoscontacto[3]}', `direccion_gym`='{datoscontacto[4]}', `barrio_gym`='{datoscontacto[5]}', `ubicacion_gym`='{datoscontacto[6]}' WHERE id_contacto ='{datoscontacto[0]}' "
         self.cursor.execute(sql)
         self.conexion.commit()

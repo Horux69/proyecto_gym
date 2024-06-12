@@ -8,12 +8,12 @@ def contacto():
     
     contacto_gym =Datoscontacto.consultaDatosgym()
     
-    return render_template('contacto.html',contacto_gym = contacto_gym)
+    return render_template('dashboard/contactanos.html',contacto_gym = contacto_gym)
 
 
 
 
-@app.route('/contacto/agregar', methods = ['POST'])
+@app.route('/contactanos/agregar', methods = ['POST'])
 def agregarDatosgym():
     
     if session.get("logueado") and  session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
@@ -38,7 +38,7 @@ def agregarDatosgym():
         return redirect('/')
     
     
-@app.route('/contacto/actualizar', methods=['POST'])
+@app.route('/contactanos/actualizar', methods=['POST'])
 def actualizarDatosgym():
     if session.get("logueado") and  session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
     
