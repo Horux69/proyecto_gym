@@ -166,13 +166,25 @@ def agregarAfiliados():
                 flash('Cedula, Telefono o Correo ya Existentes.', 'error')
                 return redirect('/afiliados')
             else:
-                registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, cifrada, leciones, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado], session['user_name'])
-                if registroAfiliado:
-                    flash('El nuevo usuario fue registrado exitosamente', 'success')
-                    return redirect('/afiliados')
+                if request.form['leciones'] == 'si':
+
+                    leciones_descripcion = request.form['otro_perfil']
+                    registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, cifrada, leciones, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado, leciones_descripcion], session['user_name'])
+                    if registroAfiliado:
+                        flash('El nuevo usuario fue registrado exitosamente', 'success')
+                        return redirect('/afiliados')
+                    else:
+                        flash('El usuario no fue registrado correctamente.', 'error')
+                        return redirect('/afiliados')
                 else:
-                    flash('El usuario no fue registrado correctamente.', 'error')
-                    return redirect('/afiliados')
+                    leciones_descripcion = 'no tiene leciones'
+                    registroAfiliado = LosAfiliados.agregarAfiliados([cedula, nombre, apellido, fecha_nacimiento, telefono, sexo, sangre, huella, telefono_emergencia, correo, cifrada, leciones, id_membresia, fecha_inicio, fecha_vencimiento, fecha_registro, estado, leciones_descripcion], session['user_name'])
+                    if registroAfiliado:
+                        flash('El nuevo usuario fue registrado exitosamente', 'success')
+                        return redirect('/afiliados')
+                    else:
+                        flash('El usuario no fue registrado correctamente.', 'error')
+                        return redirect('/afiliados')
         else:
             flash('El usuario no fue registrado correctamente.', 'error')
             return redirect('/afiliados')
