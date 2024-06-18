@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rutinas | Gym control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+
     <style>
 
 * {
@@ -82,33 +83,65 @@ main {
 }
 
 #caja_formularios {
-    align-items: center;
     background-color: #FFFFFF;
     display: flex;
-    /* overflow: hidden; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     border-radius: 10px;
     height: 570px;
     padding: 2%;
     margin-left: 35%;
     width: 30%;
-    gap: 20%;
     animation-name: animarsuperior;
     animation-duration: 1s;
-} 
+}
 
 .contenido_formulario {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: aqua; */
+}
+
+.estilacho_formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background: antiquewhite; */
+}
+
+.formulario {
+    height: 100%;
     display: none;
 }
 
-.contenido_formulario.active {
+.formulario.active {
     display: block;
+}
+
+#botones_formularios {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14%;
+}
+
+/* Estilo de los Botones */
+#adelante, #atras, #finalizar {
+    padding: 10px 20px;
+    background-color: #BDA623;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
     </style>
 </head>
-<body>
-    <main>
+
+{% include 'dashboard/cabecera.html' %}
 
         <div id="boton_agregar">
             <div id="circulo"></div>
@@ -119,140 +152,160 @@ main {
         <div id="fondo_formularios">
 
             <div id="caja_formularios">
+
                 <!-- Form #1 -->
-                <section class="contenido_formulario">
-                    <h3>Agregar ejercicios</h3>
-                    <form class="estilacho_formulario" action="/rutinas/agregar" method="post" enctype="multipart/form-data">
-                        <input class="input_n01" type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9\s]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
-                        <input class="input_n01" type="number" name="repeticiones" placeholder="repeticiones" pattern="[0-9]{1,2}" minlength="1" maxlength="2"  required>
-                        <input class="input_n01" type="number" name="series" placeholder="series" pattern="[0-9]{1,2}" minlength="1"  maxlength="2"  required>
-                        <select class="lista_seleccion" name="tipo" required>
-                            {% for resul in resulTipos %}
-                            <option value="{{resul[0]}}">{{resul[1]}}</option>
-                            {% endfor %}
-                        </select>
-                        <input id="Foto" required type="file" name="Foto">
-                        <!-- <button type="submit" id="siguiente">Siguiente</button> -->
-                        <button type="submit" id="siguiente" onclick="siguienteFormulario(1)">Siguiente</button>
-                    </form>
-                </section>
-    
+                <div id="formulario_01" class="formulario">
+                    <section class="contenido_formulario">
+                        <h3>Agregar ejercicios</h3>
+                        <form class="estilacho_formulario" action="/rutinas/agregar" method="post" enctype="multipart/form-data">
+                            <input class="input_n01" type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9\s]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
+                            <input class="input_n01" type="number" name="repeticiones" placeholder="repeticiones" pattern="[0-9]{1,2}" minlength="1" maxlength="2"  required>
+                            <input class="input_n01" type="number" name="series" placeholder="series" pattern="[0-9]{1,2}" minlength="1"  maxlength="2"  required>
+                            <select class="lista_seleccion" name="tipo" required>
+                                {% for resul in resulTipos %}
+                                <option value="{{resul[0]}}">{{resul[1]}}</option>
+                                {% endfor %}
+                            </select>
+                            <input id="Foto" required type="file" name="Foto">
+                            <button type="submit">Agregar</button>
+                        </form>
+                    </section>
+                </div>
+
                 <!-- Form #2 -->
-                <section class="contenido_formulario">
-                    <h3>Tipos de entrenamientos</h3>
-                    <form class="estilacho_formulario" action="/rutinas/agregar/tipos" method="post">
-                        <input type="text" name="NombreTipo" placeholder="Tipo de ejercicio" pattern="[A-Za-z]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
-                        <button type="submit" id="siguiente">Siguiente</button>
-                    </form>
-                </section>
-    
+                <div id="formulario_02" class="formulario">
+                    <section class="contenido_formulario">
+                        <h3>Tipos de entrenamientos</h3>
+                        <form class="estilacho_formulario" action="/rutinas/agregar/tipos" method="post">
+                            <input class="input_n01" type="text" name="NombreTipo" placeholder="Tipo de ejercicio" pattern="[A-Za-z]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
+                            <button type="submit">Agregar</button>
+                        </form>
+                    </section>
+                </div>
+
                 <!-- Form #3 -->
-                <section class="contenido_formulario">
-                    <h3>Rutina cliente</h3>
-                    <form class="estilacho_formulario" action="/Rutina/cliente" method="post">
-                        <label for="">Rutina: </label>
-                        <select class="lista_seleccion" name="rutina" required>
-                            {% for resul in resulRutinas %}
-                            <option value="{{resul[0]}}">{{resul[0]}}</option>
-                            {% endfor %}
-                        </select>
-                        <label for="">Cliente: </label>
-                        <select name="cliente" required>
-                            {% for resul in resulClientes %}
-                            <option value="{{resul[0]}}">{{resul[0]}}</option>
-                            {% endfor %}
-                        </select>
-                        <label for="">Dia: </label>
-                        <select class="lista_seleccion" name="tipo" required>
-                            <option value="lunes">Lunes</option>
-                            <option value="martes">Martes</option>
-                            <option value="miercoles">Miercoles</option>
-                            <option value="jueves">Jueves</option>
-                            <option value="viernes">Viernes</option>
-                            <option value="sabado">Sabado</option>
-                        </select>
-                        <button type="submit" id="siguiente">Siguiente</button>
-                    </form>
-                </section>
-    
+                <div id="formulario_03" class="formulario">
+                    <section class="contenido_formulario">
+                        <h3>Rutina cliente</h3>
+                        <form class="estilacho_formulario" action="/Rutina/cliente" method="post">
+                            <label for="">Rutina: </label>
+                            <select class="lista_seleccion" name="rutina" required>
+                                {% for resul in resulRutinas %}
+                                <option value="{{resul[0]}}">{{resul[1]}}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="">Cliente: </label>
+                            <select name="cliente" required>
+                                {% for resul in resulClientes %}
+                                <option value="{{resul[0]}}">{{resul[0]}}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="">Dia: </label>
+                            <select class="lista_seleccion" name="tipo" required>
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miercoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sabado</option>
+                            </select>
+                            <button type="submit" id="siguiente">Agregar</button>
+                        </form>
+                    </section>
+                </div> 
+
                 <!-- Form 4 -->
-                <section class="contenido_formulario">
-                    <h3>Creador rutina</h3>
-                    <form class="estilacho_formulario" action="/rutinas/creador_rutina" method="post">
-                        <label for="">Duracion: </label>
-                        <input type="date" name="fecha" required>
-                        <label for="">Descripcion: </label>
-                        <input type="text" part="[A-Za-z]{10,100}" name="descripcion" minlength="10" min="10" max="100" maxlength="100" required>
-                        <button type="submit" id="finalizar">Finalizar</button>
-                    </form>
-                </section>
+                <div id="formulario_04" class="formulario"> 
+                    <section class="contenido_formulario">
+                        <h3>Creador rutina</h3>
+                        <form class="estilacho_formulario" action="/rutinas/creador_rutina" method="post">
+                            <label for="">Duracion: </label>
+                            <input type="date" name="fecha" required>
+                            <label for="">Descripcion: </label>
+                            <input type="text" part="[A-Za-z]{10,100}" name="descripcion" minlength="10" min="10" max="100" maxlength="100" required>
+                            <button type="submit">Agregar</button>
+                        </form>
+                    </section>
+                </div> 
+
+                <div id="botones_formularios">
+                    <button id="atras">Atrás</button>
+                    <button id="adelante">Adelante</button>
+                    <button id="finalizar" style="display: none;">Finalizar</button>
+                </div>
+
             </div>
 
         </div>
 
-
-    </main>
     <script>
 
-const btn_Agregar = document.getElementById("boton_agregar");
+/* Constantes de los elementos utilzados a los largo de la página - Melo */
+const btnAgregar = document.getElementById("boton_agregar");
 const modal = document.getElementById("fondo_formularios");
-const forms = document.querySelectorAll('.contenido_formulario');
+const forms = document.querySelectorAll(".formulario");
+const btnAdelante = document.getElementById("adelante");
+const btnAtras = document.getElementById("atras");
+const btnFinalizar = document.getElementById("finalizar");
 let currentFormIndex = 0;
 
-btn_Agregar.addEventListener("click", () => {
-    modal.style.display = "flex"; // Cambia display a "flex" para centrar el modal
-    mostrarFormulario(0); // Mostrar el primer formulario al abrir el modal
+/* Función para mostrar la ventanita modal - (Los formularios) */
+/* El modal se puede cerrar precionando fuera de la caja, en la parte oscura */
+btnAgregar.addEventListener("click", () => {
+    modal.style.display = "block";
+    showForm(currentFormIndex);
 });
 
-window.onclick = function (event) {
+/* Botones que traen desplazan los formularios, ya sea hacia adelante o atrás */
+btnAdelante.addEventListener("click", () => {
+    if (currentFormIndex < forms.length - 1) {
+        hideForm(currentFormIndex);
+        currentFormIndex++;
+        showForm(currentFormIndex);
+    }
+});
+
+btnAtras.addEventListener("click", () => {
+    if (currentFormIndex > 0) {
+        hideForm(currentFormIndex);
+        currentFormIndex--;
+        showForm(currentFormIndex);
+    }
+});
+
+/* Botón que aparece una vez se llega al formulario número 4 - Cierra el modal */
+btnFinalizar.addEventListener("click", () => {
+    modal.style.display = "none";
+    hideForm(currentFormIndex);
+    currentFormIndex = 0;
+});
+
+/* Función para mostrar el botón dependiendo del formulario en que se encuentre */
+function showForm(index) {
+    forms[index].classList.add("active");
+    if (index === forms.length - 1) {
+        btnAdelante.style.display = "none";
+        btnFinalizar.style.display = "inline";
+    } else {
+        btnAdelante.style.display = "inline";
+        btnFinalizar.style.display = "none";
+    }
+}
+
+function hideForm(index) {
+    forms[index].classList.remove("active");
+}
+
+/* Función para que al presionar fuera de la caja del formulario (la parte oscura) se cierre */
+window.onclick = (event) => {
     if (event.target == modal) {
         modal.style.display = "none";
-        resetForms();
+        hideForm(currentFormIndex);
+        currentFormIndex = 0;
     }
 }
 
-function mostrarFormulario(index) {
-    forms.forEach((form, i) => {
-        form.classList.remove('active', 'previous');
-        if (i === index) {
-            form.classList.add('active');
-        }
-    });
-}
-
-function siguienteFormulario(nextIndex) {
-    if (nextIndex < forms.length) {
-        forms[currentFormIndex].classList.remove('active');
-        forms[currentFormIndex].classList.add('previous');
-        currentFormIndex = nextIndex;
-        mostrarFormulario(currentFormIndex);
-    } else {
-        modal.style.display = "none";
-        resetForms();
-    }
-}
-
-function resetForms() {
-    forms.forEach(form => {
-        form.classList.remove('active', 'previous');
-    });
-    currentFormIndex = 0;
-}
-
-document.querySelectorAll('#siguiente').forEach((button, index) => {
-    button.addEventListener('click', (event) => {
-        event.preventDefault(); // Evita el envío del formulario
-        siguienteFormulario(index + 1);
-    });
-});
-
-document.getElementById('finalizar').addEventListener('click', (event) => {
-    event.preventDefault(); // Evita el envío del formulario
-    modal.style.display = "none";
-    resetForms();
-});
-
+/* Gracias a los videitos de youtube por los videitos y especialmente al man de Hola Mundo por el videito de JavaScript */
 
     </script>
-</body>
-</html>
+{% include 'dashboard/pie.html' %}
