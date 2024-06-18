@@ -80,8 +80,43 @@
 
 }
 
+.modal_agregar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #111111bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .6s;
+    --transform: translateY(-100vh);
+    --transition: transform .8s;
+
+
+}
+
 
 .contenedor_modal_actualizar{
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90%;
+    border-radius: 6px;
+    padding: 3em 2.5em;
+    background-color: #fff;
+    margin: auto;
+    display: grid;
+    gap: 1em;
+    place-items: center;
+    grid-auto-columns: 100%;
+    transform: var(--transform);
+    transition: var(--transition);
+    
+}
+
+.contenedor_modal_agregar{
     position: relative;
     width: 90%;
     max-width: 800px;
@@ -139,6 +174,21 @@
 
 }
 
+.boton_agregar{
+    padding: 8px;
+    border-radius: 10px;
+    border: 0;
+    font-size: 16px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    background-color: #FFD100;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 65px;
+    margin-top: 155px;
+    text-decoration: none;
+
+}
+
 
 .nombre_gym{
     position: absolute;
@@ -183,7 +233,7 @@
 
 
 
-.modal--show {
+.mostrar_modal_agregar{
 opacity: 1;
 pointer-events: unset;
 transition: opacity .6s;
@@ -208,7 +258,7 @@ transition: opacity .6s;
 
 }
 
-.modal_close {
+.cerrar_modal_agregar{
     position: absolute;
     top: 10px;
     right: 10px;

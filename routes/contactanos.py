@@ -16,18 +16,17 @@ def contacto():
 @app.route('/contactanos/agregar', methods = ['POST'])
 def agregarDatosgym():
     
-    if session.get("logueado") and  session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
+    if session.get("logueado") and session.get("rol") == 'super_admin':
     
         if request.method == 'POST': 
+            nombre= request.form['nombre_gym']
+            telefono = request.form['telefono_gym']
+            correo= request.form['correo_gym']
+            direccion= request.form['direccion_gym']
+            barrio= request.form['barrio_gym']
+            ubicacion = request.form['ubicacion_gym']
             
-            nombre_gym = request.form['nombre_gym']
-            telefono_gym = request.form['telefono_gym']
-            correo_gym = request.form['correo_gym']
-            ubicacion_gym = request.form['ubicacion_gym']
-            barrio_gym = request.form['barrio_gym']
-            direccion_gym = request.form['direccion_gym']
-            
-            Datoscontacto.agregarDatosgym([nombre_gym,telefono_gym,correo_gym,direccion_gym,barrio_gym,ubicacion_gym])
+            Datoscontacto.agregarDatosgym(nombre,telefono,correo,direccion,barrio,ubicacion)
             return redirect('/contacto')
             
         else:
@@ -37,26 +36,25 @@ def agregarDatosgym():
         
         return redirect('/')
     
-    
 @app.route('/contactanos/actualizar', methods=['POST'])
 def actualizarDatosgym():
     if session.get("logueado") and  session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
     
         if request.method == 'POST':
+            identificacion_=request.form['id_contacto']
+            nombre_= request.form['nombre_gym']
+            telefono_ = request.form['telefono_gym']
+            correo_= request.form['correo_gym']
+            direccion_= request.form['direccion_gym']
+            barrio_= request.form['barrio_gym']
+            ubicacion_ = request.form['ubicacion_gym']
             
-            id_contacto = request.form['id_contacto']
-            nombre_gym = request.form['nombre_gym']
-            telefono_gym = request.form['telefono_gym']
-            correo_gym = request.form['correo_gym']
-            ubicacion_gym = request.form['ubicacion_gym']
-            barrio_gym = request.form['barrio_gym']
-            direccion_gym = request.form['direccion_gym']
-            
-            Datoscontacto.actualizarDatosgym([id_contacto,nombre_gym,telefono_gym,correo_gym,ubicacion_gym,barrio_gym,direccion_gym])
+            Datoscontacto.actualizarDatosgym(identificacion_,nombre_,telefono_,correo_,direccion_,barrio_,ubicacion_)
+    
             return redirect('/contacto')
         else:
             return redirect('/contacto')    
             
             
     else:
-        return redirect('/')     
+        return redirect('/')

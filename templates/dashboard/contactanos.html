@@ -15,8 +15,9 @@
 
 
 
-
-<!-- <a class="boton_actualizar" href="#">actualizar contacto</a> -->
+{% if session["rol"] == 'super_admin' %}
+<a class="boton_agregar" href="#">agregar contacto</a>
+{%endif%}
     
         <div class="contenedor_tabla">
             <table>
@@ -85,6 +86,37 @@
                     </form>
                 </div>
                 </section>
+
+
+                <section class="modal_agregar">
+                    <div class="contenedor_modal_agregar">
+                        <a href="#" class="cerrar_modal_agregar"><i class="fa-solid fa-xmark fa-xl"></i></a>
+                        <form action="/contactanos/agregar" method="post" >
+                            <h2 class="titulo">AGREGAR CONTACTO</h2>
+                            
+                            <label for="nombre_gym" class="nombre_gym">nombre:</label>
+                            <input type="text"  name="nombre_gym" class="nombre"   required >
+                
+                            <label for="telefono_gym" class="telefono_gym">telefono:</label>
+                            <input type="tel"  name="telefono_gym" class="telefono"  required >
+                
+                            <label for="correo_gym" class="correo_gym">correo:</label>
+                            <input type="email"  id="correo_gym" class="correo"  name="correo_gym"  required>
+                            
+                            <label for="direccion_gym" class="direccion_gym">dirección:</label>
+                            <input type="text"  name="direccion_gym" class="direccion"  required >          
+                
+                            <label for="barrio_gym" class="barrio_gym">barrio:</label>
+                            <input type="text"  name="barrio_gym" class="barrio"   required >
+                
+                            <label for="hubicacion_gym" class="hubicacion_gym">ubicacion:</label>
+                            <input type="text"  class="ubicacion" name="ubicacion_gym"  required>
+                
+                            
+                            <button type="submit" tabindex="7" class="boton__">AGREGAR CAMBIOS</button>
+                        </form>
+                    </div>
+                    </section>
     
         </section> 
 
@@ -102,6 +134,20 @@
         modal_cerrar.addEventListener('click', (e)=>{
             e.preventDefault();
             modal_actualizar.classList.remove('mostrar_modal');
+        });
+
+        const btn_agregar = document.querySelector('.boton_agregar');
+        const agregar_modal = document.querySelector('.modal_agregar');
+        const modal_cerrar_agregar = document.querySelector('.cerrar_modal_agregar');
+
+        btn_agregar.addEventListener('click', (e)=>{
+            e.preventDefault();
+            agregar_modal.classList.add('mostrar_modal_agregar');
+        });
+
+        modal_cerrar_agregar.addEventListener('click', (e)=>{
+            e.preventDefault();
+            agregar_modal.classList.remove('mostrar_modal_agregar');
         });
 
         </script>
