@@ -4,103 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rutinas | Gym control</title>
+    <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+main {
+    padding: 3% 2%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    background-color: #D6D6D6;
+}
+
+#boton_agregar {
+    width: 12%;
+    height: 350px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease;
+}
+#boton_agregar:hover {
+    background-color: #B3B3B3;
+    transform: scale(1.1);
+}
+
+#circulo {
+    width: 70%;
+    height: 50%;
+    border-radius: 50%;
+    background-color: #333531;
+    position: absolute;
+    top: 90px;
+}
+
+#cruz_1, #cruz_2 {
+    top: 51%;
+    width: 45%;
+    height: 3%;
+    background-color: #BDA623;
+    position: absolute;
+    transform: translateY(-50%);
+    border-radius: 5px;
+}
+
+#cruz_2 {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+#fondo_formularios {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 30px;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    bottom: 12%;
+    background-color: rgba(0, 0, 0, 0.5);
+} 
+
+@keyframes animarsuperior {
+    from {top: -300px; opacity: 0;}
+    to {top: 30px; opacity: 1;}
+}
+
+#caja_formularios {
+    align-items: center;
+    background-color: #FFFFFF;
+    display: flex;
+    /* overflow: hidden; */
+    position: absolute;
+    border-radius: 10px;
+    height: 570px;
+    padding: 2%;
+    margin-left: 35%;
+    width: 30%;
+    gap: 20%;
+    animation-name: animarsuperior;
+    animation-duration: 1s;
+} 
+
+.contenido_formulario {
+    display: none;
+}
+
+.contenido_formulario.active {
+    display: block;
+}
+
+    </style>
 </head>
 <body>
     <main>
 
-        <h3>Agregar ejercicios</h3>
+        <div id="boton_agregar">
+            <div id="circulo"></div>
+            <div id="cruz_1"></div>
+            <div id="cruz_2"></div>
+        </div>
 
-        <section>
-            <form action="/rutinas/agregar" method="post" enctype="multipart/form-data">
+        <div id="fondo_formularios">
 
-                <label for="">Nombre:</label>
-                <input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9\s]{1,50}" minlength="1" min="1" maxlength="50" max="50" required >
+            <div id="caja_formularios">
+                <!-- Form #1 -->
+                <section class="contenido_formulario">
+                    <h3>Agregar ejercicios</h3>
+                    <form class="estilacho_formulario" action="/rutinas/agregar" method="post" enctype="multipart/form-data">
+                        <input class="input_n01" type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9\s]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
+                        <input class="input_n01" type="number" name="repeticiones" placeholder="repeticiones" pattern="[0-9]{1,2}" minlength="1" maxlength="2"  required>
+                        <input class="input_n01" type="number" name="series" placeholder="series" pattern="[0-9]{1,2}" minlength="1"  maxlength="2"  required>
+                        <select class="lista_seleccion" name="tipo" required>
+                            {% for resul in resulTipos %}
+                            <option value="{{resul[0]}}">{{resul[1]}}</option>
+                            {% endfor %}
+                        </select>
+                        <input id="Foto" required type="file" name="Foto">
+                        <!-- <button type="submit" id="siguiente">Siguiente</button> -->
+                        <button type="submit" id="siguiente" onclick="siguienteFormulario(1)">Siguiente</button>
+                    </form>
+                </section>
+    
+                <!-- Form #2 -->
+                <section class="contenido_formulario">
+                    <h3>Tipos de entrenamientos</h3>
+                    <form class="estilacho_formulario" action="/rutinas/agregar/tipos" method="post">
+                        <input type="text" name="NombreTipo" placeholder="Tipo de ejercicio" pattern="[A-Za-z]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
+                        <button type="submit" id="siguiente">Siguiente</button>
+                    </form>
+                </section>
+    
+                <!-- Form #3 -->
+                <section class="contenido_formulario">
+                    <h3>Rutina cliente</h3>
+                    <form class="estilacho_formulario" action="/Rutina/cliente" method="post">
+                        <label for="">Rutina: </label>
+                        <select class="lista_seleccion" name="rutina" required>
+                            {% for resul in resulRutinas %}
+                            <option value="{{resul[0]}}">{{resul[0]}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="">Cliente: </label>
+                        <select name="cliente" required>
+                            {% for resul in resulClientes %}
+                            <option value="{{resul[0]}}">{{resul[0]}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="">Dia: </label>
+                        <select class="lista_seleccion" name="tipo" required>
+                            <option value="lunes">Lunes</option>
+                            <option value="martes">Martes</option>
+                            <option value="miercoles">Miercoles</option>
+                            <option value="jueves">Jueves</option>
+                            <option value="viernes">Viernes</option>
+                            <option value="sabado">Sabado</option>
+                        </select>
+                        <button type="submit" id="siguiente">Siguiente</button>
+                    </form>
+                </section>
+    
+                <!-- Form 4 -->
+                <section class="contenido_formulario">
+                    <h3>Creador rutina</h3>
+                    <form class="estilacho_formulario" action="/rutinas/creador_rutina" method="post">
+                        <label for="">Duracion: </label>
+                        <input type="date" name="fecha" required>
+                        <label for="">Descripcion: </label>
+                        <input type="text" part="[A-Za-z]{10,100}" name="descripcion" minlength="10" min="10" max="100" maxlength="100" required>
+                        <button type="submit" id="finalizar">Finalizar</button>
+                    </form>
+                </section>
+            </div>
 
-                <label for="">Repeticiones: </label>
-                <input type="number" name="repeticiones" placeholder="repeticiones" pattern="[0-9]{1,2}" minlength="1" maxlength="2"  required>
+        </div>
 
-                <label for="">Series: </label>
-                <input type="number" name="series" placeholder="series" pattern="[0-9]{1,2}" minlength="1"  maxlength="2"  required>
-
-                <label for="">Tipo: </label>
-                <select class="inputText" name="tipo" required>
-                    {% for resul in resulTipos %}
-                    <option value="{{resul[0]}}">{{resul[1]}}</option>
-                    {% endfor %}
-                </select>
-
-                <label for="Foto">Imagen: </label>
-                <input id="Foto" required type="file" name="Foto">
-
-                <button type="submit">Agregar</button>
-
-            </form>
-        </section>
-
-
-        <h3>Tipos de entrenamientos</h3>
-
-        <section>
-            <form action="/rutinas/agregar/tipos" method="post">
-
-                <input type="text" name="NombreTipo" placeholder="Tipo de ejercicio" pattern="[A-Za-z]{1,50}" minlength="1" min="1" maxlength="50" max="50" required>
-
-                <button type="submit">Agregar</button>
-
-            </form>
-        </section>
-
-
-        <h3>Rutina cliente</h3>
-
-        <section>
-            <form action="/Rutina/cliente" method="post">
-
-                <label for="">Rutina: </label>
-                <select name="rutina" required>
-                    {% for resul in resulRutinas %}
-                    <option value="{{resul[0]}}">{{resul[0]}}</option>
-                    {% endfor %}
-                </select>
-
-                <label for="">Cliente: </label>
-                <select name="cliente" required>
-                    {% for resul in resulClientes %}
-                    <option value="{{resul[0]}}">{{resul[0]}}</option>
-                    {% endfor %}
-                </select>
-
-                <label for="">Dia: </label>
-                <select class="inputText" name="tipo" required>
-                    <option value="lunes">Lunes</option>
-                    <option value="martes">Martes</option>
-                    <option value="miercoles">Miercoles</option>
-                    <option value="jueves">Jueves</option>
-                    <option value="viernes">Viernes</option>
-                    <option value="sabado">Sabado</option>
-                </select>
-
-                <button type="submit">Agregar</button>
-
-            </form>
-        </section>
-
-        <h3>Creador rutina</h3>
-
-        <section>
-
-            <form action="/rutinas/creador_rutina" method="post">
-
-                <label for="">Duracion: </label>
-                <input type="date" name="fecha" required>
-
-                <label for="">Descripcion: </label>
-                <input type="text" part="[A-Za-z]{10,100}" name="descripcion" minlength="10" min="10" max="100" maxlength="100" required>
-
-                <button type="submit">Agregar</button>
-            </form>
-        </section>
 
     </main>
+    <script>
+
+const btn_Agregar = document.getElementById("boton_agregar");
+const modal = document.getElementById("fondo_formularios");
+const forms = document.querySelectorAll('.contenido_formulario');
+let currentFormIndex = 0;
+
+btn_Agregar.addEventListener("click", () => {
+    modal.style.display = "flex"; // Cambia display a "flex" para centrar el modal
+    mostrarFormulario(0); // Mostrar el primer formulario al abrir el modal
+});
+
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        resetForms();
+    }
+}
+
+function mostrarFormulario(index) {
+    forms.forEach((form, i) => {
+        form.classList.remove('active', 'previous');
+        if (i === index) {
+            form.classList.add('active');
+        }
+    });
+}
+
+function siguienteFormulario(nextIndex) {
+    if (nextIndex < forms.length) {
+        forms[currentFormIndex].classList.remove('active');
+        forms[currentFormIndex].classList.add('previous');
+        currentFormIndex = nextIndex;
+        mostrarFormulario(currentFormIndex);
+    } else {
+        modal.style.display = "none";
+        resetForms();
+    }
+}
+
+function resetForms() {
+    forms.forEach(form => {
+        form.classList.remove('active', 'previous');
+    });
+    currentFormIndex = 0;
+}
+
+document.querySelectorAll('#siguiente').forEach((button, index) => {
+    button.addEventListener('click', (event) => {
+        event.preventDefault(); // Evita el envío del formulario
+        siguienteFormulario(index + 1);
+    });
+});
+
+document.getElementById('finalizar').addEventListener('click', (event) => {
+    event.preventDefault(); // Evita el envío del formulario
+    modal.style.display = "none";
+    resetForms();
+});
+
+
+    </script>
 </body>
 </html>
