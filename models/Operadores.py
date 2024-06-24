@@ -1,33 +1,30 @@
 from datetime import datetime
-from conexion import *
+from conexion import get_db_connection
 
 class Operadores:
     def __init__(self, miBD):
-        self.mysql = miBD
-        self.conexion = self.mysql.connect()
-        self.cursor = self.conexion.cursor()
+        self.conexion = miBD
+        try:
+            self.cursor = miBD.cursor()
+        except AttributeError as e:
+            print(f"Error al intentar conectar a la base de datos: {e}")
 
     def consultaOperadores(self):
         sql = "SELECT usuario, nombre, apellido, cedula, telefono, correo, rol, fecha_registro, user_registro, estado FROM operadores"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
-        self.conexion.commit()
         return resultado
-    
+
     def validarDatosOpe(self, usuario, cedula, correo, celular):
         consulta = f"SELECT * FROM operadores WHERE usuario = '{usuario}' AND correo = '{correo}' AND cedula = '{cedula}' AND telefono = '{celular}'"
         self.cursor.execute(consulta)
         resultado = self.cursor.fetchall()
-        self.conexion.commit()
         return len(resultado) > 0
-    
+
     def agregarOperador(self, operadores, user_registro):
         try:
             fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-
             sql = f"INSERT INTO operadores (usuario, nombre, apellido, cedula, telefono, correo, contrasena, rol, fecha_registro, user_registro, estado) VALUES ('{operadores[0]}', '{operadores[1]}', '{operadores[2]}', '{operadores[3]}', '{operadores[4]}', '{operadores[5]}', '{operadores[6]}', '{operadores[7]}', '{fecha_actual}', '{user_registro}', '{operadores[8]}')"
-
             self.cursor.execute(sql)
             self.conexion.commit()
             return True
@@ -50,15 +47,15 @@ class Operadores:
         consulta = f"SELECT * FROM operadores WHERE usuario = '{usuario}'"
         self.cursor.execute(consulta)
         resultado = self.cursor.fetchall()
-        self.conexion.commit()
         return resultado
-    
-    def actualizarContra(self,nuevContra):
-        
+
+    def actualizarContra(self, nuevContra):
         sql = f"UPDATE operadores SET contrasena = '{nuevContra[1]}' WHERE cedula = '{nuevContra[0]}'"
         self.cursor.execute(sql)
         self.conexion.commit()
-        
-        
-losOperadores = Operadores(mysql)
 
+# Obtener la conexión a la base de datos
+miBD = get_db_connection()
+
+# Instanciar la clase Operadores con la conexión
+losOperadores = Operadores(miBD)

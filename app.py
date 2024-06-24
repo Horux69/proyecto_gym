@@ -1,5 +1,5 @@
 from flask import render_template
-from flaskext.mysql import MySQL
+import mysql.connector
 from routes.login import validaLogin
 from routes.afiliados import afiliados
 from routes.inventario import inventario
@@ -11,7 +11,6 @@ from routes.contactanos import Datoscontacto
 from conexion import *
 
 
-LosAfiliados.desactivarUsuarios() #funcion de desactivar usuarios
 
 @app.route('/')
 def login():

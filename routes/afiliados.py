@@ -3,7 +3,7 @@ from conexion import *
 from datetime import datetime, timedelta, date
 from models.Afiliados import LosAfiliados
 from models.Membresias import lasMembresias
-from models.IngresoAfiliados import IngresoAfiliados
+from models.IngresoAfiliados import losIngresoAfiliados
 import hashlib
 
 # ------------------------ AFILIADOS ---------------------------------------------#
@@ -29,7 +29,7 @@ def consultarEstadoAfiliado():
         if infoAfiliado[0][17] == 'activo':
             fecha_ingreso = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-            IngresoAfiliados.agregarIngresoAfiliado(id_afiliado, fecha_ingreso)
+            losIngresoAfiliados.agregarIngresoAfiliado(id_afiliado, fecha_ingreso)
 
             return jsonify({
                             'valido': 'Valido',
@@ -193,9 +193,10 @@ def agregarAfiliados():
         return redirect('/afiliados')
         
         
-        
 
-@app.route('/afiliados/desactivarAfiliado/<cedula>')
+
+        
+@app.route('/afiliados/desactivarAfiliados/<cedula>', methods=['POST'])
 def desactivarAfiliados(cedula):
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         LosAfiliados.desactivarAfiliados(cedula)

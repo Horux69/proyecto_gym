@@ -4,7 +4,7 @@ from models.ValidaLogin import validaLogin
 from datetime import datetime, timedelta
 from models.Membresias import lasMembresias
 from models.Afiliados import LosAfiliados
-from models.IngresoAfiliados import IngresoAfiliados
+from models.IngresoAfiliados import losIngresoAfiliados
 import hashlib
 
 
@@ -75,7 +75,7 @@ def inicio():
 
         # ESTADISTICAS PARA CONSULTAR LAS HORAS MAS CONCURRIDAS DE INGRESO AL GYM
 
-        datos_por_hora = IngresoAfiliados.consultarHorasConcurridas()
+        datos_por_hora = losIngresoAfiliados.consultarHorasConcurridas()
 
         labels = [convertir_a_formato_12_horas(str(hora)) for hora in range(24)]
         datos = [datos_por_hora.get(hora, 0) for hora in range(24)]

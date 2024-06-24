@@ -62,7 +62,7 @@ def inventario():
     
         resultado = InvProductos.consultarProductos()
 
-        resulCate = InvProductos.consultaCataegorias()
+        resulCate = InvProductos.consultaCategorias()
         
         membresias = lasMembresias.consultarMembresias()
 
@@ -118,7 +118,7 @@ def infoEditProducto(id_producto):
     if session.get("logueado") and session.get("rol") == 'administrador' or session.get("rol") == 'super_admin':
         
         resultado = InvProductos.infoEditProducto(id_producto)
-        resultadoCate = InvProductos.consultaCataegorias()
+        resultadoCate = InvProductos.consultaCategorias()
         
         membresias = lasMembresias.consultarMembresias()
 
@@ -180,7 +180,7 @@ def agregarCategoria():
             estado = 'activo'
             
             # hacer la consulta de las categorías existentes para esta consulta deje el GET
-            categorias = InvProductos.consultaCataegorias()
+            categorias = InvProductos.consultaCategorias()
             
             # esto verifica si el nombre de la categoría ya existe o no en la base de datos
             nombres_categorias = [categoria[1] for categoria in categorias]  # tomamos los nombres de las categorías
@@ -205,7 +205,7 @@ def consultarCategoria():
         mensaje = ''  # Inicializar mensaje como None por defecto
         if 'mensaje' in session:
             mensaje = session.pop('mensaje')
-        resultado = InvProductos.consultaCataegorias()
+        resultado = InvProductos.consultaCategorias()
         
         
         
