@@ -64,22 +64,22 @@
                         <input type="text"  name="id_contacto" id="id_actualizar" value="{{contacto_gym[0][0]}}" readonly hidden>
         
                         <label for="nombre_gym" class="nombre_gym">nombre:</label>
-                        <input type="text" value="{{contacto_gym[0][1]}}" name="nombre_gym" class="nombre" pattern="[a-zA-Z ]{2,25}"  required >
+                        <input type="text" value="{{contacto_gym[0][1]}}" name="nombre_gym" minlength="2" maxlength="50" class="nombre" pattern="[a-zA-Z\s]{2,50}"  required >
             
                         <label for="telefono_gym" class="telefono_gym">telefono:</label>
-                        <input type="tel" value="{{contacto_gym[0][2]}}" name="telefono_gym" class="telefono"  pattern="[0-9]{3,15}" required>
+                        <input type="tel" value="{{contacto_gym[0][2]}}" name="telefono_gym" minlength="7" maxlength="10" class="telefono"  pattern="[0-9]{3,15}" required>
             
                         <label for="correo_gym" class="correo_gym">correo:</label>
-                        <input type="email" value="{{contacto_gym[0][3]}}" id="correo_gym" class="correo"  name="correo_gym"  pattern="[a-zA-Z0-9-@ ]{2,50}" required>
+                        <input type="email" value="{{contacto_gym[0][3]}}" id="correo_gym" class="correo"  name="correo_gym" minlength="2" maxlength="50"  pattern="[a-zA-Z0-9-@]{2,50}" required>
                         
                         <label for="direccion_gym" class="direccion_gym">dirección:</label>
-                        <input type="text" value="{{contacto_gym[0][4]}}" name="direccion_gym" class="direccion" pattern="[a-zA-Z0-9#- ]{2,30}"  required >          
+                        <input type="text" value="{{contacto_gym[0][4]}}" name="direccion_gym" class="direccion" minlength="2" maxlength="30" pattern="[a-zA-Z0-9#-\s]{2,30}"  required >          
             
                         <label for="barrio_gym" class="barrio_gym">barrio:</label>
-                        <input type="text" value="{{contacto_gym[0][5]}}" name="barrio_gym" class="barrio" pattern="[a-zA-Z ]{2,30}"     required >
+                        <input type="text" value="{{contacto_gym[0][5]}}" name="barrio_gym" class="barrio" minlength="2" maxlength="30" pattern="[a-zA-Z\s]{2,30}" required >
             
                         <label for="hubicacion_gym" class="hubicacion_gym">ubicacion:</label>
-                        <input type="text" value="{{contacto_gym[0][6]}}" class="ubicacion" name="ubicacion_gym" pattern="[a-zA-Z ]{2,30}" required>
+                        <input type="text" value="{{contacto_gym[0][6]}}" class="ubicacion" name="ubicacion_gym" minlength="2" maxlength="30" pattern="[a-zA-Z\s]{2,30}" required>
                         
                         <button type="submit" tabindex="7" class="boton__">ACTUALIZAR CAMBIOS</button>
                     </form>
@@ -94,22 +94,22 @@
                             <h2 class="titulo">AGREGAR CONTACTO</h2>
                             
                             <label for="nombre_gym" class="nombre_gym">nombre:</label>
-                            <input type="text"  name="nombre_gym" class="nombre" pattern="[a-zA-Z ]{2,25}"  required >
+                            <input type="text"  name="nombre_gym"  minlength="2" maxlength="50" class="nombre" pattern="[a-zA-Z\s]{2,50}"  required >
                 
                             <label for="telefono_gym" class="telefono_gym">telefono:</label>
-                            <input type="tel"  name="telefono_gym" class="telefono" pattern="[0-9]{3,15}"  required >
+                            <input type="tel"  name="telefono_gym" class="telefono" minlength="7" maxlength="10" pattern="[0-9]{3,15}"   required >
                 
                             <label for="correo_gym" class="correo_gym">correo:</label>
-                            <input type="email"  id="correo_gym" class="correo"  name="correo_gym" pattern="[a-zA-Z0-9-@ ]{2,50}"   required>
+                            <input type="email"  id="correo_gym" class="correo"  name="correo_gym" minlength="2" maxlength="50"  pattern="[a-zA-Z0-9-@]{2,50}"  required>
                             
                             <label for="direccion_gym" class="direccion_gym">dirección:</label>
-                            <input type="text"  name="direccion_gym" class="direccion" pattern="[a-zA-Z0-9#- ]{2,30}"   required >          
+                            <input type="text"  name="direccion_gym" class="direccion" minlength="2" maxlength="30" pattern="[a-zA-Z0-9#-\s]{2,30}" required >          
                 
                             <label for="barrio_gym" class="barrio_gym">Barrio:</label>
-                            <input type="text" id="barrio_gym" name="barrio_gym" class="barrio"  pattern="[a-zA-Z ]{2,30}" required>
+                            <input type="text" id="barrio_gym" name="barrio_gym" class="barrio" minlength="2" maxlength="30" pattern="[a-zA-Z\s]{2,30}" required>
                 
                             <label for="hubicacion_gym" class="hubicacion_gym">ubicacion:</label>
-                            <input type="text"  class="ubicacion" name="ubicacion_gym"  pattern="[a-zA-Z ]{2,30}"   required>
+                            <input type="text"  class="ubicacion" name="ubicacion_gym" minlength="2" maxlength="30" pattern="[a-zA-Z\s]{2,30}" required>
                 
                             <button type="submit" tabindex="7" class="boton__">AGREGAR CAMBIOS</button>
                         </form>

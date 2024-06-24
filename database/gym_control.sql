@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-06-2024 a las 04:10:59
+-- Tiempo de generación: 24-06-2024 a las 14:49:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -62,10 +62,17 @@ CREATE TABLE `contacto_gym` (
 --
 
 INSERT INTO `contacto_gym` (`id_contacto`, `nombre_gym`, `telefono_gym`, `correo_gym`, `direccion_gym`, `barrio_gym`, `ubicacion_gym`) VALUES
-(1, 'ACROPOLIS', '3226836027', 'samaileen1503@gmail.com', 'tulua valle', 'asnos', 'carrera 25 30 23'),
+(1, 'ACROPOLIS', '3226836027', 'samaileen1503@gmail.com', 'tulua valle', 'asnos', 'carrera 25 30 23as'),
 (2, 'prueba', '321654462', 'prueba@gmail.com', 'bariro', 'jfbfjnfkjn', 'kjfkfbk'),
 (3, 'pruebagymg', '3216549875', 'prueba@prueba.com', 'la salle', 'kdjfvnlksjjbvkljsbvkjb', ' bhdhfbvgjksbgkjfb'),
-(4, 'power_hands', '321654879', 'prueba@prueba.com', 'dsfgerhtse', 'dfgshfhtfr', 'jgedjf');
+(4, 'power_hands', '321654879', 'prueba@prueba.com', 'dsfgerhtse', 'dfgshfhtfr', 'jgedjf'),
+(5, 'aaaa', '3215465258', 'asa@gmail.com', 'aaaaaaa', 'aaaaa', 'aaaa'),
+(6, 'aaaaaaaaaaaaaaaa', '4444444444', 'asa@gmail.com', 'aaaaaaaaaaaa', 'aaaaaaaaaaa', 'aaaaaaaaaaaa'),
+(7, 'aa', '2222222222', 'aaaaaaa@aaa', 'aaaaaaaaaaaaa', 'aaaaaaaaa', 'aaaaaaa'),
+(8, 'a', '222', 'aaaaaaa@aaa', 'aaaa', 'aaaa', 'aaaa'),
+(9, 'aaaaa', '122122121', 'asa@gmail.com', 'asaasas', 'asasas', 'aaaaaaaaaaaa'),
+(10, 'aaaaaaaaaaaaaaaa', '3215465258', 'asa@gmail.com', 'aaaaaaa', 'asas', 'aaaaaaaaaaaa'),
+(11, 'aaaaaaaaaa', '1111111111', 'asa@gmail.com', 'ascacasc acasc', 'casasa ascacsa', 'cali');
 
 -- --------------------------------------------------------
 
@@ -76,17 +83,18 @@ INSERT INTO `contacto_gym` (`id_contacto`, `nombre_gym`, `telefono_gym`, `correo
 CREATE TABLE `creador_rutina` (
   `id_rutina` int(11) NOT NULL,
   `duracion` varchar(25) DEFAULT NULL,
-  `descripcion` varchar(25) DEFAULT NULL
+  `nombre` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `creador_rutina`
 --
 
-INSERT INTO `creador_rutina` (`id_rutina`, `duracion`, `descripcion`) VALUES
+INSERT INTO `creador_rutina` (`id_rutina`, `duracion`, `nombre`) VALUES
 (1, '05/10/2024', 'prueba'),
 (2, '05/10/2024', 'prueba2'),
-(5, '2024-04-25', 'esta locura');
+(5, '2024-04-25', 'esta locura'),
+(6, '2024-06-04', 'asasasasasas');
 
 -- --------------------------------------------------------
 
@@ -114,7 +122,8 @@ INSERT INTO `ejercicios` (`contador_ejercicio`, `nombre_ejercicio`, `repeciones`
 (4, 'flexiones', 5, 10, 3, 'https://prixz.com/salud/wp-content/uploads/2021/04/lagartijas2-300x175.png'),
 (5, 'pull over', 10, 5, 2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTov0oNLQjNpMF3HB6KcgxmNVH56v9qjR6hKVaKozg5dOz-6GSk6WrcmrcuJ8-MrgrfV8k&usqp=CAU'),
 (6, 'flexion inclinada', 10, 5, 3, 'https://blogladiadoresfit.com/wp-content/uploads/2020/06/calistenia-flexiones-inclinadas.jpg'),
-(12, 'prueba23', 4, 32, 3, 'Foto-20240419153826-.jpeg');
+(12, 'prueba23', 4, 32, 3, 'Foto-20240419153826-.jpeg'),
+(13, 'aaaa', 2121, 121, 2, 'Foto-20240618173901-.png');
 
 -- --------------------------------------------------------
 
@@ -311,7 +320,7 @@ CREATE TABLE `operadores` (
 --
 
 INSERT INTO `operadores` (`usuario`, `nombre`, `apellido`, `cedula`, `telefono`, `correo`, `contrasena`, `rol`, `fecha_registro`, `user_registro`, `estado`) VALUES
-('camilo01', 'Camilo', 'Castillo', '1007456213', '321458963', 'camilo@gmail.com', 'camilo1234', 'administrador', '2023-09-08 00:00:00', 'cristian', 'activo'),
+('camilo01', 'Camilo', 'Castillo', '1007456213', '321458963', 'camilo@gmail.com', '01defe492d2c21adb95134ef29cfb6a410c53d4ce0b71c0431f03ba1f7afc03327740a7d0a69ef507bf33db1e66e96c0c7306eb17e00246199f11b99e08684ae', 'administrador', '2023-09-08 00:00:00', 'cristian', 'activo'),
 ('diego', 'Diego alberto', 'pinilla', '61619696', '61611611', 'jahash@gmail.com', '1234', 'entrenador', '2023-10-13 21:54:04', 'Camilo', 'activo'),
 ('juan', 'Juan', 'Posada', '5181961961', '499611515', 'juan@gmail.com', '1234', 'entrenador', '2023-10-13 00:00:00', 'Camilo', 'activo'),
 ('prueba', 'prueba', 'prueba', '111111111111111', '1111111111', 'hola@gmail.com', 'e24a017aa47f2ff569d8d5cfedcfb0e5bfc914ea547fbb0757f419113edf47beaae7f22e2b2a4580ed76bc880d3812239b2f0af1bfa35c9203823d56b686b7c0', 'entrenador', '2024-06-11 18:05:08', 'cristian', 'activo'),
@@ -380,12 +389,12 @@ INSERT INTO `registro_usuarios` (`cedula`, `nombre`, `apellido`, `fecha_nac`, `t
 ('10032165441', 'pruebamedida', 'yeffer', '2013-10-16', '3216549877', 'hombre', 'A+', '', 321654789, 'yeferprueba2@gmail.com', '132f8f4459d4dcd768a432d143586f1c3a28ab6da0c66c3881204f625223bb910d75b1958b1c4d562dbc05a704729e67b6416a2a4070333b3338fe2c3f19c947', '', 6, '0000-00-00', '2024-04-30', '2024-03-01', 'yefer', 'inactivo', 'Foto-20240607215602.jpg', 0, ''),
 ('1003699989', 'Carlos Alberto', 'Posada', '2008-02-14', '3152085189', 'hombre', 'AB', 'NULL', 2147483647, 'lokobrs@gmail.com', '0202020202', '', 6, '2024-02-24', '2024-04-24', '2024-02-24', 'cristian', 'inactivo', NULL, 0, ''),
 ('1007412611', 'Camilo', 'Castillo', '2001-11-24', '3172509264', '', '', '', 0, 'horuxjcc@gmail.com', '', '', 6, '0000-00-00', '2024-03-12', '2023-11-19', 'Camilo', 'inactivo', NULL, 0, ''),
-('1193592038', 'cristian', 'vanegas', '2003-10-28', '3152085189', '', '', '', 0, 'pequeflow-2003@hotmail.com', '', '', 6, '0000-00-00', '2024-03-27', '2023-12-03', 'cristian', 'inactivo', NULL, 377047, ''),
-('155555555555555', 'aaaaaaa', 'aaaaaaa', '2024-05-31', '1111111111', 'hombre', 'O+', 'NULL', 2147483647, 'cscscscs@gmail.com', '5ee14d3d6b45bf3d8dd1e25507b761c0e2c1f5c9051fe50d9eb0ee0b97a4743354f62bf77cd4ad044103981a0f9a64cbb09a8d2dc65138cfc7f3af88a6aa320d', 'si', 1, '2024-06-16', '2024-06-17', '2024-06-16', 'cristian', 'activo', NULL, 0, 'prueba'),
+('1193592038', 'cristian', 'vanegas', '2003-10-28', '3152085189', '', '', '', 0, 'pequeflow-2003@hotmail.com', 'd9e6762dd1c8eaf6d61b3c6192fc408d4d6d5f1176d0c29169bc24e71c3f274ad27fcd5811b313d681f7e55ec02d73d499c95455b6b5bb503acf574fba8ffe85', '', 6, '0000-00-00', '2024-03-27', '2023-12-03', 'cristian', 'inactivo', NULL, 245692, ''),
+('155555555555555', 'aaaaaaa', 'aaaaaaa', '2024-05-31', '1111111111', 'hombre', 'O+', 'NULL', 2147483647, 'cscscscs@gmail.com', '5ee14d3d6b45bf3d8dd1e25507b761c0e2c1f5c9051fe50d9eb0ee0b97a4743354f62bf77cd4ad044103981a0f9a64cbb09a8d2dc65138cfc7f3af88a6aa320d', 'si', 6, '2024-06-16', '2024-06-17', '2024-06-16', 'cristian', 'inactivo', NULL, 0, 'prueba'),
 ('16161', 'camilo', 'castillo', '2001-11-24', '56944194', '', '', '', 0, 'yefer155@gmail.com', 'prueba112', '', 6, '2023-10-11', '2023-11-11', '2023-10-11', 'camilo', 'inactivo', NULL, 0, ''),
 ('222222222', 'prueba', 'prueba', '1995-06-06', '3201544365', 'hombre', 'A+', 'NULL', 2147483647, 'hola@gmail.com', 'e24a017aa47f2ff569d8d5cfedcfb0e5bfc914ea547fbb0757f419113edf47beaae7f22e2b2a4580ed76bc880d3812239b2f0af1bfa35c9203823d56b686b7c0', '', 6, '2024-06-11', '2024-06-12', '2024-06-11', 'cristian', 'inactivo', NULL, 0, ''),
 ('232312222', 'alfonzo', 'alquaeda', '2008-02-21', '1222222222', 'hombre', 'AB', 'NULL', 2147483647, '12222222@nxjskdacns.com', '232312222', '', 6, '2024-02-25', '2024-02-27', '2024-02-25', 'cristian', 'inactivo', NULL, 0, ''),
-('444444444444444', 'aaaaaaas', 'asasasa', '2024-06-04', '6666666666', 'hombre', 'A-', 'NULL', 1222222222, 'cscscq@gmail.com', 'bff34d4e7f654a4105e44630145731320dae0ffa7ebf12cf36afd908c42b4d0e67f51a2bd952e40ac6f02141a1198d1f7946ac219877e5499bbedc3f16a4d9f5', 'no', 1, '2024-06-16', '2024-06-17', '2024-06-16', 'cristian', 'activo', NULL, 0, 'no tiene leciones'),
+('444444444444444', 'aaaaaaas', 'asasasa', '2024-06-04', '6666666666', 'hombre', 'A-', 'NULL', 1222222222, 'cscscq@gmail.com', 'bff34d4e7f654a4105e44630145731320dae0ffa7ebf12cf36afd908c42b4d0e67f51a2bd952e40ac6f02141a1198d1f7946ac219877e5499bbedc3f16a4d9f5', 'no', 6, '2024-06-16', '2024-06-17', '2024-06-16', 'cristian', 'inactivo', NULL, 0, 'no tiene leciones'),
 ('666666666666666', 'alberto', 'jose', '2024-06-20', '4444444444', 'hombre', 'O+', 'NULL', 2147483647, 'dada@gmail.com', 'cb0b4a73a5176053e6eb3766f5eabe2a9faad01e3a32adf077ba0bfc7b0a56be8996d1b12c33796569e464f33802fc7e873a606b37a46f6d56c7813c79314a7b', 'no', 6, '2024-06-12', '2024-06-13', '2024-06-12', 'cristian', 'inactivo', NULL, 0, '');
 
 -- --------------------------------------------------------
@@ -564,19 +573,19 @@ ALTER TABLE `categoria_productos`
 -- AUTO_INCREMENT de la tabla `contacto_gym`
 --
 ALTER TABLE `contacto_gym`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `creador_rutina`
 --
 ALTER TABLE `creador_rutina`
-  MODIFY `id_rutina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_rutina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `ejercicios`
 --
 ALTER TABLE `ejercicios`
-  MODIFY `contador_ejercicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `contador_ejercicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `ejercicio_rutina`
