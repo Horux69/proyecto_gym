@@ -18,6 +18,13 @@ body {
     min-height: 100vh;
 }
 
+#contenedor_de_todo {
+    background-color: #D6D6D6;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    position: relative;
+}
 /* .contenedor {
     background-color: #D6D6D6;
     min-height: 100vh;

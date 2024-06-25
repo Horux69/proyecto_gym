@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s;
+    font-family: 'Poppins', sans-serif;
+    text-transform: lowercase;
+}
+:root{
+    --gris_claro:#D6D6D6;
+    --azul_oscuro:#1f2232;
+    --amarillo:#ffc857;
+}
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+
+#contenedor_formulario_contra{
+    background-color: #fff;
+    position: relative;
+    display: flex;
+    height: 50%;
+    width: 50%;
+    left: 25%;
+    top: 15%;
+    flex-direction: column;
+    align-items: center;
+        h2{
+            margin: 0;
+            padding: 0;
+            
+
+        }
+}
