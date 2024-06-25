@@ -64,7 +64,7 @@ def inicio():
         # fecha_minima = fecha_actual - timedelta(days=(70 * 365))
 
         if afiliadosActivos[0][0] == 'inactivo':
-            afiliadosActivos = (('activo', 0),) + afiliadosActivos
+            afiliadosActivos = [('activo', 0),] + afiliadosActivos
 
         renovadas = afiliadosActivos[0][1]
         no_renovadas = afiliadosActivos[1][1] if afiliadosActivos and len(afiliadosActivos) > 1 else 0
