@@ -55,14 +55,17 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-outline-secondary btn-sm botonFiltros">
                         <i class="fa fa-filter" aria-hidden="true"></i>
                     </button>
+                    
                     <a href="" class="boton_ope">Agregar Membresia<i class="fa-solid fa-plus"></i></a>
                 </nav>
                 <div class="contenido-wrapper">
                     <table class="table table-head-fixed table-light table-striped table-bordered " style="width: 100%;" id="consultar_membresias">
                         <thead>
                             <tr>
-                                <th>Ver Más</th>
+                                <!-- <th>Ver Más</th> -->
+                                {% if usuarioRol != 'entrenador' %}
                                 <th>Acciones</th>
+                                {% endif %}
                                 <th>Nombre</th>
                                 <th>Tiempo de Duracion</th>
                                 <th>Precio</th>
@@ -144,31 +147,39 @@
         $.ajax({
             url: "/consultarDatosMembresias",
             type: "GET",
-            success: function (data) {
+            success: function (response) {
+
+                var data = response.data;
+                var user_role = response.role;
+
+                var columns = [
+                    { data: "Nombre" },
+                    { data: "TiempoDuracion" },
+                    { data: "Precio" },
+                    { data: "Estado" }
+                ];
+
+                if (user_role != 'entrenador') {
+                    columns.splice(1, 0, { data: "Acciones" });
+                }
+
                 var table_casos = $('#consultar_membresias').DataTable({
                     "createdRow": function(row, data, dataIndex) {
 
                         var estado = data.Estado;
         
                         if (estado === 'activo') {
-                            $('td', row).eq(5).html('<span class="badge badge-success">Activa</span>');
+                            $('td', row).eq(user_role != 'entrenador' ? 4 : 3).html('<span class="badge badge-success">Activa</span>');
                         } else {
-                            $('td', row).eq(5).html('<span class="badge badge-danger">Inactiva</span>');
+                            $('td', row).eq(user_role != 'entrenador' ? 4 : 3).html('<span class="badge badge-danger">Inactiva</span>');
                         }
                     },
                     data: data,
-                    columns: [
-                        { data: "VerMas" },
-                        { data: "Acciones" },
-                        { data: "Nombre" },
-                        { data: "TiempoDuracion" },
-                        { data: "Precio" },
-                        { data: "Estado" }
-                    ],
+                    columns: columns,
                     // se especifican las columnas
         searchPane: {
             container: '.searchPanes',
-            columns: [5],
+            columns: user_role != 'entrenador' ? [4] : [3],
             threshold: 0
         },
         "language": {
@@ -197,8 +208,8 @@
                 targets: [0]
             },
             {
-                className: 'dt-center',
-                targets: [0, 1]
+                className: 'dt-left',
+                targets: user_role != 'entrenador' ? [0] : [0]
             },
             {
                 responsivePriority: 1,
@@ -206,7 +217,7 @@
             },
             {
                 responsivePriority: 2,
-                targets: 1
+                targets: user_role != 'entrenador' ? 1 : 1
             },
             {
                 responsivePriority: 3,

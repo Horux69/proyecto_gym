@@ -66,8 +66,9 @@
                     <table class="table table-head-fixed table-light table-striped table-bordered " style="width: 100%;" id="consultar_afiliados">
                         <thead>
                             <tr>
-                                <th>Ver Más</th>
+                                {% if usuarioRol != 'entrenador' %}
                                 <th>Acciones</th>
+                                {% endif %}
                                 <th>Nombres</th>
                                 <th>Categoria</th>
                                 <th>Precio de Compra</th>
@@ -158,22 +159,30 @@
         $.ajax({
             url: "/consultarDatosInventario",
             type: "GET",
-            success: function (data) {
+            success: function (response) {
+
+                var data = response.data;
+                var user_role = response.role;
+
+                var columns = [
+                    { data: "Nombre" },
+                    { data: "NombreCategoria" },
+                    { data: "PrecioCompra" },
+                    { data: "PrecioVenta" },
+                    { data: "Cantidad" }
+                ];
+
+                if (user_role != 'entrenador') {
+                    columns.splice(0, 0, { data: "Acciones" });
+                }
+
                 var table_casos = $('#consultar_afiliados').DataTable({
                     data: data,
-                    columns: [
-                        { data: "VerMas" },
-                        { data: "Acciones" },
-                        { data: "Nombre" },
-                        { data: "NombreCategoria" },
-                        { data: "PrecioCompra" },
-                        { data: "PrecioVenta" },
-                        { data: "Cantidad" }
-                    ],
+                    columns: columns,
                     // se especifican las columnas
         searchPane: {
             container: '.searchPanes',
-            columns: [3],
+            columns: user_role != 'entrenador' ? [2] : [1],
             threshold: 0
         },
         "language": {
@@ -199,8 +208,8 @@
                 targets: [0]
             },
             {
-                className: 'dt-center',
-                targets: [0, 1]
+                className: 'dt-left',
+                targets: user_role != 'entrenador' ? [0] : [0]
             },
             {
                 responsivePriority: 1,
@@ -208,7 +217,7 @@
             },
             {
                 responsivePriority: 2,
-                targets: 1
+                targets: user_role != 'entrenador' ? 1 : 1
             },
             {
                 responsivePriority: 3,

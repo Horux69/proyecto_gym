@@ -8,7 +8,7 @@ from models.Membresias import lasMembresias
 
 # ----------------------------- INVENTARIO PRODUCTOS ------------------------------------#
 
-def obtener_datos_inventario():
+def obtener_datos_inventario(usuarioRol):
     try:
         # Aquí realizas la consulta a tu base de datos o donde tengas los datos
         resultados = InvProductos.consultarProductos()
@@ -22,10 +22,13 @@ def obtener_datos_inventario():
                             </button>
                         </div>"""
             
-            acciones = f"""<div class='btn-group'>
-                            <a class='btn btn-danger delete-producto' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
-                            <a class="btn btn-primary" href="/inventario/infoEditProducto/{row[0]}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a>
-                            </div>"""
+            acciones = ""
+
+            if usuarioRol != 'entrenador':
+                acciones = f"""<div class='btn-group'>
+                                <a class='btn btn-danger delete-producto' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
+                                <a class="btn btn-primary" href="/inventario/infoEditProducto/{row[0]}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a>
+                                </div>"""
 
             caso = {
                 "VerMas": verMas,
@@ -48,9 +51,12 @@ def obtener_datos_inventario():
     
 @app.route('/consultarDatosInventario')
 def consultarDatosInventario():
-    data = obtener_datos_inventario()
 
-    return jsonify(data)
+    usuarioRol = session["rol"]
+
+    data = obtener_datos_inventario(usuarioRol)
+
+    return jsonify({"data": data, "role": usuarioRol})
 
 @app.route('/inventario')
 def inventario():
@@ -59,10 +65,12 @@ def inventario():
         mensaje = ''  # Inicializar mensaje como None por defecto
         if 'mensaje' in session:
             mensaje = session.pop('mensaje')
+
+        usuarioRol = session["rol"]
     
         resultado = InvProductos.consultarProductos()
 
-        resulCate = InvProductos.consultaCategorias()
+        resulCate = InvProductos.consultaCataegorias()
         
         membresias = lasMembresias.consultarMembresias()
 
@@ -77,7 +85,7 @@ def inventario():
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
         
 
-        return render_template('/dashboard/inventario_productos.html', productos = resultado, categorias = resulCate, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima)
+        return render_template('/dashboard/inventario_productos.html', productos = resultado, categorias = resulCate, resulMem = membresias, minima = fecha_minima, maxima = fecha_maxima, usuarioRol = usuarioRol)
     
     else:
         return redirect('/')

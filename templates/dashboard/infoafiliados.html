@@ -70,7 +70,7 @@
         </div>
 
             <div class="btn_accion">
-                {% if session["rol"] == 'entrenador' or session["rol"] == 'administrador' %}
+                {% if session["rol"] == 'entrenador' or session["rol"] == 'administrador' or session["rol"] == 'super_admin' %}
                 <button type="submit" onclick="return confirm('actualizar datos?')" class="buttonSumit2">actualizar datos</button>
                 {% endif %}
                 <a href="/afiliados" class="btn_desactivar">Regresar</a>

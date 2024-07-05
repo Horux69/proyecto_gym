@@ -9,7 +9,7 @@ from models.Membresias import lasMembresias
 
 # ------------------------ MEMBRESIAS ---------------------------------------------#
 
-def obtener_datos_membresias():
+def obtener_datos_membresias(usuarioRol):
     try:
         # Aquí realizas la consulta a tu base de datos o donde tengas los datos
         resultados = lasMembresias.consultarMembresias()
@@ -23,7 +23,10 @@ def obtener_datos_membresias():
                             </button>
                         </div>"""
             
-            acciones = f"""<div class='btn-group'>
+            acciones = ""
+            
+            if usuarioRol != 'entrenador':
+                acciones = f"""<div class='btn-group'>
                             <a onclick='return confirm('Seguro quiere eliminar esta membresia?')' class='btn btn-danger delete-membresia' href='#' data-id='{row[0]}'><i class='fa-solid fa-trash'></i></a>
                             <a class="btn btn-primary" href="/membresias/infoEdit/{row[0]}"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a>
                             </div>"""
@@ -55,9 +58,12 @@ def obtener_datos_membresias():
     
 @app.route('/consultarDatosMembresias')
 def consultarDatosMembresias():
-    data = obtener_datos_membresias()
 
-    return jsonify(data)
+    usuarioRol = session["rol"]
+
+    data = obtener_datos_membresias(usuarioRol)
+
+    return jsonify({"data": data, "role": usuarioRol})
 
 @app.route('/membresias')
 def membresias():
@@ -65,7 +71,9 @@ def membresias():
         mensaje = ''  # Inicializar mensaje como None por defecto
         if 'mensaje' in session:
             mensaje = session.pop('mensaje')
-            
+
+        usuarioRol = session["rol"]
+
         resultado = lasMembresias.consultarMembresias()
         
         fecha_actual = datetime.now()
@@ -78,7 +86,7 @@ def membresias():
         fecha_minima = fecha_actual - timedelta(days=(70 * 365))
         
         
-        return render_template('dashboard/membresias.html', membresias = resultado, resulMem = resultado, minima = fecha_minima, maxima = fecha_maxima)
+        return render_template('dashboard/membresias.html', membresias = resultado, resulMem = resultado, minima = fecha_minima, maxima = fecha_maxima, usuarioRol = usuarioRol)
     else:
         return redirect('/')
     

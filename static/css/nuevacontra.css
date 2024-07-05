@@ -21,16 +21,27 @@ body, html {
     background-color: #fff;
     position: relative;
     display: flex;
-    height: 50%;
-    width: 50%;
-    left: 25%;
+    height: 300px;
+    width: 480px;
+    left: 35%;
     top: 15%;
     flex-direction: column;
     align-items: center;
+    border: solid;
+    border-radius: 5px;
+
         h2{
             margin: 0;
             padding: 0;
             
 
         }
+}
+#formulario_nueva{
+    height: 100%;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  text-align: center;
+
 }
