@@ -32,7 +32,7 @@ class Rutinas:
         return resultado
 
     def Id_rutina(self):
-        sql = "SELECT id_rutina, nombre FROM creador_rutina"
+        sql = "SELECT id_rutina, descripcion FROM creador_rutina"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         return resultado

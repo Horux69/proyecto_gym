@@ -9,7 +9,7 @@ def get_db_connection():
         host='localhost', 
         user='root',
         password='', 
-        database='gym_control'
+        database='gym_control2'
     )
     return mydb
 

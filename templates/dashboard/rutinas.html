@@ -78,8 +78,15 @@
             <h3>Creador rutina</h3>
         </div>
         <form id="estilo_formulario_4" action="/rutinas/creador_rutina" method="post">
-            <label class="texto_form_4" for="">Duracion: </label>
-            <input class="inputs_form_4" type="date" name="fecha" required>
+            <label class="texto_form_4" for="">Dia: </label>
+            <select class="lista_seleccion_form3" name="fecha" required>
+                <option value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miercoles">Miercoles</option>
+                <option value="jueves">Jueves</option>
+                <option value="viernes">Viernes</option>
+                <option value="sabado">Sabado</option>
+            </select>
             <label class="texto_form_4" for="">Descripcion: </label>
             <input class="inputs_form_4" type="text" part="[A-Za-z]{10,100}" name="descripcion" minlength="10" min="10" max="100" maxlength="100" required>
             <button id="boton_formulario_4" type="submit">Agregar</button>
